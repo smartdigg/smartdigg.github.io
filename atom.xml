@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2023-08-20T23:39:20+08:00</updated>
+  <updated>2023-08-20T23:40:32+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -188,17 +188,6 @@
 <li><a href="https://www.privacytools.io/">https://www.privacytools.io/</a></li>
 <li><a href="http://prism-break.org/en/">http://prism-break.org/en/</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[如何在五分钟内搭建Github博客]]></title>
-    <link href="https://smartdig.github.io/16901256071454.html"/>
-    <updated>2023-07-23T23:20:07+08:00</updated>
-    <id>https://smartdig.github.io/16901256071454.html</id>
-    <content type="html"><![CDATA[
-<p>前提：Mweb Pro软件、Github Desktop。</p>
 
 ]]></content>
   </entry>
