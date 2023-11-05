@@ -4,19 +4,142 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2023-11-03T13:12:02+08:00</updated>
+  <updated>2023-11-06T00:34:58+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
-  <generator uri="http://www.mweb.im/">MWeb</generator>
+  <generator uri="https://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[Brave浏览器安全配置]]></title>
+    <link href="https://smartdig.github.io/brave-browser-security-enhanced.html.html"/>
+    <updated>2023-11-05T17:24:33+08:00</updated>
+    <id>https://smartdig.github.io/brave-browser-security-enhanced.html.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8">安装Brave浏览器</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA">设置安全增强</a>
+<ul>
+<li><a href="#shields">Shields</a></li>
+<li><a href="#privacy-and-security">Privacy and security</a></li>
+<li><a href="#search-engine">Search engine</a></li>
+<li><a href="#extensions">Extensions</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8F%92%E4%BB%B6">插件</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>Brave浏览器是一款关注隐私和安全的开源浏览器，提供简洁的安全配置。从<a href="https://privacytests.org/">PrivacyTests.org</a>可以看出Brave浏览器在日常使用中可以提供相当好的保护。</p>
+<h3><a id="%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Brave浏览器</h3>
+<p>从Brave浏览器主页下载：<a href="https://brave.com/">https://brave.com</a>，也可以到Github Brave页面下载：<a href="https://github.com/brave/brave-browser">https://github.com/brave/brave-browser</a>。</p>
+<p>以下设置仅提供日常网络安全保护（网址加密、阻止广告、跟踪、指纹等），并不代表上网匿名。通过一些网站<a href="https://browserleaks.com/">https://browserleaks.com</a>或<a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a>可以轻易看到你的IP地址以及浏览器信息。追求匿名可使用虚拟机+VPN+TOR浏览器。</p>
+<h3><a id="%E8%AE%BE%E7%BD%AE%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置安全增强</h3>
+<p>安装Brave浏览器后，从右上角进入设置（Settings）。</p>
+<h4><a id="shields" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shields</h4>
+<ul>
+<li><code>Trackers &amp; ads blocking</code>：选择<code>Aggressive</code>；</li>
+<li><code>Upgrade connections to HTTPS</code>：选择<code>Strict</code>；</li>
+<li><code>Block fingerprinting</code>：选择<code>Standard</code>；</li>
+<li><code>Block cookies</code>：选择<code>Only cross-site</code>；</li>
+<li><code>Content filtering</code>：根据需要开启过滤；</li>
+<li><code>Auto-redirect tracking URLs</code>：开启；</li>
+<li><code>Prevent sites from fingerprinting me based on my language preferences</code>：开启；</li>
+</ul>
+<p><strong>Social media blocking</strong>，关闭所有。</p>
+<h4><a id="privacy-and-security" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Privacy and security</h4>
+<ul>
+<li><code>WebRTC IP Handling Policy</code>：选择<code>Disable non-proxied UDP</code>；也可以安装扩展<code>WebRTC Leak Shield</code>来限制WebRTC；</li>
+<li><code>Use Google services for push messaging</code>：关闭；</li>
+<li><code>Allow privacy-preserving product analytics (P3A)</code>：关闭；</li>
+<li><code>Automatically send diagnostic reports</code>：关闭。</li>
+</ul>
+<h4><a id="search-engine" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search engine</h4>
+<ul>
+<li><code>Improve search suggestions</code>：关闭；</li>
+<li><code>Web Discovery Project</code>：关闭；</li>
+<li><code>Index other search engines</code>：关闭。</li>
+</ul>
+<h4><a id="extensions" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extensions</h4>
+<p>不使用可以关闭：<code>Hangouts</code>、<code>Media Router</code>、<code>WebTorrent</code>、<code>Widevine</code>。</p>
+<h3><a id="%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>插件</h3>
+<ul>
+<li>uBlock Origin；</li>
+<li>Privacy Badger；</li>
+<li>Decentraleyes；</li>
+<li>Cookie AutoDelete；</li>
+<li>Tampermonkey（可选）；</li>
+<li>WebRTC Leak Shield（可选）。</li>
+</ul>
+<h3><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h3>
+<ul>
+<li><a href="https://brave.com/">https://brave.com</a></li>
+<li><a href="https://browserleaks.com/">https://browserleaks.com</a></li>
+<li><a href="https://www.privacytools.io/">https://www.privacytools.io</a></li>
+<li><a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a></li>
+<li><a href="https://privacytests.org/news.html">https://privacytests.org/news.html</a></li>
+<li><a href="https://www.privacyguides.org/en/desktop-browsers/#brave">https://www.privacyguides.org/en/desktop-browsers/#brave</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[安全、隐私和匿名]]></title>
+    <link href="https://smartdig.github.io/security-privay-anonymity.html.html"/>
+    <updated>2023-11-04T09:58:41+08:00</updated>
+    <id>https://smartdig.github.io/security-privay-anonymity.html.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E5%85%A8%E3%80%81%E9%9A%90%E7%A7%81%E5%92%8C%E5%8C%BF%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB">安全、隐私和匿名的关系</a>
+<ul>
+<li><a href="#%E6%B2%A1%E6%9C%89%E9%9A%90%E7%A7%81%E6%88%96%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8">没有隐私或匿名的安全</a></li>
+<li><a href="#%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E9%9A%90%E7%A7%81">没有匿名的隐私</a></li>
+<li><a href="#%E6%B2%A1%E6%9C%89%E5%AE%89%E5%85%A8%E7%9A%84%E5%8C%BF%E5%90%8D">没有安全的匿名</a></li>
+<li><a href="#%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8%E5%92%8C%E9%9A%90%E7%A7%81">没有匿名的安全和隐私</a></li>
+<li><a href="#%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E6%88%96%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%90%E7%A7%81">没有匿名或安全的隐私</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>我们可能认为我们知道隐私、安全和匿名之间的区别，但我们经常混淆它们，它们绝对不是同一件事。</p>
+<p>简单理解安全、隐私和匿名：</p>
+<ul>
+<li>安全（Security）：防止未经授权的人接触到信息、账户或其他类似东西；</li>
+<li>隐私（Privacy）：涉及你的身份和信息，不希望别人知道的。比如三围、聊天记录、银行卡密码等；</li>
+<li>匿名（Anonymity）：隐藏你的真实身份，完全不为任何人所知。</li>
+</ul>
+<h3><a id="%E5%AE%89%E5%85%A8%E3%80%81%E9%9A%90%E7%A7%81%E5%92%8C%E5%8C%BF%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安全、隐私和匿名的关系</h3>
+<p>隐私有助于你的安全，因为如果别人不知道你的信息，他们就无法冒充你来回答安全问题。安全可以通过控制谁能获取你的信息来保护你的隐私。<br />
+以家庭住房为例：安全是门锁；隐私是钥匙，你可以决定谁能得到备用钥匙；匿名是指没有人获得备用钥匙，甚至是家庭地址。</p>
+<p>这三个概念不一定相互依赖。安全产品不能保证隐私，私有产品不能保证安全，匿名也不能保证。</p>
+<h4><a id="%E6%B2%A1%E6%9C%89%E9%9A%90%E7%A7%81%E6%88%96%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有隐私或匿名的安全</h4>
+<p>谷歌提供了世界一流的安全性，却没有隐私或匿名。</p>
+<h4><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名的隐私</h4>
+<p>类似<a href="privacy.com">Privacy.com</a>、<a href="https://ironvest.com/">IronVest</a>（曾经的Blur）提供的掩码卡(Masked card)服务，他们清楚地知道你是谁。不过，他们会向你提供虚拟电话号码、电子邮件地址和银行卡，让你提供给其他公司和个人，从而保护你的真实信息，帮助你保护自己的隐私。</p>
+<h4><a id="%E6%B2%A1%E6%9C%89%E5%AE%89%E5%85%A8%E7%9A%84%E5%8C%BF%E5%90%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有安全的匿名</h4>
+<p>以现金为例，以现金支付商品可以保持您的匿名。但是，如果卖家不发货（除非您有收据），您就没有任何安全保障。</p>
+<h4><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8%E5%92%8C%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名的安全和隐私</h4>
+<p>以Signal为例，Signal注册需要您的电话号码，因此可以通过法院命令甚至网络搜索来找到您的身份，具体取决于您使用的电话号码。即使您的身份不受保护和控制，您的Signal消息内容和您传输的信息也将受到保护和控制。</p>
+<h4><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E6%88%96%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名或安全的隐私</h4>
+<p>想想你在野外上厕所的情景。你可以找一些小树丛躲在后面，这样可以保护你的隐私，但却没有安全性或匿名性。没有任何东西可以阻止任何人找到你，如果警察要求你出示证件，你也得不到任何保护。</p>
+<h3><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h3>
+<ul>
+<li><a href="https://blog.privacyguides.org/2021/02/23/security-privacy-anonymity/">https://blog.privacyguides.org/2021/02/23/security-privacy-anonymity/</a></li>
+<li><a href="https://web.archive.org/web/20210729190914/https://thenewoil.xyz/privsecanon.html">https://web.archive.org/web/20210729190914/https://thenewoil.xyz/privsecanon.html</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[网络安全手册]]></title>
-    <link href="https://smartdig.github.io/Network-security-manual.html"/>
+    <link href="https://smartdig.github.io/network-security-manual.html"/>
     <updated>2023-08-16T12:54:11+08:00</updated>
-    <id>https://smartdig.github.io/Network-security-manual.html</id>
+    <id>https://smartdig.github.io/network-security-manual.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%89%8D%E6%8F%90">前提</a></li>
@@ -41,7 +164,7 @@
 </li>
 <li><a href="#%E8%BA%AB%E4%BB%BD%E5%AE%89%E5%85%A8">身份安全</a></li>
 <li><a href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5">相关概念</a></li>
-<li><a href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5">参考链接</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
 <h2><a id="%E5%89%8D%E6%8F%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>前提</h2>
@@ -78,8 +201,10 @@
 <p>可以在【沙盒】应用中或【虚拟机】中运行该软件，阻止其访问本机数据，实现风险隔离。</p>
 <h2><a id="%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>软件推荐</h2>
 <h3><a id="%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器</h3>
-<p><a href="https://ftp.mozilla.org/pub/firefox/releases/">Firefox国际版</a>；Brave浏览器；Firefox Focus；<br />
-如果不想自行加固浏览器，可以直接使用Tor Browser。</p>
+<p><a href="https://ftp.mozilla.org/pub/firefox/releases/">Firefox国际版</a>；<br />
+Brave浏览器；<br />
+Firefox Focus；<br />
+如果不想加固浏览器，可以使用Tor Browser。</p>
 <h4><a id="%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器插件</h4>
 <ul>
 <li>uBlock Origin</li>
@@ -92,20 +217,20 @@
 </ul>
 <h4><a id="%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%B5%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器安全性检测</h4>
 <ul>
-<li>检测 IP 泄露：<a href="https://ipleak.net/">https://ipleak.net/</a></li>
-<li>浏览器指纹：<a href="https://amiunique.org/">https://amiunique.org/</a></li>
+<li>检测 IP 泄露：<a href="https://ipleak.net">https://ipleak.net</a></li>
+<li>浏览器指纹：<a href="https://amiunique.org">https://amiunique.org</a></li>
 <li>检测 DNS 泄露：<a href="https://www.dnsleaktest.com/">https://www.dnsleaktest.com/</a>, <a href="https://www.expressvpn.com/dns-leak-test">https://www.expressvpn.com/dns-leak-test</a></li>
 <li>检测 WebRTC 泄露：<a href="https://www.expressvpn.com/webrtc-leak-test">https://www.expressvpn.com/webrtc-leak-test</a></li>
 <li>其它浏览器安全问题检测：<a href="https://browserleaks.com/">https://browserleaks.com/</a></li>
-<li>检测 Tor：<a href="https://check.torproject.org/">https://check.torproject.org/</a></li>
+<li>检测 Tor：<a href="https://check.torproject.org">https://check.torproject.org</a></li>
 <li>Cloudflare检测DNS加密 (DoH/DoT)、DNSSEC、TLS 1.3、SNI 加密 (ECH)：<a href="https://www.cloudflare.com/ssl/encrypted-sni">https://www.cloudflare.com/ssl/encrypted-sni</a></li>
-<li>Device Info：<a href="https://www.deviceinfo.me/">https://www.deviceinfo.me/</a></li>
+<li>Device Info：<a href="https://www.deviceinfo.me">https://www.deviceinfo.me</a></li>
 </ul>
 <h4><a id="%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>搜索引擎</h4>
 <ul>
-<li>Brave search： <a href="https://search.brave.com/">https://search.brave.com/</a></li>
-<li>DuckDucoGo： <a href="https://duckduckgo.com/">https://duckduckgo.com/</a></li>
-<li>Startpage：<a href="https://www.startpage.com/">https://www.startpage.com/</a></li>
+<li>Brave search： <a href="https://search.brave.com/">https://search.brave.com</a></li>
+<li>DuckDucoGo： <a href="https://duckduckgo.com/">https://duckduckgo.com</a></li>
+<li>Startpage：<a href="https://www.startpage.com/">https://www.startpage.com</a></li>
 </ul>
 <h3><a id="%E5%8A%A0%E5%AF%86%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>加密即时通讯</h3>
 <p>不推荐所有来自中国的聊天软件。<br />
@@ -182,11 +307,13 @@
 <li>【物理安全】的例外是指你的装置落入了他人之手，如果你的设备没有设定密码、你被迫解锁设备或者警察使用【取证设备】破解了系统防护，他们将能看到你的通讯内容，取证设备还可能恢复被删除的聊天记录。即时通讯软件在移动装置上的【物理安全】的脆弱性是由移动装置及移动操作系统本身的脆弱性决定的。</li>
 <li>【端对端加密】是指只有通信的双方能够解密通信内容，包括通信服务提供者在内的第三方都不掌握密钥，无法解密通信内容。【端对端加密】实质上是一种密钥的分发和管理方法，所解决的是【云端安全】和用户对通信服务商的信任问题，它能否真正发挥作用取决于服务商的做法。</li>
 </ul>
-<h2><a id="%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考链接</h2>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
-<li><a href="https://reconsidera.github.io/">https://reconsidera.github.io/</a></li>
-<li><a href="https://www.privacytools.io/">https://www.privacytools.io/</a></li>
-<li><a href="http://prism-break.org/en/">http://prism-break.org/en/</a></li>
+<li><a href="https://reconsidera.github.io">https://reconsidera.github.io</a></li>
+<li><a href="https://www.privacytools.io">https://www.privacytools.io</a></li>
+<li><a href="http://prism-break.org/en">http://prism-break.org/en</a></li>
+<li><a href="https://www.privacyguides.org/en">https://www.privacyguides.org/en</a></li>
+<li><a href="https://www.privacytools.io">https://www.privacytools.io</a></li>
 </ul>
 
 ]]></content>

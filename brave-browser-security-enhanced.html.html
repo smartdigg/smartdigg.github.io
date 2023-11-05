@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-    Hello World - 永久记录
+    Brave浏览器安全配置 - 永久记录
     
     </title>
     
@@ -74,16 +74,77 @@
  <div class="container">
   <article class="post-container">
     <header class="post-header">
-        <h1 class="post-title">Hello World</h1>
+        <h1 class="post-title">Brave浏览器安全配置</h1>
         <p class="post-date">
-                <span>Posted <time datetime="2023/07/11" itemprop="datePublished">2023/07/11</time></span>
+                <span>Posted <time datetime="2023/10/11" itemprop="datePublished">2023/10/11</time></span>
             </p>
     </header>
 
     <div class="post-content clearfix">
-<pre class="line-numbers"><code class="language-plain_text">$ whoami
-</code></pre>
-<p>Smartdig means Smart Digestion.</p>
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8">安装Brave浏览器</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA">设置安全增强</a>
+<ul>
+<li><a href="#shields">Shields</a></li>
+<li><a href="#privacy-and-security">Privacy and security</a></li>
+<li><a href="#search-engine">Search engine</a></li>
+<li><a href="#extensions">Extensions</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8F%92%E4%BB%B6">插件</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>Brave浏览器是一款关注隐私和安全的开源浏览器，提供简洁的安全配置。从<a href="https://privacytests.org/">PrivacyTests.org</a>可以看出Brave浏览器在日常使用中可以提供相当好的保护。</p>
+<h3><a id="%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Brave浏览器</h3>
+<p>从Brave浏览器主页下载：<a href="https://brave.com/">https://brave.com</a>，也可以到Github Brave页面下载：<a href="https://github.com/brave/brave-browser">https://github.com/brave/brave-browser</a>。</p>
+<p>以下设置仅提供日常网络安全保护（网址加密、阻止广告、跟踪、指纹等），并不代表上网匿名。通过一些网站<a href="https://browserleaks.com/">https://browserleaks.com</a>或<a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a>可以轻易看到你的IP地址以及浏览器信息。追求匿名可使用虚拟机+VPN+TOR浏览器。</p>
+<h3><a id="%E8%AE%BE%E7%BD%AE%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置安全增强</h3>
+<p>安装Brave浏览器后，从右上角进入设置（Settings）。</p>
+<h4><a id="shields" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shields</h4>
+<ul>
+<li><code>Trackers &amp; ads blocking</code>：选择<code>Aggressive</code>；</li>
+<li><code>Upgrade connections to HTTPS</code>：选择<code>Strict</code>；</li>
+<li><code>Block fingerprinting</code>：选择<code>Standard</code>；</li>
+<li><code>Block cookies</code>：选择<code>Only cross-site</code>；</li>
+<li><code>Content filtering</code>：根据需要开启过滤；</li>
+<li><code>Auto-redirect tracking URLs</code>：开启；</li>
+<li><code>Prevent sites from fingerprinting me based on my language preferences</code>：开启；</li>
+</ul>
+<p><strong>Social media blocking</strong>，关闭所有。</p>
+<h4><a id="privacy-and-security" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Privacy and security</h4>
+<ul>
+<li><code>WebRTC IP Handling Policy</code>：选择<code>Disable non-proxied UDP</code>；也可以安装扩展<code>WebRTC Leak Shield</code>来限制WebRTC；</li>
+<li><code>Use Google services for push messaging</code>：关闭；</li>
+<li><code>Allow privacy-preserving product analytics (P3A)</code>：关闭；</li>
+<li><code>Automatically send diagnostic reports</code>：关闭。</li>
+</ul>
+<h4><a id="search-engine" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search engine</h4>
+<ul>
+<li><code>Improve search suggestions</code>：关闭；</li>
+<li><code>Web Discovery Project</code>：关闭；</li>
+<li><code>Index other search engines</code>：关闭。</li>
+</ul>
+<h4><a id="extensions" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extensions</h4>
+<p>不使用可以关闭：<code>Hangouts</code>、<code>Media Router</code>、<code>WebTorrent</code>、<code>Widevine</code>。</p>
+<h3><a id="%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>插件</h3>
+<ul>
+<li>uBlock Origin；</li>
+<li>Privacy Badger；</li>
+<li>Decentraleyes；</li>
+<li>Cookie AutoDelete；</li>
+<li>Tampermonkey（可选）；</li>
+<li>WebRTC Leak Shield（可选）。</li>
+</ul>
+<h3><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h3>
+<ul>
+<li><a href="https://brave.com/">https://brave.com</a></li>
+<li><a href="https://browserleaks.com/">https://browserleaks.com</a></li>
+<li><a href="https://www.privacytools.io/">https://www.privacytools.io</a></li>
+<li><a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a></li>
+<li><a href="https://privacytests.org/news.html">https://privacytests.org/news.html</a></li>
+<li><a href="https://www.privacyguides.org/en/desktop-browsers/#brave">https://www.privacyguides.org/en/desktop-browsers/#brave</a></li>
+</ul>
 
     </div>
     <footer class="post-footer clearfix">
@@ -130,8 +191,6 @@
 
 
 
-
-<script src="asset/prism.js"></script>
 
         
       
