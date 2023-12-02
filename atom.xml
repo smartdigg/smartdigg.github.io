@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2023-12-03T01:24:56+08:00</updated>
+  <updated>2023-12-03T01:29:58+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -124,9 +124,9 @@
   
   <entry>
     <title type="html"><![CDATA[安全、隐私和匿名]]></title>
-    <link href="https://smartdig.github.io/security-privay-anonymity.html"/>
+    <link href="https://smartdig.github.io/security-privacy-anonymity.html"/>
     <updated>2023-11-04T09:58:41+08:00</updated>
-    <id>https://smartdig.github.io/security-privay-anonymity.html</id>
+    <id>https://smartdig.github.io/security-privacy-anonymity.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%AE%89%E5%85%A8%E3%80%81%E9%9A%90%E7%A7%81%E5%92%8C%E5%8C%BF%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB">安全、隐私和匿名的关系</a>
