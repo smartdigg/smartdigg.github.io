@@ -4,13 +4,13 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2023-12-03T01:29:58+08:00</updated>
+  <updated>2024-02-17T15:06:34+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
-  <generator uri="https://www.mweb.im/">MWeb</generator>
+  <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
     <title type="html"><![CDATA[网络搜索引擎]]></title>
@@ -26,10 +26,10 @@
 </div>
 <h2><a id="%E5%95%86%E7%94%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>商用搜索引擎问题</h2>
 <p>商用搜索引擎通常收集、存储和分享有关用户搜索和浏览习惯的数据，包括但不限于搜索查询、IP地址、内容过滤、第三方Trackers等等。</p>
-<p><strong>远离百度、搜狗、360搜索、Bing、Google等搜索引擎。</strong></p>
+<p><strong>远离百度、搜 狗、360搜索、Bing、Google等搜索引擎。</strong></p>
 <h2><a id="%E5%AE%89%E5%85%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%8E%A8%E8%8D%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安全搜索引擎推荐</h2>
 <ul>
-<li><a href="https://search.brave.com/">Brave</a></li>
+<li><a href="https://search.brave.com/">Brave search</a></li>
 <li><a href="https://search.disroot.org/">Disroot</a></li>
 <li><a href="https://duckduckgo.com/">Duckduckgo</a></li>
 <li><a href="https://metager.org/">Metager</a></li>
@@ -70,8 +70,11 @@
 </div>
 <p>Brave浏览器是一款关注隐私和安全的开源浏览器，提供简洁的安全配置。从<a href="https://privacytests.org/">PrivacyTests.org</a>可以看出Brave浏览器在日常使用中可以提供相当好的保护。</p>
 <h2><a id="%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Brave浏览器</h2>
-<p>从Brave浏览器主页下载：<a href="https://brave.com/">https://brave.com</a>，也可以到Github Brave页面下载：<a href="https://github.com/brave/brave-browser">https://github.com/brave/brave-browser</a>。</p>
-<p>以下设置仅提供日常网络安全保护（网址加密、阻止广告、跟踪、指纹等），并不代表上网匿名。通过一些网站<a href="https://browserleaks.com/">https://browserleaks.com</a>或<a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a>可以轻易看到你的IP地址以及浏览器信息。追求匿名可使用虚拟机+VPN+TOR浏览器。</p>
+<p>从Brave浏览器主页下载：<a href="https://brave.com/">https://brave.com</a>。</p>
+<p>也可以到Github Brave页面下载：<a href="https://github.com/brave/brave-browser">https://github.com/brave/brave-browser</a>。</p>
+<p>以下设置仅提供日常网络安全保护（网址加密、阻止广告、跟踪、指纹等），并不代表上网匿名。<br />
+通过一些网站如<a href="https://browserleaks.com/">https://browserleaks.com</a>或<a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a>等可以轻易看到你的IP地址以及浏览器信息。</p>
+<p>追求更高安全的匿名可使用虚拟机+VPN+TOR浏览器。</p>
 <h2><a id="%E8%AE%BE%E7%BD%AE%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置安全增强</h2>
 <p>安装Brave浏览器后，从右上角进入设置（Settings）。</p>
 <h3><a id="shields" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shields</h3>
@@ -90,7 +93,8 @@
 <li><code>WebRTC IP Handling Policy</code>：选择<code>Disable non-proxied UDP</code>；也可以安装扩展<code>WebRTC Leak Shield</code>来限制WebRTC；</li>
 <li><code>Use Google services for push messaging</code>：关闭；</li>
 <li><code>Allow privacy-preserving product analytics (P3A)</code>：关闭；</li>
-<li><code>Automatically send diagnostic reports</code>：关闭。</li>
+<li><code>Automatically send diagnostic reports</code>：关闭；</li>
+<li><code>Automatically send daily usage ping to Brave</code>：关闭。</li>
 </ul>
 <h3><a id="search-engine" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Search engine</h3>
 <ul>
@@ -215,11 +219,11 @@
 <p>就个人而言，更有效率的对抗虚假信息方法是「做减法」——减少资讯摄入量，只关注什么是相对可信的，不必去了解什么是虚假的，以及为什么是虚假的。不要把休闲娱乐资源当作可靠的时事资讯。学好外语，替换信息源语种。</p>
 <h2><a id="%E7%B3%BB%E7%BB%9F%E9%80%89%E6%8B%A9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>系统选择</h2>
 <ul>
-<li>不用中资操作系统（如 EMUI、MIUI、ColorOS 等国产安卓 ROM）</li>
+<li>不用中资操作系统（如EMUI、MIUI、ColorOS、鸿蒙等国产安卓ROM）</li>
 <li>桌面操作系统的安全性优于移动操作系统</li>
-<li>桌面级操作系统的安全性， Linux &gt; macOS &gt; Windows</li>
-<li>移动操作系统的安全性，隐私强化型 Android/适用于移动设备的 Linux 发行版 &gt; 原生 Android/iOS+外区 Apple ID &gt; iOS+国区 Apple ID &gt; 国行安卓 ROM</li>
-<li>对技术小白而言，用 iOS 比 Android 安全</li>
+<li>桌面级操作系统的安全性，Linux&gt;macOS&gt;Windows</li>
+<li>移动操作系统的安全性，隐私强化型Android/适用于移动设备的Linux发行版&gt;原生Android/iOS+外区Apple ID&gt;iOS+国区Apple ID&gt;国行安卓ROM</li>
+<li>对技术小白而言，用iOS比Android安全</li>
 <li>尽可能用新款移动设备，及时更新最新版系统</li>
 </ul>
 <p>中国厂商定制的安卓很可能在系统中留下后门，存在严重安全隐患，此外还有越权收集用户信息、推送安全补丁不及时、阉割原生系统功能、推送垃圾广告和信息等诸多缺点。</p>
@@ -227,20 +231,21 @@
 <ul>
 <li>尽量不要使用需要手机号的软件或服务</li>
 <li>绝对不要将自己使用的真实手机号码绑定社交/即时通讯软件账号</li>
-<li>避免选择有资安、隐私污点的产品（如 WhatsApp、Zoom、Opera）；不要安装中资毒瘤软件360安全卫士、腾讯电脑管家和百度卫士等（如有安装，建议卸载并重装系统）</li>
+<li>避免选择有资安、隐私污点的产品（如WhatsApp、Zoom、Opera）；不要安装中资毒瘤软件360安全卫士、腾讯电脑管家和百度卫士等（如有安装，建议卸载并重装系统）</li>
 <li>优先选择【自由开源软件】（FOSS）</li>
 <li>优先选择在【本地】运算和存储数据的软件和服务，避免使用依赖【云服务】的产品</li>
-<li>从【可靠来源】下载软件（如项目官网、项目的 GitHub 仓库、Apple App Store、F-Droid、Google Play Store 等）</li>
-<li>避免在移动设备上下载 Facebook、Twitter、TikTok 等收集海量个人信息的社交媒体应用程序，尽量使用其网页版</li>
+<li>从【可靠来源】下载软件（如项目官网、项目的GitHub仓库、Apple App Store、F-Droid、Google Play Store 等）</li>
+<li>避免在移动设备上下载Facebook、Twitter、TikTok等收集海量个人信息的社交媒体应用程序，尽量使用其网页版</li>
 </ul>
 <h2><a id="%E6%B2%BB%E7%90%86%E6%B5%81%E6%B0%93%E8%BD%AF%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>治理流氓软件</h2>
 <p>可以在【沙盒】应用中或【虚拟机】中运行该软件，阻止其访问本机数据，实现风险隔离。</p>
 <h2><a id="%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>软件推荐</h2>
 <h3><a id="%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器</h3>
 <p><a href="https://ftp.mozilla.org/pub/firefox/releases/">Firefox国际版</a>；<br />
-Brave浏览器；<br />
-Firefox Focus；<br />
-如果不想加固浏览器，可以使用Tor Browser。</p>
+<a href="https://brave.com/">Brave浏览器</a>；<br />
+<a href="https://librewolf.net/">LibreWolf</a>；<br />
+<a href="https://mullvad.net/en/browser">Mullvad</a>；<br />
+如果不想加固浏览器，可以使用<a href="https://www.torproject.org/download/">Tor Browser</a>。</p>
 <h4><a id="%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器插件</h4>
 <ul>
 <li>uBlock Origin</li>
@@ -248,39 +253,40 @@ Firefox Focus；<br />
 <li>Privacy Badger</li>
 <li>Cookie AutoDelete</li>
 <li>ClearURLs</li>
+<li>CanvasBlocker</li>
 <li>SingleFileZ</li>
 <li>Smart HTTPS</li>
 </ul>
 <h4><a id="%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E5%85%A8%E6%80%A7%E6%A3%80%E6%B5%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器安全性检测</h4>
 <ul>
-<li>检测 IP 泄露：<a href="https://ipleak.net">https://ipleak.net</a></li>
+<li>检测IP泄露：<a href="https://ipleak.net">https://ipleak.net</a></li>
 <li>浏览器指纹：<a href="https://amiunique.org">https://amiunique.org</a></li>
-<li>检测 DNS 泄露：<a href="https://www.dnsleaktest.com/">https://www.dnsleaktest.com/</a>, <a href="https://www.expressvpn.com/dns-leak-test">https://www.expressvpn.com/dns-leak-test</a></li>
-<li>检测 WebRTC 泄露：<a href="https://www.expressvpn.com/webrtc-leak-test">https://www.expressvpn.com/webrtc-leak-test</a></li>
+<li>检测DNS泄露：<a href="https://www.dnsleaktest.com/%EF%BC%8Chttps://www.expressvpn.com/dns-leak-test">https://www.dnsleaktest.com/，https://www.expressvpn.com/dns-leak-test</a></li>
+<li>检测WebRTC泄露：<a href="https://www.expressvpn.com/webrtc-leak-test">https://www.expressvpn.com/webrtc-leak-test</a></li>
 <li>其它浏览器安全问题检测：<a href="https://browserleaks.com/">https://browserleaks.com/</a></li>
-<li>检测 Tor：<a href="https://check.torproject.org">https://check.torproject.org</a></li>
-<li>Cloudflare检测DNS加密 (DoH/DoT)、DNSSEC、TLS 1.3、SNI 加密 (ECH)：<a href="https://www.cloudflare.com/ssl/encrypted-sni">https://www.cloudflare.com/ssl/encrypted-sni</a></li>
+<li>检测Tor：<a href="https://check.torproject.org">https://check.torproject.org</a></li>
+<li>Cloudflare检测DNS加密(DoH/DoT)、DNSSEC、TLS 1.3、SNI加密(ECH)：<a href="https://www.cloudflare.com/ssl/encrypted-sni">https://www.cloudflare.com/ssl/encrypted-sni</a></li>
 <li>Device Info：<a href="https://www.deviceinfo.me">https://www.deviceinfo.me</a></li>
 </ul>
 <h4><a id="%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>搜索引擎</h4>
 <ul>
-<li>Brave search： <a href="https://search.brave.com/">https://search.brave.com</a></li>
-<li>DuckDucoGo： <a href="https://duckduckgo.com/">https://duckduckgo.com</a></li>
-<li>Startpage：<a href="https://www.startpage.com/">https://www.startpage.com</a></li>
+<li>Brave search：<a href="https://search.brave.com">https://search.brave.com</a></li>
+<li>DuckDucoGo：<a href="https://duckduckgo.com">https://duckduckgo.com</a></li>
+<li>Startpage：<a href="https://www.startpage.com">https://www.startpage.com</a></li>
 </ul>
 <h3><a id="%E5%8A%A0%E5%AF%86%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>加密即时通讯</h3>
 <p>不推荐所有来自中国的聊天软件。<br />
-推荐Element、Session。</p>
+可以用Element、Session、Threema、XMPP。</p>
 <h3><a id="%E8%BE%93%E5%85%A5%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>输入法</h3>
 <p>不要安装任何来自中国的输入法软件，建议尽量使用开源的输入法，其次使用系统原生输入法。</p>
 <p>推荐输入法：</p>
 <ul>
 <li>Fcitx</li>
-<li>小狼毫 Weasel</li>
-<li>鼠鬚管 Squirrel</li>
+<li>小狼毫Weasel</li>
+<li>鼠鬚管Squirrel</li>
 </ul>
 <h3><a id="%E9%82%AE%E7%AE%B1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>邮箱</h3>
-<p>无论何时都不要使用【中资邮箱】。使用 PGP/GnuPG（GNU Privacy Guard，GPG）手动加密邮件内容。</p>
+<p>无论何时都不要使用【中资邮箱】。使用PGP/GnuPG（GNU Privacy Guard，GPG）手动加密邮件内容。</p>
 <h3><a id="%E4%BA%91%E6%9C%8D%E5%8A%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>云服务</h3>
 <ul>
 <li>不使用中资云服务（如百度网盘，阿里云、腾讯云、京东云的VPS），即使使用也不要上传任何私人资料</li>
@@ -289,7 +295,7 @@ Firefox Focus；<br />
 <li>配合使用自由开源的加密工具Cryptomator在本地将数据加密后再上传云端（适用于全平台）</li>
 <li>将文件存入VeraCrypt创建的【虚拟加密盘】中，再将虚拟加密盘上传到网盘（仅适用于桌面级设备）</li>
 </ul>
-<p>更多软件推荐，参考<a href="https://www.privacytools.io/">privacytools</a></p>
+<p>更多软件推荐<a href="https://www.privacytools.io">privacytools</a>。</p>
 <h2><a id="%E8%BA%AB%E4%BB%BD%E5%AE%89%E5%85%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>身份安全</h2>
 <ul>
 <li>注册墙外社交媒体时使用全新的虚拟身份，与墙内平台实名制身份、墙外分享日常的身份相隔离。</li>
@@ -310,36 +316,36 @@ Firefox Focus；<br />
 <li>不要发送暴露自己【声纹】的音、视频</li>
 <li>防范【元数据】
 <ul>
-<li>发送自己拍摄照片前需去除照片的 EXIF（Exchangeable image file format，可交换图像文件格式）信息，后者包含了照片的属性信息和拍摄数据，包括拍摄设置、拍摄时间和拍摄地点定位等信息</li>
-<li>使用 ExifTool、mat2（通用） 清除【元数据】，或者截屏后发送截图</li>
-<li>分享自己拍摄、剪辑的视频或其他文件前使用 mat2 等工具清除【元数据】</li>
+<li>发送自己拍摄照片前需去除照片的EXIF（Exchangeable image file format，可交换图像文件格式）信息，后者包含了照片的属性信息和拍摄数据，包括拍摄设置、拍摄时间和拍摄地点定位等信息</li>
+<li>使用ExifTool、mat2（通用）清除【元数据】，或者截屏后发送截图</li>
+<li>分享自己拍摄、剪辑的视频或其他文件前使用mat2等工具清除【元数据】</li>
 </ul>
 </li>
 <li>不要在社交网站分享你的【定位】（不论是你的居住地点、工作地点还是旅行时访问的地点）</li>
 <li>不要和墙外网友交换微信等墙内社媒/通讯软件帐号</li>
 <li>不要在墙外、墙内社媒平台上发送相同的内容</li>
-<li>防范【链接追踪参数 】：不要通过已登录账号的客户端将新浪微博、网易云音乐等墙内服务的超链接转发到墙外社交平台，这些分享链接中带有关联实名制用户 ID 的【追踪参数】，可定位到真实身份，网警因而可以借助实名制的墙内帐号顺藤摸瓜。推特分享链接后的 s 参数与用户 ID 相关联，建议手动去除</li>
-<li>防范【盲水印】：豆瓣、知乎等客户端截图带有关联用户 ID 的盲水印/不可见水印，可追踪截图者身份，建议使用Wayback/Web Archive等存档后转发Web Archive的存档链接</li>
+<li>防范【链接追踪参数】：不要通过已登录账号的客户端将新浪微博、网易云音乐等墙内服务的超链接转发到墙外社交平台，这些分享链接中带有关联实名制用户ID的【追踪参数】，可定位到真实身份，网警因而可以借助实名制的墙内帐号顺藤摸瓜。推特分享链接后的s参数与用户ID相关联，建议手动去除</li>
+<li>防范【盲水印】：豆瓣、知乎等客户端截图带有关联用户ID的盲水印/不可见水印，可追踪截图者身份，建议使用Wayback/Web Archive等存档后转发Web Archive的存档链接</li>
 <li>防范【语言指纹/行文风格】：不要在社交网站使用自己在墙内社交媒体或者另一社交网站的个性化习惯性用语</li>
 <li>不要透露自己的线上线下活动时间（如某日某时参与某游行）</li>
 <li>防范【钓鱼】
 <ul>
-<li>防范【钓鱼链接】：不要随意点开短链接和非主流网站的链接，可以先将链接上传到 VirusTotal 分析</li>
-<li>不要点开通过邮件、私信（DM）发送的链接和文件，可使用独立的虚拟机实例下载文件后上传 VirusTotal 扫描确认安全性，事后删除该虚拟机实例<br />
-如经自行检查发现有身份泄露的风险（比如用 +86 手机号绑定（过） Twitter），建议立即放弃当前帐号（删除旧账号发布的所有内容并注销账号），然后另行注册新账号。</li>
+<li>防范【钓鱼链接】：不要随意点开短链接和非主流网站的链接，可以先将链接上传到VirusTotal分析</li>
+<li>不要点开通过邮件、私信（DM）发送的链接和文件，可使用独立的虚拟机实例下载文件后上传VirusTotal扫描确认安全性，事后删除该虚拟机实例<br />
+如经自行检查发现有身份泄露的风险（比如用+86手机号绑定（过）Twitter），建议立即放弃当前帐号（删除旧账号发布的所有内容并注销账号），然后另行注册新账号。</li>
 </ul>
 </li>
 </ul>
-<p>不要通过修改用户名、昵称和头像等信息继续使用该账号，账号对应的 userid 是固定不变的，并且很可能已被写入社工数据库，后续的修改是无济于事的。</p>
+<p>不要通过修改用户名、昵称和头像等信息继续使用该账号，账号对应的userid是固定不变的，并且很可能已被写入社工数据库，后续的修改是无济于事的。</p>
 <h2><a id="%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>相关概念</h2>
 <ul>
 <li>【新闻报道】是指对客观事实的陈述，只关注「发生了什么」。客观事实是客观的，但陈述毕竟是人为的产物，从遣词到造句都难免带有陈述者的主观色彩，因此只能做到相对客观。</li>
 <li>【宣传机器】：在经济上受政治实体资助，在组织、人事和生产内容上受到政治实体的直接、广泛的干预，其生产内容服务于该政治实体的利益，在观点上明显偏袒该政治实体。</li>
-<li>【零日漏洞】（0-day）也称零时差漏洞、零日攻击，指那些还没有补丁的安全漏洞。零日攻击是无法防范的，普通用户能做的只能是等待系统/软件发行商释出增加安全补丁的新版本后及时下载安装更新。当安全补丁释出后，同一漏洞就从 0-day 变成 1-day 乃至 N-day，此时透过该漏洞发起的攻击是可以防范的，如果不及时安装更新就意味着让自己持续暴露在危险中。</li>
-<li>【虚拟机】 (virtual machine, VM）指在主系统通过虚拟化方案运行虚拟操作系统实例。</li>
+<li>【零日漏洞】（0-day）也称零时差漏洞、零日攻击，指那些还没有补丁的安全漏洞。零日攻击是无法防范的，普通用户能做的只能是等待系统/软件发行商释出增加安全补丁的新版本后及时下载安装更新。当安全补丁释出后，同一漏洞就从0-day变成1-day乃至N-day，此时透过该漏洞发起的攻击是可以防范的，如果不及时安装更新就意味着让自己持续暴露在危险中。</li>
+<li>【虚拟机】(virtual machine, VM）指在主系统通过虚拟化方案运行虚拟操作系统实例。</li>
 <li>【云端安全】是指存储在通讯服务商的云端服务器上的用户聊天记录的安全性。就【云端安全】而言，最安全的做法是【端对端加密】，IM服务商的服务器只进行转发，无法解密用户的加密通讯内容。</li>
 <li>【终端安全】是指安装即时通讯软件的终端装置的安全性，可分为【软件安全】和【物理安全】。</li>
-<li>【软件安全】的例外是指终端装置中存在【恶意软件】，你的操作系统（如 iOS、Android）、即时通讯应用本身或者其他应用（比如 WhatsApp）存在后门，或者他人对你的设备拥有远程登陆权限，你的通讯内容就可能会泄露。</li>
+<li>【软件安全】的例外是指终端装置中存在【恶意软件】，你的操作系统（如iOS、Android）、即时通讯应用本身或者其他应用（比如WhatsApp）存在后门，或者他人对你的设备拥有远程登陆权限，你的通讯内容就可能会泄露。</li>
 <li>【物理安全】的例外是指你的装置落入了他人之手，如果你的设备没有设定密码、你被迫解锁设备或者警察使用【取证设备】破解了系统防护，他们将能看到你的通讯内容，取证设备还可能恢复被删除的聊天记录。即时通讯软件在移动装置上的【物理安全】的脆弱性是由移动装置及移动操作系统本身的脆弱性决定的。</li>
 <li>【端对端加密】是指只有通信的双方能够解密通信内容，包括通信服务提供者在内的第三方都不掌握密钥，无法解密通信内容。【端对端加密】实质上是一种密钥的分发和管理方法，所解决的是【云端安全】和用户对通信服务商的信任问题，它能否真正发挥作用取决于服务商的做法。</li>
 </ul>
