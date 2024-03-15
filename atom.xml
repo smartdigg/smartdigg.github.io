@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-02-23T22:04:23+08:00</updated>
+  <updated>2024-03-15T12:04:30+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -26,7 +26,7 @@
 </div>
 <h2><a id="%E5%95%86%E7%94%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>商用搜索引擎问题</h2>
 <p>商用搜索引擎通常收集、存储和分享有关用户搜索和浏览习惯的数据，包括但不限于搜索查询、IP地址、内容过滤、第三方Trackers等等。</p>
-<p><strong>远离百度、搜 狗、360搜索、Bing、Google等搜索引擎。</strong></p>
+<p><strong>远离百度、搜狗、360搜索、Bing、Google等搜索引擎</strong>。</p>
 <h2><a id="%E5%AE%89%E5%85%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%8E%A8%E8%8D%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安全搜索引擎推荐</h2>
 <ul>
 <li><a href="https://search.brave.com/">Brave search</a></li>
@@ -373,6 +373,69 @@
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[macOS安装Rime输入法]]></title>
+    <link href="https://smartdig.github.io/macos-install-rime.html"/>
+    <updated>2024-02-17T15:00:58+08:00</updated>
+    <id>https://smartdig.github.io/macos-install-rime.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">下载配置文件</a></li>
+<li><a href="#%E5%AE%9A%E5%88%B6">定制</a></li>
+<li><a href="#%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE">可选配置</a>
+<ul>
+<li><a href="#%E4%BF%AE%E6%94%B9%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88">修改输入方案</a></li>
+<li><a href="#%E7%9A%AE%E8%82%A4%E9%85%8D%E7%BD%AE">皮肤配置</a></li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E9%85%8D%E7%BD%AE%E5%92%8C%E8%AF%8D%E5%BA%93">同步配置和词库</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>优点：开源、不联网、没有隐私问题。</p>
+<h2><a id="%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装</h2>
+<p>通过官网下载：<a href="https://rime.im/download/">https://rime.im/download/</a>，具体安装参考薄荷拼音的配置教程：<a href="https://www.mintimate.cc/zh/guide/installRime.html">安装Rime输入法</a>。</p>
+<p>在 macOS 上也可以通过Homebrew安装：</p>
+<pre class="line-numbers"><code class="language-bash">brew cask install squirrel
+</code></pre>
+<p>记得去系统设置键盘添加Rime输入法。</p>
+<h2><a id="%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载配置文件</h2>
+<p>选择配置文件的原则是简单，开箱即用，无需额外配置。推荐薄荷拼音 <a href="https://github.com/Mintimate/oh-my-rime">https://github.com/Mintimate/oh-my-rime</a>。</p>
+<p>将整个配置文件库下载下来。</p>
+<h2><a id="%E5%AE%9A%E5%88%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>定制</h2>
+<ol>
+<li>点击菜单栏【ㄓ】-【用户设定】，将打开Rime默认配置文件夹<code>~/Library/Rime</code>。</li>
+<li>清空该文件夹，然后将【配置文件】里所有文件粘贴进去。</li>
+<li>点击菜单栏【ㄓ】-【部署】，至此完成定制配置。</li>
+</ol>
+<h2><a id="%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>可选配置</h2>
+<h3><a id="%E4%BF%AE%E6%94%B9%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>修改输入方案</h3>
+<p>编辑默认配置文件夹<code>~/Library/Rime</code>中<code>default.custom.yaml</code>文件。</p>
+<p>修改候选词数量，需要更改<code>menu/page_size</code>后的数字。</p>
+<p>若只使用小鹤双拼输入法，注释掉<code>schema_list</code>中除<code>double_pinyin_flypy</code>外其他输入方案。</p>
+<p>切换简繁，使用快捷键<code>Control</code>+ <code>~</code>进行切换。</p>
+<h3><a id="%E7%9A%AE%E8%82%A4%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>皮肤配置</h3>
+<p>调整Rime默认配置文件夹<code>~/Library/Rime</code>中<code>squirrel.yaml</code>文件：</p>
+<ul>
+<li><code>color_scheme</code>以及<code>color_scheme_dark</code>分别对应亮色与暗色主题。</li>
+<li><code>candidate_list_layout</code>可设置候选项排列方向。</li>
+</ul>
+<h3><a id="%E5%90%8C%E6%AD%A5%E9%85%8D%E7%BD%AE%E5%92%8C%E8%AF%8D%E5%BA%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>同步配置和词库</h3>
+<p>在Rime默认配置文件夹<code>~/Library/Rime</code>中<code>installation.yaml</code>文件中追加：</p>
+<pre class="line-numbers"><code class="language-plain_text">sync_dic: &quot;/path/to/rsync&quot;
+installation_id: &quot;your_custom_id&quot;
+</code></pre>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>薄荷拼音github仓库 <a href="https://github.com/Mintimate/oh-my-rime">https://github.com/Mintimate/oh-my-rime</a></li>
+<li>薄荷拼音主页 <a href="https://www.mintimate.cc/">https://www.mintimate.cc/</a></li>
+<li>小众软件介绍 <a href="https://www.appinn.com/oh-my-rime/">https://www.appinn.com/oh-my-rime/</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[如何快速搭建个人静态博客]]></title>
     <link href="https://smartdig.github.io/how-to-quickly-build-a-personal-static-blog.html"/>
     <updated>2023-07-23T23:20:07+08:00</updated>
@@ -393,38 +456,38 @@
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>本文的静态博客，主要利用Github Page，也可以采用Cloudflare Page，方法类似。</p>
+<p>本文的静态博客主要利用Github Page，也可以采用Cloudflare Page，方法类似。</p>
 <h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
-<p>安装两个软件<a href="https://apps.apple.com/us/app/mweb-pro/id1403919533">Mweb Pro</a>以及<a href="https://desktop.github.com/">Github Desktop</a>。</p>
+<p>macOS安装两个软件<a href="https://apps.apple.com/us/app/mweb-pro/id1403919533">Mweb Pro</a>以及<a href="https://desktop.github.com/">Github Desktop</a>。</p>
 <p>优点：无需命令行，简单，仅需关注内容创作。</p>
 <p>也可以选择安装<a href="https://open.gridea.dev/#started">Gridea</a>，不限平台，配置简单。</p>
 <h2><a id="github%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github配置</h2>
 <p>首先注册Github帐号，并在个人主界面里选择创建一个新的仓库（Create a new repository）。</p>
-<p>进入页面后，在Repository name的位置填写域名，格式是<code>username.github.io</code>。借一张图，按图设置：</p>
+<p>进入页面后，在Repository name的位置填写域名，格式是<code>&lt;USERNAME&gt;.github.io</code>。借一张图，按图设置：</p>
 <p><img src="media/16901256071454/202305b.png" alt="202305b" /></p>
-<p>以后你的博客网址便是<a href="https://username.github.io">https://username.github.io</a> 。</p>
+<p>以后你的博客网址便是https://<USERNAME>.github.io 。</p>
 <h2><a id="mweb-pro%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mweb Pro配置</h2>
 <h3><a id="%E7%BD%91%E9%A1%B5%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网页配置</h3>
 <p>在Mweb Pro的设置中选择<code>Library &amp; Backup</code>，设置<code>Library Location</code>以及<code>Build Sites Save Location</code>。</p>
 <p>在Mweb Pro界面的左下角，加号选择<code>New Static Site Category</code>。</p>
 <p><img src="media/16901256071454/202305a.png" alt="202305a" /></p>
-<p>紧接着配置名称<code>username.github.io</code>、博客主题、站点名、网址URL<code>https://username.github.io/</code>、时间格式以及网站描述。</p>
+<p>紧接着配置名称<code>&lt;USERNAME&gt;.github.io</code>、博客主题、站点名、网址URL<code>https://&lt;USERNAME&gt;.github.io/</code>、时间格式以及网站描述。</p>
 <p><img src="media/16901256071454/202305c.png" alt="202305c" /></p>
-<p>首次使用选择<code>Build Site</code>，也可以在博客有内容后再<code>Build Site</code>。这里的<code>Build Path</code>系自动生成，位置指向<code>Build Sites Save Location</code>下的子文件夹<code>username.github.io</code>。记住这个文件夹的位置，稍后要用到。</p>
+<p>首次使用选择<code>Build Site</code>，也可以在博客有内容后再<code>Build Site</code>。这里的<code>Build Path</code>系自动生成，位置指向<code>Build Sites Save Location</code>下的子文件夹<code>&lt;USERNAME&gt;.github.io</code>。记住这个文件夹的位置，稍后要用到。</p>
 <h3><a id="%E5%86%85%E5%AE%B9%E5%86%99%E4%BD%9C%E5%8F%8A%E9%A2%84%E8%A7%88" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>内容写作及预览</h3>
-<p>之后在Mweb Pro的侧边栏选择<code>username.github.io</code>，在该分类下新建文件。博客的所有文章都保存在该分类下。</p>
-<p>在侧边栏<code>username.github.io</code>分类上点击右键，选择<code>Clear &amp; Rebuild Site</code>，之后再选择<code>Preview Site</code>便会打开浏览器预览。</p>
+<p>之后在Mweb Pro的侧边栏选择<code>&lt;USERNAME&gt;.github.io</code>，在该分类下新建文件。博客的所有文章都保存在该分类下。</p>
+<p>在侧边栏<code>&lt;USERNAME&gt;.github.io</code>分类上点击右键，选择<code>Clear &amp; Rebuild Site</code>，之后再选择<code>Preview Site</code>便会打开浏览器预览。</p>
 <p><img src="media/16901256071454/202305d.png" alt="202305d" /></p>
 <p>至此，本地静态博客完成。</p>
 <h2><a id="github-desktop%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github Desktop配置</h2>
-<p>安装Github Desktop软件，登录后克隆你的仓库<code>username.github.io</code>。其中<code>Local Path</code>为上一步骤中设置的名为<code>username.github.io</code>的文件夹。</p>
+<p>安装Github Desktop软件，登录后克隆你的仓库<code>&lt;USERNAME&gt;.github.io</code>。其中<code>Local Path</code>为上一步骤中设置的名为<code>&lt;USERNAME&gt;.github.io</code>的文件夹。</p>
 <p>等待Clone完成后，界面上会显示几种管理修改你的项目的方式。借一张图，效果如下：<br />
 <img src="media/16901256071454/202305e.png" alt="202305e" /></p>
 <h2><a id="%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>博客发布</h2>
 <p>打开Github Desktop。Github Desktop会在界面左侧显示文件夹的变动。</p>
-<p>先点击Github Desktop左下角的<code>Commit to master</code>，再点击<code>Push origin</code>就可以将内容上传。之后便可以去<a href="https://username.github.io">https://username.github.io</a> 查看博客最新内容。</p>
+<p>先点击Github Desktop左下角的<code>Commit to master</code>，再点击<code>Push origin</code>就可以将内容上传。之后便可以去https://<USERNAME>.github.io 查看博客最新内容。</p>
 <h2><a id="%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>进阶操作</h2>
-<p>可以修改主题，绑定个人域名，设置Cloudflare加速，还可以设置自动发布等。</p>
+<p>可以修改主题、绑定个人域名、添加评论功能、设置Cloudflare加速，还可以设置自动发布等。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>How to use Publish Script to Publish website <a href="https://www.mweb.im/how_to_use_shell_script.html">https://www.mweb.im/how_to_use_shell_script.html</a></li>
