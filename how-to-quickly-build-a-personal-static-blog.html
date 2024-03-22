@@ -107,6 +107,8 @@
                                   <span class="tran-tags">Tags:</span>&nbsp;
                                   
                                     <a class="tag is-link is-light" href='tag_Github.html'>#Github</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_%E9%9D%99%E6%80%81%E5%8D%9A%E5%AE%A2.html'>#静态博客</a>
                                      
 
                                 </p>
@@ -128,6 +130,7 @@
 <li><a href="#github-desktop%E9%85%8D%E7%BD%AE">Github Desktop配置</a></li>
 <li><a href="#%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83">博客发布</a></li>
 <li><a href="#%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C">进阶操作</a></li>
+<li><a href="#%E6%8F%90%E7%A4%BA">提示</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
@@ -140,7 +143,7 @@
 <p>首先注册Github帐号，并在个人主界面里选择创建一个新的仓库（Create a new repository）。</p>
 <p>进入页面后，在Repository name的位置填写域名，格式是<code>&lt;USERNAME&gt;.github.io</code>。借一张图，按图设置：</p>
 <p><img src="media/16901256071454/202305b.png" alt="202305b" /></p>
-<p>以后你的博客网址便是https://<USERNAME>.github.io 。</p>
+<p>以后你的博客网址便是<code>https://&lt;USERNAME&gt;.github.io</code>。</p>
 <h2><a id="mweb-pro%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mweb Pro配置</h2>
 <h3><a id="%E7%BD%91%E9%A1%B5%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网页配置</h3>
 <p>在Mweb Pro的设置中选择<code>Library &amp; Backup</code>，设置<code>Library Location</code>以及<code>Build Sites Save Location</code>。</p>
@@ -151,24 +154,25 @@
 <p>首次使用选择<code>Build Site</code>，也可以在博客有内容后再<code>Build Site</code>。这里的<code>Build Path</code>系自动生成，位置指向<code>Build Sites Save Location</code>下的子文件夹<code>&lt;USERNAME&gt;.github.io</code>。记住这个文件夹的位置，稍后要用到。</p>
 <h3><a id="%E5%86%85%E5%AE%B9%E5%86%99%E4%BD%9C%E5%8F%8A%E9%A2%84%E8%A7%88" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>内容写作及预览</h3>
 <p>之后在Mweb Pro的侧边栏选择<code>&lt;USERNAME&gt;.github.io</code>，在该分类下新建文件。博客的所有文章都保存在该分类下。</p>
-<p>在侧边栏<code>&lt;USERNAME&gt;.github.io</code>分类上点击右键，选择<code>Clear &amp; Rebuild Site</code>，之后再选择<code>Preview Site</code>便会打开浏览器预览。</p>
+<p>在侧边栏<code>&lt;USERNAME&gt;.github.io</code>分类上点击右键，选择<code>Clear &amp; Rebuild Site</code>，之后再选择<code>Preview Site</code>便可打开浏览器预览。</p>
 <p><img src="media/16901256071454/202305d.png" alt="202305d" /></p>
 <p>至此，本地静态博客完成。</p>
 <h2><a id="github-desktop%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github Desktop配置</h2>
-<p>安装Github Desktop软件，登录后克隆你的仓库<code>&lt;USERNAME&gt;.github.io</code>。其中<code>Local Path</code>为上一步骤中设置的名为<code>&lt;USERNAME&gt;.github.io</code>的文件夹。</p>
+<p>安装Github Desktop软件，登录后克隆你的仓库<code>&lt;USERNAME&gt;.github.io</code>。其中<code>Local Path</code>为上一步设置的名为<code>&lt;USERNAME&gt;.github.io</code>的文件夹。</p>
 <p>等待Clone完成后，界面上会显示几种管理修改你的项目的方式。借一张图，效果如下：<br />
 <img src="media/16901256071454/202305e.png" alt="202305e" /></p>
 <h2><a id="%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>博客发布</h2>
 <p>打开Github Desktop。Github Desktop会在界面左侧显示文件夹的变动。</p>
-<p>先点击Github Desktop左下角的<code>Commit to master</code>，再点击<code>Push origin</code>就可以将内容上传。之后便可以去https://<USERNAME>.github.io 查看博客最新内容。</p>
+<p>先点击Github Desktop左下角的<code>Commit to master</code>，再点击<code>Push origin</code>就可以将内容上传。之后便可以去<code>https://&lt;USERNAME&gt;.github.io</code>查看博客最新内容。</p>
 <h2><a id="%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>进阶操作</h2>
-<p>可以修改主题、绑定个人域名、添加评论功能、设置Cloudflare加速，还可以设置自动发布等。</p>
+<p>可以修改主题、绑定个人域名、添加评论功能、设置Cloudflare加速，还可以设置自动发布等等。</p>
+<h2><a id="%E6%8F%90%E7%A4%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>提示</h2>
+<p><strong>博客最重要的是内容，少折腾，坚持创作</strong>。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>How to use Publish Script to Publish website <a href="https://www.mweb.im/how_to_use_shell_script.html">https://www.mweb.im/how_to_use_shell_script.html</a></li>
 <li>MWeb 生成静态网站 &amp; 博客 <a href="https://zh.mweb.im/zh-mweb-static-blog.html">https://zh.mweb.im/zh-mweb-static-blog.html</a></li>
 <li>自定义或制作自己的静态网站模板 <a href="https://zh.mweb.im/zh-make_your_site_template.html">https://zh.mweb.im/zh-make_your_site_template.html</a></li>
-<li>Gridea <a href="https://open.gridea.dev/gridea-start/">https://open.gridea.dev/gridea-start/</a></li>
 <li>我是如何利用Github Pages搭建起我的博客，细数一路的坑 <a href="https://zhuanlan.zhihu.com/p/334815426">https://zhuanlan.zhihu.com/p/334815426</a></li>
 <li>GitHub Pages 搭建教程 <a href="https://sspai.com/post/54608">https://sspai.com/post/54608</a></li>
 </ul>
