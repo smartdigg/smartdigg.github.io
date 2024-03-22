@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-03-20T21:21:07+08:00</updated>
+  <updated>2024-03-22T17:43:50+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -23,7 +23,7 @@
 <li><a href="#%E5%AE%89%E5%85%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%8E%A8%E8%8D%90">安全搜索引擎推荐</a></li>
 <li><a href="#%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">添加搜索引擎</a>
 <ul>
-<li><a href="#chromiumchromebraveedge%E7%B1%BB">Chromium/Chrome/Brave/Edge类</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8">基于Chromium浏览器</a></li>
 <li><a href="#firefox">Firefox</a></li>
 </ul>
 </li>
@@ -46,9 +46,16 @@
 <li>其他搜索引擎及比较：<a href="https://searchengine.party">https://searchengine.party</a></li>
 </ul>
 <h2><a id="%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加搜索引擎</h2>
-<h3><a id="chromiumchromebraveedge%E7%B1%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chromium/Chrome/Brave/Edge类</h3>
-<p><img src="/brave-browser-security-enhanced.html" alt="Brave浏览器安全配置" /></p>
+<h3><a id="%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>基于Chromium浏览器</h3>
+<p>以Brave浏览器为例，从设置的侧边栏进入Search engine，在Manage search engines and site search页面下方Site search添加，</p>
+<p>例如添加Brave搜索引擎：</p>
+<pre class="line-numbers"><code class="language-plain_text">Name：Brave
+Shortcut：
+URL with %s in place of query：https://search.brave.com/search?q=%s
+</code></pre>
 <h3><a id="firefox" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Firefox</h3>
+<p>首先在设置中将搜索框加入工具栏：<code>Add search bar in toolbar</code>。之后打开搜索引擎首页便会在搜索框出现添加提示。</p>
+<p>部分搜索引擎不会出现提示，可安装插件<code>Add custom search engine</code>。 打开插件首选项，按照插件提示类似填写即可。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>privacytools <a href="https://www.privacytools.io/private-search">https://www.privacytools.io/private-search</a></li>
@@ -262,11 +269,13 @@
 <p>可以在【沙盒】应用中或【虚拟机】中运行该软件，阻止其访问本机数据，实现风险隔离。</p>
 <h2><a id="%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>软件推荐</h2>
 <h3><a id="%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器</h3>
-<p><a href="https://ftp.mozilla.org/pub/firefox/releases/">Firefox国际版</a>；<br />
-<a href="https://brave.com/">Brave浏览器</a>；<br />
-<a href="https://librewolf.net/">LibreWolf</a>；<br />
-<a href="https://mullvad.net/en/browser">Mullvad</a>；<br />
-如果不想加固浏览器，可以使用<a href="https://www.torproject.org/download/">Tor Browser</a>。</p>
+<ul>
+<li><a href="https://ftp.mozilla.org/pub/firefox/releases/">Firefox国际版</a></li>
+<li><a href="https://brave.com/">Brave浏览器</a></li>
+<li><a href="https://librewolf.net/">LibreWolf</a></li>
+<li><a href="https://mullvad.net/en/browser">Mullvad</a></li>
+</ul>
+<p>如果不想加固浏览器，可以使用<a href="https://www.torproject.org/download/">Tor Browser</a>。</p>
 <h4><a id="%E6%B5%8F%E8%A7%88%E5%99%A8%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>浏览器插件</h4>
 <ul>
 <li>uBlock Origin</li>
