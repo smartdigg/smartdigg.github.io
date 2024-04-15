@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-04-13T01:16:53+08:00</updated>
+  <updated>2024-04-13T01:26:17+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -291,7 +291,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <ul>
 <li>检测IP泄露：<a href="https://ipleak.net">https://ipleak.net</a></li>
 <li>浏览器指纹：<a href="https://amiunique.org">https://amiunique.org</a></li>
-<li>检测DNS泄露：<a href="https://www.dnsleaktest.com/%EF%BC%8Chttps://www.expressvpn.com/dns-leak-test">https://www.dnsleaktest.com/，https://www.expressvpn.com/dns-leak-test</a></li>
+<li>检测DNS泄露：<a href="https://www.dnsleaktest.com/">https://www.dnsleaktest.com/</a>，<a href="https://www.expressvpn.com/dns-leak-test">https://www.expressvpn.com/dns-leak-test</a></li>
 <li>检测WebRTC泄露：<a href="https://www.expressvpn.com/webrtc-leak-test">https://www.expressvpn.com/webrtc-leak-test</a></li>
 <li>其它浏览器安全问题检测：<a href="https://browserleaks.com/">https://browserleaks.com/</a></li>
 <li>检测Tor：<a href="https://check.torproject.org">https://check.torproject.org</a></li>
@@ -381,11 +381,10 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 </ul>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
-<li><a href="https://reconsidera.github.io">https://reconsidera.github.io</a></li>
-<li><a href="https://www.privacytools.io">https://www.privacytools.io</a></li>
-<li><a href="http://prism-break.org/en">http://prism-break.org/en</a></li>
-<li><a href="https://www.privacyguides.org/en">https://www.privacyguides.org/en</a></li>
-<li><a href="https://www.privacytools.io">https://www.privacytools.io</a></li>
+<li>reconsidera <a href="https://reconsidera.github.io">https://reconsidera.github.io</a></li>
+<li>privacytools <a href="https://www.privacytools.io">https://www.privacytools.io</a></li>
+<li>prism-break <a href="http://prism-break.org/en">http://prism-break.org/en</a></li>
+<li>privacyguides <a href="https://www.privacyguides.org/en">https://www.privacyguides.org/en</a></li>
 </ul>
 
 ]]></content>
@@ -587,7 +586,7 @@ installation_id: &quot;your_custom_id&quot;
     <updated>2023-07-23T22:28:06+08:00</updated>
     <id>https://smartdig.github.io/hello-world.html</id>
     <content type="html"><![CDATA[
-<p>Smartdig, dig smart.</p>
+<p>Smartdig, dig smartly.</p>
 
 ]]></content>
   </entry>
