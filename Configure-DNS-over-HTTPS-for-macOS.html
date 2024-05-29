@@ -333,13 +333,13 @@ $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt
 <p>服务仅设定为随系统自启，启动配置文件位置：<code>/Library/LaunchDaemons/mosdns.plist</code>。</p>
 <p>安装成功后并不会马上自动运行，启动需手动运行服务。<br />
 启动mosdns：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ /opt/local/etc/mosdns/mosdns service start
+<pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start
 </code></pre>
 <p>检查mosdns是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5304
 </code></pre>
 <p>管理mosdns服务：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ /opt/local/etc/mosdns/mosdns service stop/uninstall
+<pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service stop/uninstall
 </code></pre>
 <p>备注：mosdns可替代cloudflared服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别便是cloudflared服务非常稳定。</p>
 <h2><a id="adguardhome%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>AdGuardHome配置</h2>
@@ -359,14 +359,18 @@ DNS服务器监听选择<code>所有接口</code>，端口选择<code>53</code>�
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /Applications/AdGuardHome/AdGuardHome -s start
 </code></pre>
 <p>打开浏览器，输入网址 <a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/ </a>即可访问AdGuardHome的管理界面。</p>
-<p>在DNS设置中填入上游DNS服务器地址：<code>127.0.0.1:5304</code>。</p>
+<p>在DNS设置中填入上游DNS服务器地址：<code>127.0.0.1:5304</code>以及<code>[::]:5304</code>。</p>
 <p>过滤器可视情况添加：</p>
 <ol>
+<li>EasyList Adblock Plus 官方维护的广告规则。链接：<a href="https://easylist-downloads.adblockplus.org/easylist.txt">https://easylist-downloads.adblockplus.org/easylist.txt</a></li>
 <li>EasyList China：国内网站广告过滤的主规则。链接：<a href="https://easylist-downloads.adblockplus.org/easylistchina.txt">https://easylist-downloads.adblockplus.org/easylistchina.txt</a></li>
-<li>EasyPrivacy：EasyPrivacy保护隐私，不被跟踪。链接：<a href="https://easylist-downloads.adblockplus.org/easyprivacy.txt">https://easylist-downloads.adblockplus.org/easyprivacy.txt</a></li>
-<li>CJX's Annoyance List：过滤烦人的自我推广，并补充EasyPrivacy 隐私规则。链接<a href="https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt">https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt</a></li>
+<li>EasyPrivacy：反隐私跟踪、挖矿规则。链接：<a href="https://easylist-downloads.adblockplus.org/easyprivacy.txt">https://easylist-downloads.adblockplus.org/easyprivacy.txt</a></li>
+<li>CJX's Annoyance List：过滤烦人的自我推广，并补充EasyPrivacy 隐私规则。链接：<a href="https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt">https://raw.githubusercontent.com/cjx82630/cjxlist/master/cjx-annoyance.txt</a></li>
 <li>I don't care about cookies：屏蔽网站的cookies相关的警告。链接：<a href="https://www.i-dont-care-about-cookies.eu/abp/">https://www.i-dont-care-about-cookies.eu/abp/</a></li>
-<li>anti-ad：去广告。链接：<a href="https://gitee.com/privacy-protection-tools/anti-ad/raw/master/easylist.txt">https://gitee.com/privacy-protection-tools/anti-ad/raw/master/easylist.txt</a></li>
+<li>anti-AD：中文区去广告。链接：<a href="https://anti-ad.net/easylist.txt">https://anti-ad.net/easylist.txt</a></li>
+<li>Fanboy's Annoyances List 去除页面弹窗广告规则 链接：<a href="https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt">https://easylist-downloads.adblockplus.org/fanboy-annoyance.txt</a></li>
+<li>Github520 直连Github <a href="https://raw.hellogithub.com/hosts">https://raw.hellogithub.com/hosts</a></li>
+<li>HalfLife	合并自EasylistChina、EasylistLite、CJX’sAnnoyance <a href="https://cdn.jsdelivr.net/gh/o0HalfLife0o/list@master/ad-pc.txt">https://cdn.jsdelivr.net/gh/o0HalfLife0o/list@master/ad-pc.txt</a></li>
 </ol>
 <p>检查AdGuardHome是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
@@ -384,14 +388,7 @@ DNS服务器监听选择<code>所有接口</code>，端口选择<code>53</code>�
 $ sudo launchctl start /Library/LaunchDaemons/AdGuardHome.plist 
 </code></pre>
 <h2><a id="%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开机启动</h2>
-<p>修改系统DNS：</p>
-<ol>
-<li>在Mac上，选取苹果菜单&gt;“系统设置”，然后点按边栏中的“网络”。</li>
-<li>点按要使用的网络服务（例如Wi-Fi或以太网），然后点按“详细信息”。</li>
-<li>点按DNS，点按“DNS服务器”列表底部的“添加”按钮，然后输入DNS服务器的IPv4<code>127.0.0.1</code>或IPv6地址<code>::1</code>。</li>
-<li>完成后，点按“好”。</li>
-</ol>
-<p>一般情况下，完成以上操作便已将所有服务添加至开机启动项，如果没有则需要手动添加：</p>
+<p>一般情况下，完成以上步骤便已将所有服务添加至开机启动项，如果没有则需要手动添加：</p>
 <pre class="line-numbers"><code class="language-plain_text">#开机启动cloudflared
 $ sudo launchctl load -w /Library/LaunchDaemons/com.cloudflare.cloudflared.plist
 
@@ -404,12 +401,22 @@ $ sudo launchctl load -w /Library/LaunchDaemons/mosdns.plist
 # 开机启动AdGuardHome
 $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 </code></pre>
+<p>最后，需要修改系统DNS：</p>
+<ol>
+<li>在Mac上，选取苹果菜单&gt;“系统设置”，然后点按边栏中的“网络”。</li>
+<li>点按要使用的网络服务（例如Wi-Fi或以太网），然后点按“详细信息”。</li>
+<li>点按DNS，点按“DNS服务器”列表底部的“添加”按钮，然后输入DNS服务器的IPv4<code>127.0.0.1</code>或IPv6地址<code>::1</code>。</li>
+<li>完成后，点按“好”。</li>
+</ol>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>How to protect your network with AdGuard Home <a href="https://meshnet.nordvpn.com/how-to/security/protect-network-with-adguard-home">https://meshnet.nordvpn.com/how-to/security/protect-network-with-adguard-home</a></li>
 <li>mosdns-wiki-zh <a href="https://irine-sistiana.gitbook.io/mosdns-wiki/mosdns-v5">https://irine-sistiana.gitbook.io/mosdns-wiki/mosdns-v5</a></li>
-<li>国内国外域名分流的配置 <a href="https://github.com/IrineSistiana/mosdns/discussions/605">https://github.com/IrineSistiana/mosdns/discussions/605</a></li>
+<li>AdGuard Home自建DNS防污染、去广告教程 #2 - 优化增强设置详解 <a href="https://p3terx.com/archives/use-adguard-home-to-build-dns-to-prevent-pollution-and-remove-ads-2.html">https://p3terx.com/archives/use-adguard-home-to-build-dns-to-prevent-pollution-and-remove-ads-2.html</a></li>
 <li>MacOS配置DNS Over HTTPS <a href="https://cat.ms/macos-use-doh">https://cat.ms/macos-use-doh</a></li>
+<li>国内国外域名分流的配置 <a href="https://github.com/IrineSistiana/mosdns/discussions/605">https://github.com/IrineSistiana/mosdns/discussions/605</a></li>
+<li>基于DNS的内网代理分流方案 <a href="https://github.com/Sereinfy/mosdns-config">https://github.com/Sereinfy/mosdns-config</a></li>
+<li>利用Mosdns(v4 or v5)和AdGuardHome搭建自己的DNS <a href="https://www.xukecheng.tech/use-mosdns-and-adguardhome-to-build-your-own-dns">https://www.xukecheng.tech/use-mosdns-and-adguardhome-to-build-your-own-dns</a></li>
 <li>在Mac上输入DNS和搜索域设置 <a href="https://support.apple.com/zh-cn/guide/mac-help/mh141272/mac">https://support.apple.com/zh-cn/guide/mac-help/mh141272/mac</a></li>
 </ul>
 
