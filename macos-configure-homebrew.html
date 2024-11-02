@@ -129,13 +129,13 @@
 <p>macOS重装或降级后，若使用Time Machine恢复，一般情况下Homebrew不能正常工作。这时就需重新配置Homebrew。</p>
 <h2><a id="%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重新安装CommandLineTools</h2>
 <p>重置<code>CommandLineTools</code>：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ sudo xcode-select --reset
+<pre class="line-numbers"><code class="language-zsh">$ sudo xcode-select --reset
 </code></pre>
 <p>然后删除旧的<code>CommandLineTools</code>：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ sudo rm -rf /Library/Developer/CommandLineTools
+<pre class="line-numbers"><code class="language-zsh">$ sudo rm -rf /Library/Developer/CommandLineTools
 </code></pre>
 <p>全新安装<code>CommandLineTools</code>：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ sudo xcode-select --install
+<pre class="line-numbers"><code class="language-zsh">$ sudo xcode-select --install
 </code></pre>
 <p>全新安装Homebrew，仅需执行最后一步。</p>
 <h2><a id="%E5%AE%89%E8%A3%85homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Homebrew</h2>
@@ -143,38 +143,38 @@
 <ol>
 <li>设置Homebrew环境变量：</li>
 </ol>
-<pre class="line-numbers"><code class="language-plain_text">export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
-export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
-export HOMEBREW_INSTALL_FROM_API=1
+<pre class="line-numbers"><code class="language-zsh">$ export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+$ export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+$ export HOMEBREW_INSTALL_FROM_API=1
 </code></pre>
 <ol start="2">
 <li>配置Homebrew Bottles环境变量：</li>
 </ol>
-<pre class="line-numbers"><code class="language-plain_text">echo 'export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;' &gt;&gt; ~/.zprofile
-echo 'export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;' &gt;&gt; ~/.zprofile
-export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
-export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+<pre class="line-numbers"><code class="language-zsh">$ echo 'export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;' &gt;&gt; ~/.zprofile
+$ echo 'export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;' &gt;&gt; ~/.zprofile
+$ export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+$ export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
 </code></pre>
 <ol start="3">
 <li>（可选）配置Homebrew PyPi环境变量：</li>
 </ol>
-<pre class="line-numbers"><code class="language-plain_text">export HOMEBREW_PIP_INDEX_URL=&quot;https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple&quot;
+<pre class="line-numbers"><code class="language-zsh">$ export HOMEBREW_PIP_INDEX_URL=&quot;https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple&quot;
 </code></pre>
 <ol start="4">
 <li>安装Homebrew：</li>
 </ol>
-<pre class="line-numbers"><code class="language-plain_text">$ git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
+<pre class="line-numbers"><code class="language-zsh">$ git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
 $ cd brew-install &amp;&amp; sudo ./install.sh
 $ rm -rf brew-install
 </code></pre>
 <ol start="5">
 <li>将<code>brew</code>程序的相关路径加入到环境变量中：</li>
 </ol>
-<pre class="line-numbers"><code class="language-plain_text">test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
+<pre class="line-numbers"><code class="language-zsh">test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
 </code></pre>
 <h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复Homebrew默认源</h2>
 <p>参考清华帮助文档细节。</p>
-<pre class="line-numbers"><code class="language-plain_text"># brew 程序本身，Homebrew / Linuxbrew 相同
+<pre class="line-numbers"><code class="language-zsh"># brew 程序本身，Homebrew / Linuxbrew 相同
 unset HOMEBREW_API_DOMAIN
 unset HOMEBREW_BREW_GIT_REMOTE
 git -C &quot;$(brew --repo)&quot; remote set-url origin https://github.com/Homebrew/brew
