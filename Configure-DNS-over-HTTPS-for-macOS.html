@@ -153,8 +153,8 @@ $ mkdir -p /usr/local/etc/cloudflared
 <pre class="line-numbers"><code class="language-plain_text">proxy-dns: true
 proxy-dns-port: 5305
 proxy-dns-upstream:
-    - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
 </code></pre>
 <p>安装到系统：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo cloudflared service install
@@ -174,7 +174,7 @@ proxy-dns-upstream:
 <p>安装后会自动生成启动配置文件<code>/Library/LaunchDaemons/dnscrypt-proxy.plist</code>。</p>
 <p>修改配置文件中的部分内容：<code>/opt/homebrew/etc/dnscrypt-proxy.toml</code>：</p>
 <pre class="line-numbers"><code class="language-plain_text">#自由添加server_names
-server_names = ['iqdns-xyz','jp.tiar.app-doh', 'doh-crypto-sx', 'uncensoreddns-ipv6', 'dns.sb', 'cisco'] 
+server_names = ['cloudflare','cloudflare-ipv6','libredns','jp.tiar.app-doh', 'doh-crypto-sx', 'uncensoreddns-ipv6', 'cisco'] 
 
 listen_addresses = ['127.0.0.1:5300', '[::1]:5300']
 

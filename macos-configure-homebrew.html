@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-    网络搜索引擎 - 永久记录
+    macOS配置Homebrew - 永久记录
     
     </title>
     
@@ -79,7 +79,7 @@
                   <div class="post-body single-content">
                     
                     <h1 class="title">
-                            网络搜索引擎   
+                            macOS配置Homebrew   
                       </h1>
                      
                     
@@ -96,7 +96,7 @@
                             <div class="media-content">
                               <div class="content">
                                 <p>
-                                 <span class="date">2023/11/11</span>
+                                 <span class="date">2024/01/11</span>
                                   
                                          
                                   
@@ -106,7 +106,9 @@
                                   <br />
                                   <span class="tran-tags">Tags:</span>&nbsp;
                                   
-                                    <a class="tag is-link is-light" href='tag_%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E.html'>#搜索引擎</a>
+                                    <a class="tag is-link is-light" href='tag_macOS.html'>#macOS</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_homebrew.html'>#homebrew</a>
                                      
 
                                 </p>
@@ -117,50 +119,83 @@
                 </div>
                   <article class="markdown-body single-content">
                     <div class="mweb_toc"><ul>
-<li><a href="#%E5%95%86%E7%94%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%97%AE%E9%A2%98">商用搜索引擎问题</a></li>
-<li><a href="#%E5%AE%89%E5%85%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%8E%A8%E8%8D%90">安全搜索引擎推荐</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">添加搜索引擎</a>
-<ul>
-<li><a href="#%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8">基于Chromium浏览器</a></li>
-<li><a href="#firefox">Firefox</a></li>
-</ul>
-</li>
+<li><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools">重新安装CommandLineTools</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85homebrew">安装Homebrew</a></li>
+<li><a href="#%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90">恢复Homebrew默认源</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<h2><a id="%E5%95%86%E7%94%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>商用搜索引擎问题</h2>
-<p>商用搜索引擎通常收集、存储和分享有关用户搜索和浏览习惯的数据，包括但不限于搜索查询、IP地址、内容过滤、第三方Trackers等等。</p>
-<p><strong>远离百度、搜狗、360搜索、Bing、Google等搜索引擎</strong>。</p>
-<h2><a id="%E5%AE%89%E5%85%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%8E%A8%E8%8D%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安全搜索引擎推荐</h2>
-<ul>
-<li><a href="https://search.brave.com/">Brave search</a></li>
-<li><a href="https://search.disroot.org/">Disroot</a></li>
-<li><a href="https://duckduckgo.com/">Duckduckgo</a></li>
-<li><a href="https://gibiru.com/">Gibiru</a></li>
-<li><a href="https://metager.org/">Metager</a></li>
-<li><a href="https://www.startpage.com/">Mojeek</a></li>
-<li><a href="https://www.qwant.com/">Qwant</a></li>
-<li><a href="https://searx.space/">SearX</a>（可自建）</li>
-<li><a href="https://www.startpage.com/">Startpage</a></li>
-<li><a href="https://github.com/benbusby/whoogle-search">Whoogle</a>（可自建）</li>
-<li>其他搜索引擎及比较：<a href="https://searchengine.party">https://searchengine.party</a></li>
-</ul>
-<h2><a id="%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加搜索引擎</h2>
-<h3><a id="%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>基于Chromium浏览器</h3>
-<p>以Brave浏览器为例，参考<a href="brave-browser-security-enhanced.html">Brave浏览器安全配置</a>。<br />
-从设置的侧边栏进入Search engine，在Manage search engines and site search页面下方Site search添加，</p>
-<p>例如添加Brave搜索引擎：</p>
-<pre class="line-numbers"><code class="language-plain_text">Name：Brave
-Shortcut：
-URL with %s in place of query：https://search.brave.com/search?q=%s
+<p>本篇适用于macOS重装或降级后使用Homebrew，部分内容也适用于全新系统安装Homebrew。</p>
+<p>macOS重装或降级后，若使用Time Machine恢复，一般情况下Homebrew不能正常工作。这时就需重新配置Homebrew。</p>
+<h2><a id="%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重新安装CommandLineTools</h2>
+<p>重置<code>CommandLineTools</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo xcode-select --reset
 </code></pre>
-<h3><a id="firefox" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Firefox</h3>
-<p>首先在设置中将搜索框加入工具栏：<code>Add search bar in toolbar</code>。之后打开搜索引擎首页便会在搜索框出现添加提示。</p>
-<p>部分搜索引擎不会出现提示，可安装插件<code>Add custom search engine</code>。 打开插件首选项，按照插件提示类似填写即可。</p>
+<p>然后删除旧的<code>CommandLineTools</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo rm -rf /Library/Developer/CommandLineTools
+</code></pre>
+<p>全新安装<code>CommandLineTools</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo xcode-select --install
+</code></pre>
+<p>全新安装Homebrew，仅需执行最后一步。</p>
+<h2><a id="%E5%AE%89%E8%A3%85homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Homebrew</h2>
+<p>以下设置适用于Apple Silicon CPU设备，即带M芯片，默认使用<code>zsh</code>。鉴于大陆github使用困难，本篇使用清华软件源。</p>
+<ol>
+<li>设置Homebrew环境变量：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+export HOMEBREW_INSTALL_FROM_API=1
+</code></pre>
+<ol start="2">
+<li>配置Homebrew Bottles环境变量：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">echo 'export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;' &gt;&gt; ~/.zprofile
+echo 'export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;' &gt;&gt; ~/.zprofile
+export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+</code></pre>
+<ol start="3">
+<li>（可选）配置Homebrew PyPi环境变量：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">export HOMEBREW_PIP_INDEX_URL=&quot;https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple&quot;
+</code></pre>
+<ol start="4">
+<li>安装Homebrew：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">$ git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
+$ cd brew-install &amp;&amp; sudo ./install.sh
+$ rm -rf brew-install
+</code></pre>
+<ol start="5">
+<li>将<code>brew</code>程序的相关路径加入到环境变量中：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
+</code></pre>
+<h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复Homebrew默认源</h2>
+<p>参考清华帮助文档细节。</p>
+<pre class="line-numbers"><code class="language-plain_text"># brew 程序本身，Homebrew / Linuxbrew 相同
+unset HOMEBREW_API_DOMAIN
+unset HOMEBREW_BREW_GIT_REMOTE
+git -C &quot;$(brew --repo)&quot; remote set-url origin https://github.com/Homebrew/brew
+
+# 以下针对 macOS 系统上的 Homebrew
+unset HOMEBREW_CORE_GIT_REMOTE
+BREW_TAPS=&quot;$(BREW_TAPS=&quot;$(brew tap 2&gt;/dev/null)&quot;; echo -n &quot;${BREW_TAPS//$'\n'/:}&quot;)&quot;
+for tap in core cask command-not-found; do
+    if [[ &quot;:${BREW_TAPS}:&quot; == *&quot;:homebrew/${tap}:&quot;* ]]; then  # 只复原已安装的 Tap
+        brew tap --custom-remote &quot;homebrew/${tap}&quot; &quot;https://github.com/Homebrew/homebrew-${tap}&quot;
+    fi
+done
+
+# 重新拉取远程
+brew update
+</code></pre>
+<p>同时检查<code>~/.zprofile</code>内容，删除带有<code>mirrors.tuna.tsinghua.edu.cn</code>的行。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
-<li>privacytools <a href="https://www.privacytools.io/private-search">https://www.privacytools.io/private-search</a></li>
-<li>prism-break <a href="https://prism-break.org/en/categories/gnu-linux/#web-search">https://prism-break.org/en/categories/gnu-linux/#web-search</a></li>
+<li>Homebrew 官方安装文档 <a href="https://docs.brew.sh/Installation">https://docs.brew.sh/Installation</a></li>
+<li>清华 Homebrew 软件仓库配置 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/">https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/</a></li>
 </ul>
 
                   </article>
@@ -191,6 +226,9 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
       </footer>
 
 
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
 
   
 

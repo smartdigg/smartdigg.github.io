@@ -478,7 +478,7 @@ server-tcp 127.0.0.1:5305 -group china -exclude-default-group
 </code></pre>
 <h3><a id="smartdns%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 管理</h3>
 <p>暂停mosdns：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ sudo brew services stop mosdns
+<pre class="line-numbers"><code class="language-plain_text">$ brew services stop mosdns
 $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </code></pre>
 <p>启动SmartDNS：</p>
@@ -486,7 +486,7 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </code></pre>
 <p>使用<code>sudo</code>命令会自动添加到开机启动项，启动配置文件位置：<code>/Library/LaunchDaemons/homebrew.mxcl.smartdns.plist</code>。</p>
 <p>如果不需要后台服务，可以执行命令：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ /opt/homebrew/opt/smartdns/sbin/smartdns run -c /opt/homebrew/etc/smartdns/smartdns.conf
+<pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/homebrew/opt/smartdns/sbin/smartdns run -c /opt/homebrew/etc/smartdns/smartdns.conf
 </code></pre>
 <p>检查SmartDNS是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5304

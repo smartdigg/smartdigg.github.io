@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-09-19T01:41:06+08:00</updated>
+  <updated>2024-11-02T17:22:22+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -376,7 +376,7 @@ server-tcp 127.0.0.1:5305 -group china -exclude-default-group
 </code></pre>
 <h3><a id="smartdns%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 管理</h3>
 <p>暂停mosdns：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ sudo brew services stop mosdns
+<pre class="line-numbers"><code class="language-plain_text">$ brew services stop mosdns
 $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </code></pre>
 <p>启动SmartDNS：</p>
@@ -384,7 +384,7 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </code></pre>
 <p>使用<code>sudo</code>命令会自动添加到开机启动项，启动配置文件位置：<code>/Library/LaunchDaemons/homebrew.mxcl.smartdns.plist</code>。</p>
 <p>如果不需要后台服务，可以执行命令：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ /opt/homebrew/opt/smartdns/sbin/smartdns run -c /opt/homebrew/etc/smartdns/smartdns.conf
+<pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/homebrew/opt/smartdns/sbin/smartdns run -c /opt/homebrew/etc/smartdns/smartdns.conf
 </code></pre>
 <p>检查SmartDNS是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5304
@@ -455,8 +455,8 @@ $ mkdir -p /usr/local/etc/cloudflared
 <pre class="line-numbers"><code class="language-plain_text">proxy-dns: true
 proxy-dns-port: 5305
 proxy-dns-upstream:
-    - https://dns.alidns.com/dns-query
     - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
 </code></pre>
 <p>安装到系统：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo cloudflared service install
@@ -476,7 +476,7 @@ proxy-dns-upstream:
 <p>安装后会自动生成启动配置文件<code>/Library/LaunchDaemons/dnscrypt-proxy.plist</code>。</p>
 <p>修改配置文件中的部分内容：<code>/opt/homebrew/etc/dnscrypt-proxy.toml</code>：</p>
 <pre class="line-numbers"><code class="language-plain_text">#自由添加server_names
-server_names = ['iqdns-xyz','jp.tiar.app-doh', 'doh-crypto-sx', 'uncensoreddns-ipv6', 'dns.sb', 'cisco'] 
+server_names = ['cloudflare','cloudflare-ipv6','libredns','jp.tiar.app-doh', 'doh-crypto-sx', 'uncensoreddns-ipv6', 'cisco'] 
 
 listen_addresses = ['127.0.0.1:5300', '[::1]:5300']
 
@@ -727,6 +727,95 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[macOS配置Homebrew]]></title>
+    <link href="https://smartdig.github.io/macos-configure-homebrew.html"/>
+    <updated>2024-10-23T13:25:03+08:00</updated>
+    <id>https://smartdig.github.io/macos-configure-homebrew.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools">重新安装CommandLineTools</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85homebrew">安装Homebrew</a></li>
+<li><a href="#%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90">恢复Homebrew默认源</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>本篇适用于macOS重装或降级后使用Homebrew，部分内容也适用于全新系统安装Homebrew。</p>
+<p>macOS重装或降级后，若使用Time Machine恢复，一般情况下Homebrew不能正常工作。这时就需重新配置Homebrew。</p>
+<h2><a id="%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重新安装CommandLineTools</h2>
+<p>重置<code>CommandLineTools</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo xcode-select --reset
+</code></pre>
+<p>然后删除旧的<code>CommandLineTools</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo rm -rf /Library/Developer/CommandLineTools
+</code></pre>
+<p>全新安装<code>CommandLineTools</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo xcode-select --install
+</code></pre>
+<p>全新安装Homebrew，仅需执行最后一步。</p>
+<h2><a id="%E5%AE%89%E8%A3%85homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Homebrew</h2>
+<p>以下设置适用于Apple Silicon CPU设备，即带M芯片，默认使用<code>zsh</code>。鉴于大陆github使用困难，本篇使用清华软件源。</p>
+<ol>
+<li>设置Homebrew环境变量：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
+export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
+export HOMEBREW_INSTALL_FROM_API=1
+</code></pre>
+<ol start="2">
+<li>配置Homebrew Bottles环境变量：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">echo 'export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;' &gt;&gt; ~/.zprofile
+echo 'export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;' &gt;&gt; ~/.zprofile
+export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;
+export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
+</code></pre>
+<ol start="3">
+<li>（可选）配置Homebrew PyPi环境变量：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">export HOMEBREW_PIP_INDEX_URL=&quot;https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple&quot;
+</code></pre>
+<ol start="4">
+<li>安装Homebrew：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">$ git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
+$ cd brew-install &amp;&amp; sudo ./install.sh
+$ rm -rf brew-install
+</code></pre>
+<ol start="5">
+<li>将<code>brew</code>程序的相关路径加入到环境变量中：</li>
+</ol>
+<pre class="line-numbers"><code class="language-plain_text">test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
+</code></pre>
+<h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复Homebrew默认源</h2>
+<p>参考清华帮助文档细节。</p>
+<pre class="line-numbers"><code class="language-plain_text"># brew 程序本身，Homebrew / Linuxbrew 相同
+unset HOMEBREW_API_DOMAIN
+unset HOMEBREW_BREW_GIT_REMOTE
+git -C &quot;$(brew --repo)&quot; remote set-url origin https://github.com/Homebrew/brew
+
+# 以下针对 macOS 系统上的 Homebrew
+unset HOMEBREW_CORE_GIT_REMOTE
+BREW_TAPS=&quot;$(BREW_TAPS=&quot;$(brew tap 2&gt;/dev/null)&quot;; echo -n &quot;${BREW_TAPS//$'\n'/:}&quot;)&quot;
+for tap in core cask command-not-found; do
+    if [[ &quot;:${BREW_TAPS}:&quot; == *&quot;:homebrew/${tap}:&quot;* ]]; then  # 只复原已安装的 Tap
+        brew tap --custom-remote &quot;homebrew/${tap}&quot; &quot;https://github.com/Homebrew/homebrew-${tap}&quot;
+    fi
+done
+
+# 重新拉取远程
+brew update
+</code></pre>
+<p>同时检查<code>~/.zprofile</code>内容，删除带有<code>mirrors.tuna.tsinghua.edu.cn</code>的行。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>Homebrew 官方安装文档 <a href="https://docs.brew.sh/Installation">https://docs.brew.sh/Installation</a></li>
+<li>清华 Homebrew 软件仓库配置 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/">https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[超简单个人网页TiddlyWiki]]></title>
     <link href="https://smartdig.github.io/super-simple-personal-webpage-tiddlywiki.html"/>
     <updated>2024-09-13T14:35:05+08:00</updated>
@@ -815,8 +904,10 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 <li><a href="https://search.brave.com/">Brave search</a></li>
 <li><a href="https://search.disroot.org/">Disroot</a></li>
 <li><a href="https://duckduckgo.com/">Duckduckgo</a></li>
+<li><a href="https://gibiru.com/">Gibiru</a></li>
 <li><a href="https://metager.org/">Metager</a></li>
 <li><a href="https://www.startpage.com/">Mojeek</a></li>
+<li><a href="https://www.qwant.com/">Qwant</a></li>
 <li><a href="https://searx.space/">SearX</a>（可自建）</li>
 <li><a href="https://www.startpage.com/">Startpage</a></li>
 <li><a href="https://github.com/benbusby/whoogle-search">Whoogle</a>（可自建）</li>
@@ -1352,6 +1443,7 @@ installation_id: &quot;your_custom_id&quot;
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>How to use Publish Script to Publish website <a href="https://www.mweb.im/how_to_use_shell_script.html">https://www.mweb.im/how_to_use_shell_script.html</a></li>
+<li>Publii 官网<a href="https://getpublii.com/">https://getpublii.com</a></li>
 <li>MWeb 生成静态网站 &amp; 博客 <a href="https://zh.mweb.im/zh-mweb-static-blog.html">https://zh.mweb.im/zh-mweb-static-blog.html</a></li>
 <li>自定义或制作自己的静态网站模板 <a href="https://zh.mweb.im/zh-make_your_site_template.html">https://zh.mweb.im/zh-make_your_site_template.html</a></li>
 <li>我是如何利用Github Pages搭建起我的博客，细数一路的坑 <a href="https://zhuanlan.zhihu.com/p/334815426">https://zhuanlan.zhihu.com/p/334815426</a></li>
