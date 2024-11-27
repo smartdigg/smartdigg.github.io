@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-11-02T17:27:47+08:00</updated>
+  <updated>2024-11-27T13:27:51+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -445,6 +445,7 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 <li>使用mosdns分流，端口5304；</li>
 <li>使用AdGuardHome去广告以及管理黑名单，端口53。</li>
 </ol>
+<p>备注：第四步为可选步骤，仅需将mosdns的端口修改为53。</p>
 <h2><a id="cloudflared%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>cloudflared 配置</h2>
 <p>使用homebrew安装，也可以到官网下载安装<a href="https://github.com/cloudflare/cloudflared">https://github.com/cloudflare/cloudflared</a>。cloudflared负责解析国内网站，使用端口<code>5305</code>。</p>
 <p>安装cloudflared：</p>
@@ -633,8 +634,11 @@ plugins:
 $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
 <p>服务仅设定为随系统自启，启动配置文件位置：<code>/Library/LaunchDaemons/mosdns.plist</code>。</p>
-<p>安装成功后并不会马上自动运行，启动需手动运行服务。<br />
-启动mosdns：</p>
+<p>安装成功后并不会马上运行，需手动启动。查看mosdns的服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">cat /Library/LaunchDaemons/mosdns.plist
+</code></pre>
+<p>修改<code>RunAtLoad</code>的值为<code>true</code>。</p>
+<p>启动mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start
 </code></pre>
 <p>检查mosdns是否正常启动：</p>
@@ -643,7 +647,7 @@ $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt
 <p>管理mosdns服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service stop/uninstall
 </code></pre>
-<p>备注：mosdns可替代cloudflared服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别便是cloudflared服务非常稳定。</p>
+<p>备注：mosdns可替代cloudflared服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别是cloudflared服务非常稳定。</p>
 <h2><a id="adguardhome%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>AdGuardHome 配置</h2>
 <p>从Github下载安装 <a href="https://github.com/AdguardTeam/AdGuardHome">https://github.com/AdguardTeam/AdGuardHome</a>。</p>
 <p>解压缩，并将<code>AdGuardHome</code>文件夹移动至<code>/Applications/</code>目录下。</p>
@@ -721,6 +725,85 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 <li>基于DNS的内网代理分流方案 <a href="https://github.com/Sereinfy/mosdns-config">https://github.com/Sereinfy/mosdns-config</a></li>
 <li>利用Mosdns(v4 or v5)和AdGuardHome搭建自己的DNS <a href="https://www.xukecheng.tech/use-mosdns-and-adguardhome-to-build-your-own-dns">https://www.xukecheng.tech/use-mosdns-and-adguardhome-to-build-your-own-dns</a></li>
 <li>在Mac上输入DNS和搜索域设置 <a href="https://support.apple.com/zh-cn/guide/mac-help/mh141272/mac">https://support.apple.com/zh-cn/guide/mac-help/mh141272/mac</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[LibreWolf浏览器配置]]></title>
+    <link href="https://smartdig.github.io/Librewolf-browser-configuration.html"/>
+    <updated>2024-11-10T23:42:15+08:00</updated>
+    <id>https://smartdig.github.io/Librewolf-browser-configuration.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85">LibreWolf浏览器安装</a></li>
+<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE">LibreWolf浏览器设置</a></li>
+<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86">LibreWolf浏览器管理</a>
+<ul>
+<li><a href="#%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95">安装扩展</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0librewolf">更新LibreWolf</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">添加搜索引擎</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98">其他问题</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>之前介绍过<a href="brave-browser-security-enhanced.html">Brave浏览器安全配置</a>，鉴于Google公司在Chromium项目中经常作妖，用户可以考虑使用LibreWolf浏览器。LibreWolf浏览器是一款基于Firefox的浏览器，安全性与隐私性不弱于Brave浏览器。可参考<a href="https://privacytests.org/">privacytests.org</a>浏览器测评。</p>
+<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器安装</h2>
+<pre class="line-numbers"><code class="language-plain_text">$ brew install --cask librewolf
+</code></pre>
+<p>由于LibreWolf浏览器开发者没有购买开发者证书，因此使用前需要在终端授权。</p>
+<pre class="line-numbers"><code class="language-plain_text">$ xattr -cr /Applications/LibreWolf.app 
+</code></pre>
+<p>也可以一步到位安装：</p>
+<pre class="line-numbers"><code class="language-plain_text">brew install librewolf --no-quarantine
+</code></pre>
+<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器设置</h2>
+<p>LibreWolf浏览器基本上与Firefox一致，唯独在设置中增加LibreWolf选项。</p>
+<p><img src="media/17312533358317/Librewolf-setting.png" alt="Librewolf-setting" /></p>
+<p>LibreWolf浏览器可以通过<code>about:config</code>来配置，另外也能通过修改配置文件<code>librewolf.overrides.cfg</code>来覆盖配置内容。</p>
+<p><code>librewolf.overrides.cfg</code>配置文件默认不存在，如需使用需要手动创建：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ mkdir $HOME/.librewolf 
+$ touch $HOME/.librewolf/librewolf.overrides.cfg
+</code></pre>
+<p>大致内容，按需修改：</p>
+<pre class="line-numbers"><code class="language-plain_text">//Enable letterboxing
+defaultPref(&quot;privacy.resistFingerprinting.letterboxing&quot;, true); 
+
+//Limit cross-origin referers
+defaultPref(&quot;network.http.referer.XOriginPolicy&quot;, 2);
+
+//disable WebGL
+defaultPref(&quot;webgl.disabled&quot;, true);
+</code></pre>
+<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器管理</h2>
+<h3><a id="%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装扩展</h3>
+<p>官方建议尽可能少安装扩展，因为额外的扩展可能增加你的攻击面。</p>
+<ul>
+<li>uBlockOrigin <a href="https://github.com/gorhill/uBlock">https://github.com/gorhill/uBlock</a>；</li>
+<li>Canvas Blocker <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasblocker/">https://addons.mozilla.org/en-US/firefox/addon/canvasblocker</a>；<br />
+其他拓展可参考<a href="network-security-manual.html">网络安全手册</a>。</li>
+</ul>
+<h3><a id="%E6%9B%B4%E6%96%B0librewolf" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>更新LibreWolf</h3>
+<pre class="line-numbers"><code class="language-plain_text">brew update &amp;&amp; brew upgrade
+</code></pre>
+<h3><a id="%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加搜索引擎</h3>
+<p>LibreWolf添加搜索引擎方式与Firefox相同：点击搜索框中的绿色加号，按指引操作即可。如果工具栏没有搜索框，可以右键点击工具栏，选择自定义工具栏，再将搜索栏拖放到需要的位置。</p>
+<p><img src="media/17312533358317/x001.png" alt="x001" /></p>
+<p>部分搜索引擎不会弹出绿色加号，例如Bing <a href="https://www2.bing.com">https://www2.bing.com</a>，可以进入设置手动添加。<br />
+<img src="media/17312533358317/x003.png" alt="x003" /></p>
+<h3><a id="%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>其他问题</h3>
+<ul>
+<li>&quot;SSL_ERROR_UNSAFE_NEGOTIATION&quot;：修改<code>security.ssl.require_safe_negotiation</code> 为<code>false</code>；</li>
+<li>&quot;SEC_ERROR_OCSP_SERVER_ERROR&quot;：在设置LibreWolf首选项中取消勾选<code>Enforce OCSP hard-fail</code>。</li>
+</ul>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>LibreWolf浏览器官网 <a href="https://librewolf.net/">https://librewolf.net</a></li>
+<li>干净简洁的浏览器，LibreWolf软件体验  <a href="https://post.smzdm.com/p/ag5d8e9w/">https://post.smzdm.com/p/ag5d8e9w</a></li>
+<li>纠结了很久 Chrome 和 Arc，最终选择了 Librewolf <a href="https://sspai.com/post/85096">https://sspai.com/post/85096</a></li>
 </ul>
 
 ]]></content>
@@ -843,7 +926,7 @@ brew update
 <h2><a id="%E4%B8%8B%E8%BD%BDtiddlywiki" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载TiddlyWiKi</h2>
 <p>打开TiddlyWiki官网<a href="https://tiddlywiki.com/">https://tiddlywiki.com</a>，在GettingStarted部分下载空白副本，默认文件名为<code>empty.html</code>。</p>
 <p>也可以选择下载TiddlyWiKi经典版本<a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com/</a>。</p>
-<p>主要区别：经典TiddlyWiKi有很多年历史，而新版TiddlyWiKi使用html5技术，外观更现代化。两个版本都在更新。</p>
+<p>主要区别：经典TiddlyWiKi有多年历史，而新版TiddlyWiKi使用html5，外观更现代化。两个版本都在更新。</p>
 <p>本文所介绍的是新版TiddlyWiKi，又称TiddlyWiKi 5。</p>
 <h2><a id="%E7%BC%96%E8%BE%91%E5%92%8C%E4%BF%9D%E5%AD%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编辑和保存</h2>
 <p>TiddlyWiKi作为单一html文件可直接通过浏览器打开、编辑与保存。也可使用如TiddlyDesktop等软件自动保存。在GettingStarted部分也有其他软件推荐。</p>
@@ -871,6 +954,7 @@ brew update
 <ul>
 <li>TiddlyWiKi <a href="https://tiddlywiki.com/">https://tiddlywiki.com</a></li>
 <li>TiddlyWiKi Classic <a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com</a></li>
+<li>Classic TiddlyThemes <a href="https://github.com/YakovL/TiddlyThemes">https://github.com/YakovL/TiddlyThemes</a></li>
 <li>TiddyWiki 简易指南 <a href="https://pkmer.cn/Pkmer-Docs/12-tiddywiki/tiddywiki/">https://pkmer.cn/Pkmer-Docs/12-tiddywiki/tiddywiki</a></li>
 <li>探索 TiddlyWiki 5：个人知识管理的利器 <a href="https://blog.csdn.net/gitblog_00041/article/details/136706046">https://blog.csdn.net/gitblog_00041/article/details/136706046</a></li>
 </ul>
@@ -1391,6 +1475,7 @@ installation_id: &quot;your_custom_id&quot;
     <id>https://smartdig.github.io/how-to-quickly-build-a-personal-static-blog.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
+<li><a href="#%E9%87%8D%E8%A6%81%E6%8F%90%E9%86%92">重要提醒</a></li>
 <li><a href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87">安装前准备</a></li>
 <li><a href="#github%E9%85%8D%E7%BD%AE">Github配置</a></li>
 <li><a href="#mweb-pro%E9%85%8D%E7%BD%AE">Mweb Pro配置</a>
@@ -1402,15 +1487,16 @@ installation_id: &quot;your_custom_id&quot;
 <li><a href="#github-desktop%E9%85%8D%E7%BD%AE">Github Desktop配置</a></li>
 <li><a href="#%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83">博客发布</a></li>
 <li><a href="#%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C">进阶操作</a></li>
-<li><a href="#%E6%8F%90%E7%A4%BA">提示</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
 <p>本文的静态博客主要利用Github Page，也可以采用Cloudflare Page，方法类似。</p>
+<h2><a id="%E9%87%8D%E8%A6%81%E6%8F%90%E9%86%92" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重要提醒</h2>
+<p><strong>博客最重要的是内容，少折腾，坚持创作</strong>。</p>
 <h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
 <p>macOS安装两个软件<a href="https://apps.apple.com/us/app/mweb-pro/id1403919533">Mweb Pro</a>以及<a href="https://desktop.github.com/">Github Desktop</a>。</p>
 <p>优点：无需命令行，简单，仅需关注内容创作。</p>
-<p>也可以选择安装<a href="https://open.gridea.dev/#started">Gridea</a>，不限平台，配置简单。</p>
+<p>也可以选择安装<a href="https://getpublii.com/">Publii</a>或<a href="https://open.gridea.dev/">Gridea</a>，不限平台，配置简单。</p>
 <h2><a id="github%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github配置</h2>
 <p>首先注册Github帐号，并在个人主界面里选择创建一个新的仓库（Create a new repository）。</p>
 <p>进入页面后，在Repository name的位置填写域名，格式是<code>&lt;USERNAME&gt;.github.io</code>。借一张图，按图设置：</p>
@@ -1438,12 +1524,10 @@ installation_id: &quot;your_custom_id&quot;
 <p>先点击Github Desktop左下角的<code>Commit to master</code>，再点击<code>Push origin</code>就可以将内容上传。之后便可以去<code>https://&lt;USERNAME&gt;.github.io</code>查看博客最新内容。</p>
 <h2><a id="%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>进阶操作</h2>
 <p>可以修改主题、绑定个人域名、添加评论功能、设置Cloudflare加速，还可以设置自动发布等等。</p>
-<h2><a id="%E6%8F%90%E7%A4%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>提示</h2>
-<p><strong>博客最重要的是内容，少折腾，坚持创作</strong>。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>How to use Publish Script to Publish website <a href="https://www.mweb.im/how_to_use_shell_script.html">https://www.mweb.im/how_to_use_shell_script.html</a></li>
-<li>Publii 官网<a href="https://getpublii.com/">https://getpublii.com</a></li>
+<li>Publii 官网 <a href="https://getpublii.com/">https://getpublii.com</a></li>
 <li>MWeb 生成静态网站 &amp; 博客 <a href="https://zh.mweb.im/zh-mweb-static-blog.html">https://zh.mweb.im/zh-mweb-static-blog.html</a></li>
 <li>自定义或制作自己的静态网站模板 <a href="https://zh.mweb.im/zh-make_your_site_template.html">https://zh.mweb.im/zh-make_your_site_template.html</a></li>
 <li>我是如何利用Github Pages搭建起我的博客，细数一路的坑 <a href="https://zhuanlan.zhihu.com/p/334815426">https://zhuanlan.zhihu.com/p/334815426</a></li>

@@ -143,6 +143,7 @@
 <li>使用mosdns分流，端口5304；</li>
 <li>使用AdGuardHome去广告以及管理黑名单，端口53。</li>
 </ol>
+<p>备注：第四步为可选步骤，仅需将mosdns的端口修改为53。</p>
 <h2><a id="cloudflared%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>cloudflared 配置</h2>
 <p>使用homebrew安装，也可以到官网下载安装<a href="https://github.com/cloudflare/cloudflared">https://github.com/cloudflare/cloudflared</a>。cloudflared负责解析国内网站，使用端口<code>5305</code>。</p>
 <p>安装cloudflared：</p>
@@ -331,8 +332,11 @@ plugins:
 $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
 <p>服务仅设定为随系统自启，启动配置文件位置：<code>/Library/LaunchDaemons/mosdns.plist</code>。</p>
-<p>安装成功后并不会马上自动运行，启动需手动运行服务。<br />
-启动mosdns：</p>
+<p>安装成功后并不会马上运行，需手动启动。查看mosdns的服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">cat /Library/LaunchDaemons/mosdns.plist
+</code></pre>
+<p>修改<code>RunAtLoad</code>的值为<code>true</code>。</p>
+<p>启动mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start
 </code></pre>
 <p>检查mosdns是否正常启动：</p>
@@ -341,7 +345,7 @@ $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt
 <p>管理mosdns服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service stop/uninstall
 </code></pre>
-<p>备注：mosdns可替代cloudflared服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别便是cloudflared服务非常稳定。</p>
+<p>备注：mosdns可替代cloudflared服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别是cloudflared服务非常稳定。</p>
 <h2><a id="adguardhome%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>AdGuardHome 配置</h2>
 <p>从Github下载安装 <a href="https://github.com/AdguardTeam/AdGuardHome">https://github.com/AdguardTeam/AdGuardHome</a>。</p>
 <p>解压缩，并将<code>AdGuardHome</code>文件夹移动至<code>/Applications/</code>目录下。</p>

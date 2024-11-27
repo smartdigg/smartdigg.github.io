@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>https://smartdig.github.io/</loc>
-  <lastmod>2024-11-02T17:27:50+08:00</lastmod>
+  <lastmod>2024-11-27T13:28:07+08:00</lastmod>
 </url>
 
 <url>
@@ -13,6 +13,11 @@
 <url>
   <loc>https://smartdig.github.io/configure-DNS-over-HTTPS-for-macOS.html</loc>
   <lastmod>2024-04-11T11:11:11+08:00</lastmod>
+</url>
+
+<url>
+  <loc>https://smartdig.github.io/Librewolf-browser-configuration.html</loc>
+  <lastmod>2024-02-11T11:11:11+08:00</lastmod>
 </url>
 
 <url>
