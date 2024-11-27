@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-11-27T13:27:51+08:00</updated>
+  <updated>2024-11-27T13:46:08+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -762,7 +762,7 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 </code></pre>
 <h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器设置</h2>
 <p>LibreWolf浏览器基本上与Firefox一致，唯独在设置中增加LibreWolf选项。</p>
-<p><img src="media/17312533358317/Librewolf-setting.png" alt="Librewolf-setting" /></p>
+<p><img src="media/17312533358317/Librewolf-setting.webp" alt="Librewolf-setting" /></p>
 <p>LibreWolf浏览器可以通过<code>about:config</code>来配置，另外也能通过修改配置文件<code>librewolf.overrides.cfg</code>来覆盖配置内容。</p>
 <p><code>librewolf.overrides.cfg</code>配置文件默认不存在，如需使用需要手动创建：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ mkdir $HOME/.librewolf 
@@ -791,9 +791,9 @@ defaultPref(&quot;webgl.disabled&quot;, true);
 </code></pre>
 <h3><a id="%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加搜索引擎</h3>
 <p>LibreWolf添加搜索引擎方式与Firefox相同：点击搜索框中的绿色加号，按指引操作即可。如果工具栏没有搜索框，可以右键点击工具栏，选择自定义工具栏，再将搜索栏拖放到需要的位置。</p>
-<p><img src="media/17312533358317/x001.png" alt="x001" /></p>
-<p>部分搜索引擎不会弹出绿色加号，例如Bing <a href="https://www2.bing.com">https://www2.bing.com</a>，可以进入设置手动添加。<br />
-<img src="media/17312533358317/x003.png" alt="x003" /></p>
+<p><img src="media/17312533358317/x001.webp" alt="x001" /></p>
+<p>部分搜索引擎不会弹出绿色加号，例如Bing <a href="https://www2.bing.com">https://www2.bing.com</a>，可以进入设置手动添加。</p>
+<p><img src="media/17312533358317/x003.webp" alt="x003" /></p>
 <h3><a id="%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>其他问题</h3>
 <ul>
 <li>&quot;SSL_ERROR_UNSAFE_NEGOTIATION&quot;：修改<code>security.ssl.require_safe_negotiation</code> 为<code>false</code>；</li>
