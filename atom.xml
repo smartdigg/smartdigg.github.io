@@ -4,13 +4,173 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdig.github.io/atom.xml" rel="self"/>
   <link href="https://smartdig.github.io/"/>
-  <updated>2024-11-27T14:07:53+08:00</updated>
+  <updated>2024-12-03T10:45:35+08:00</updated>
   <id>https://smartdig.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[自建搜索引擎]]></title>
+    <link href="https://smartdig.github.io/self-hosted-search-engine.html"/>
+    <updated>2024-11-30T10:44:45+08:00</updated>
+    <id>https://smartdig.github.io/self-hosted-search-engine.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%85%AC%E5%85%B1%E5%AE%9E%E4%BE%8B">公共实例</a></li>
+<li><a href="#whoogle-search">Whoogle Search</a></li>
+<li><a href="#searxng">SearXNG</a></li>
+<li><a href="#yacy">YaCy</a></li>
+<li><a href="#%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8Fzerotier">内网穿透Zerotier</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>中国大陆网络搜索环境逐渐恶化，信息检索结果缺乏真实性和可信度。当然用户可以选择国外的搜索引擎直接使用，但这些搜索引擎不保证稳定性或被墙的可能性。有条件的用户可以在自己的VPS上自建搜索引擎，并通过内网穿透使用。比较有名的有Whoogle Search，SearXNG，YaCy等。</p>
+<h2><a id="%E5%85%AC%E5%85%B1%E5%AE%9E%E4%BE%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>公共实例</h2>
+<p>如果不想自建搜索引擎，也可以直接使用公共实例。</p>
+<ul>
+<li>Searx Public Instances <a href="https://searx.space">https://searx.space</a></li>
+<li>Whoogle Public Instances <a href="https://github.com/benbusby/whoogle-search?tab=readme-ov-file#public-instances">https://github.com/benbusby/whoogle-search?tab=readme-ov-file#public-instances</a></li>
+<li>其他<a href="search-engine.html">网络搜索引擎</a></li>
+</ul>
+<h2><a id="whoogle-search" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Whoogle Search</h2>
+<p>Whoogle Search 搜索结果基于Google搜索，没有广告也没有追踪。详细介绍看Github主页<a href="https://github.com/benbusby/whoogle-search">https://github.com/benbusby/whoogle-search</a>。</p>
+<p>Docker CLI安装：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo docker pull benbusby/whoogle-search
+$ sudo docker run --publish 5000:5000 --detach --name whoogle-search benbusby/whoogle-search:latest
+</code></pre>
+<p>也可以使用docker-compose安装：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ git clone https://github.com/benbusby/whoogle-search.git
+$ cd whoogle-search
+$ sudo docker-compose up
+</code></pre>
+<p>Whoogle Search的端口为5000。</p>
+<h2><a id="searxng" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SearXNG</h2>
+<p>相比Whoogle Search，SearXNG的搜索结果来自多个搜索引擎。</p>
+<p>安装searxng-docker：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cd ~
+$ mkdir searxng-docker
+$ cd searxng-docker
+$ vim docker-compose.yaml
+</code></pre>
+<p>文件<code>docker-compose.yaml</code>的内容（此处参考<a href="https://nougats.cn/searxng/">使用docker搭建SearXNG搜索引擎</a>）：</p>
+<pre class="line-numbers"><code class="language-plain_text">version: '3.7'
+ 
+services:
+# 我们注释掉caddy的内容
+  #  caddy:
+  #  container_name: caddy
+  #  image: caddy:2-alpine
+  #  network_mode: host
+  #  volumes:
+  #    - ./Caddyfile:/etc/caddy/Caddyfile:ro
+  #    - caddy-data:/data:rw
+  #    - caddy-config:/config:rw
+  #  environment:
+  #    - SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}
+  #    - SEARXNG_TLS=${LETSENCRYPT_EMAIL:-internal}
+  #  cap_drop:
+  #    - ALL
+  #  cap_add:
+  #    - NET_BIND_SERVICE
+  #    - DAC_OVERRIDE
+ 
+  redis:
+    container_name: redis
+    image: &quot;redis:alpine&quot;
+    command: redis-server --save &quot;&quot; --appendonly &quot;no&quot;
+    networks:
+      - searxng
+    tmpfs:
+      - /var/lib/redis
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+ 
+  searxng:
+    container_name: searxng
+    image: searxng/searxng:latest
+    networks:
+      - searxng
+    ports:
+     - &quot;8180:8080&quot;   # 这个冒号左边的端口可以更改，右边的不要改
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    logging:
+      driver: &quot;json-file&quot;
+      options:
+        max-size: &quot;1m&quot;
+        max-file: &quot;1&quot;
+networks:
+  searxng:
+    ipam:
+      driver: default
+ 
+        #volumes:
+        #caddy-data:
+        #caddy-config:
+</code></pre>
+<p>生成密钥文件：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sed -i &quot;s|ultrasecretkey|$(openssl rand -hex 32)|g&quot; searxng/settings.yml
+</code></pre>
+<p>个人使用实例可以将<code>searxng/settings.yml</code>中<code>limiter</code>的值改成<code>false</code>。</p>
+<p>启动Docker镜像：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo docker-compose up -d  
+</code></pre>
+<p>SearXNG端口为8080。</p>
+<h2><a id="yacy" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>YaCy</h2>
+<p>YaCy是一款分布式搜索引擎，搜索结果完全由用户自己掌控。YaCy可以单独安装使用，也可以加入P2P将索引分享给其他人使用。</p>
+<p>Docker安装(适合intel芯片)：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo docker run -d --name yacy_search_server -p 8090:8090 -p 8443:8443 -v yacy_search_server_data:/opt/yacy_search_server/DATA --restart unless-stopped --log-opt max-size=200m --log-opt max-file=2 yacy/yacy_search_server:latest
+</code></pre>
+<p>YaCy的端口为8090。</p>
+<h2><a id="%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8Fzerotier" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>内网穿透Zerotier</h2>
+<p>Zerotier是一款不错的内网穿透软件，需要在VPS及自己常用的设备上同时安装。VPS以Linux系统为例。</p>
+<p>安装Zerotier：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ curl -s 'https://raw.githubusercontent.com/zerotier/ZeroTierOne/main/doc/contact%40zerotier.com.gpg' | gpg --import &amp;&amp; \  
+if z=$(curl -s 'https://install.zerotier.com/' | gpg); then echo &quot;$z&quot; | sudo bash; fi
+</code></pre>
+<p>开机启动Zerotier：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo systemctl enable zerotier-one
+</code></pre>
+<p>加入网络：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo zerotier-cli join ################ 
+</code></pre>
+<p>其中<code>################</code>为你想加入网络的16位ID。然后登录zerotier官网允许设备即可。</p>
+<p>同样地，你也需要在日常使用的设备上安装zerotier，在<a href="https://www.zerotier.com/download/">Zerotier网站</a>上下载合适的版本。加入相同网络，并登录zerotier官网允许设备。</p>
+<p>在zerotier官网可以查看所加入网络下所有设备的IP地址，记下你的VPS的IP地址。假设VPS的IP地址为<code>10.147.17.102</code>，那么可以通过如下方式访问自建的搜索引擎：</p>
+<ul>
+<li>Whoogle-search：<a href="http://10.147.17.102:5000">http://10.147.17.102:5000</a></li>
+<li>SearXNG：<a href="http://10.147.17.102:8080">http://10.147.17.102:8080</a></li>
+<li>YaCy：<a href="http://10.147.17.102:8090">http://10.147.17.102:8090</a></li>
+</ul>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>SearXNG Docker <a href="https://github.com/searxng/searxng-docker">https://github.com/searxng/searxng-docker</a></li>
+<li>SearXNG Github <a href="https://github.com/searxng/searxng">https://github.com/searxng/searxng</a></li>
+<li>whoogle Search <a href="https://github.com/benbusby/whoogle-search">https://github.com/benbusby/whoogle-search</a></li>
+<li>YaCy Github <a href="https://github.com/yacy/yacy_search_server">https://github.com/yacy/yacy_search_server</a></li>
+<li>YaCy Homepage <a href="https://yacy.net/">https://yacy.net</a></li>
+<li>P2P分布式搜索引擎YaCy <a href="https://blog.csdn.net/wbsu2004/article/details/127646231">https://blog.csdn.net/wbsu2004/article/details/127646231</a></li>
+<li>使用docker搭建SearXNG搜索引擎 <a href="https://nougats.cn/searxng/">https://nougats.cn/searxng</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[SmartDNS 配置]]></title>
@@ -1008,7 +1168,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 </code></pre>
 <h3><a id="firefox" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Firefox</h3>
 <p>首先在设置中将搜索框加入工具栏：<code>Add search bar in toolbar</code>。之后打开搜索引擎首页便会在搜索框出现添加提示。</p>
-<p>部分搜索引擎不会出现提示，可安装插件<code>Add custom search engine</code>。 打开插件首选项，按照插件提示类似填写即可。</p>
+<p>部分搜索引擎不会出现提示，可到设置中手动添加，也可以安装插件<code>Add custom search engine</code>。 打开插件首选项，按照插件提示类似填写即可。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>privacytools <a href="https://www.privacytools.io/private-search">https://www.privacytools.io/private-search</a></li>
@@ -1543,7 +1703,7 @@ installation_id: &quot;your_custom_id&quot;
     <updated>2023-07-23T22:28:06+08:00</updated>
     <id>https://smartdig.github.io/hello-world.html</id>
     <content type="html"><![CDATA[
-<p>Smartdig, dig smartly.</p>
+<p>最好永久记录！</p>
 
 ]]></content>
   </entry>
