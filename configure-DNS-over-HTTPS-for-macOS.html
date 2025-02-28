@@ -85,14 +85,6 @@
                     
                       <div class="media">
                             
-                            <figure class="media-left">
-                              <p class="image is-48x48">
-                                
-                                  <img class="is-rounded" src="">
-                                
-                              </p>
-                            </figure>
-                            
                             <div class="media-content">
                               <div class="content">
                                 <p>
@@ -189,14 +181,15 @@ require_nolog = false
 disabled_server_names = ['alidns-doh', 'dnspod']
 </code></pre>
 <p>启动dnscrypt-proxy服务：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ brew services start dnscrypt-proxy
+<pre class="line-numbers"><code class="language-plain_text">$sudo brew services start dnscrypt-proxy
 </code></pre>
 <p>检查dnscrypt-proxy是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5300
 </code></pre>
 <p>管理dnscrypt-proxy服务：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ brew services start/stop/status/restart dnscrypt-proxy
+<pre class="line-numbers"><code class="language-plain_text">$sudo brew services start/stop/restart dnscrypt-proxy
 </code></pre>
+<p><strong>备注</strong>：不要使用不带<code>sudo</code>的命令：<code>brew services start/stop/restart dnscrypt-proxy</code>，这是为了避免在如下位置出现导致端口冲突提醒的配置文件：<code>~/Library/LaunchAgents/homebrew.mxcl.dnscrypt-proxy.plist</code>。</p>
 <h2><a id="mosdns%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mosdns配置</h2>
 <p>从Github下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。mosdns仅作分流和转发，使用端口<code>5304</code>。</p>
 <p>解压缩后，将整个文件夹移至<code>/opt/local/etc/</code>，修改配置文件<code>/opt/local/etc/config.yaml</code>：</p>

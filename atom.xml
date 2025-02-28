@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[永久记录]]></title>
-  <link href="https://smartdig.github.io/atom.xml" rel="self"/>
-  <link href="https://smartdig.github.io/"/>
-  <updated>2024-12-03T10:49:08+08:00</updated>
-  <id>https://smartdig.github.io/</id>
+  <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
+  <link href="https://smartdigg.github.io/"/>
+  <updated>2025-03-01T01:52:22+08:00</updated>
+  <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
@@ -13,10 +13,106 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
+    <title type="html"><![CDATA[如何在个人电脑上部署DeepSeek]]></title>
+    <link href="https://smartdigg.github.io/how-to-deploy-deepseek-on-your-computer.html"/>
+    <updated>2025-02-18T01:40:47+08:00</updated>
+    <id>https://smartdigg.github.io/how-to-deploy-deepseek-on-your-computer.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%87%86%E5%A4%87">准备</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDollama">下载Ollama</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85ollama">安装Ollama</a></li>
+</ul>
+</li>
+<li><a href="#%E9%83%A8%E7%BD%B2deepseek">部署DeepSeek</a>
+<ul>
+<li><a href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%89%88%E6%9C%AC">选择合适的版本</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2deepseek-32b">部署DeepSeek 32B</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81">配置浏览器支持</a></li>
+<li><a href="#%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE">参数设置</a></li>
+</ul>
+</li>
+<li><a href="#%E5%85%B6%E4%BB%96%E6%94%AF%E6%8C%81%E6%A8%A1%E5%9E%8B">其他支持模型</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>很多互联网公司支持使用满血版DeepSeek，与个人部署的DeepSeek的区别就在用户需要献出自己的手机号码、IP地址、设备信息、聊天记录等个人隐私信息，另外国内公司不支持无账号使用大模型，必须绑定手机号码。考虑到国内长期存在的实名制，手机号码实际绑定了用户的身份证信息以及家庭地址等等。</p>
+<h2><a id="%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>准备</h2>
+<h3><a id="%E4%B8%8B%E8%BD%BDollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载Ollama</h3>
+<p>到Ollama网页下载程序，<a href="https://ollama.com/download">https://ollama.com/download</a>。</p>
+<h3><a id="%E5%AE%89%E8%A3%85ollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Ollama</h3>
+<p>以macOS为例，一般情况下直接安装。如果没有图标出现，则需进入<code>/Applications/Ollama.app/Contents/Resources/</code>，打开该文件夹下<code>ollama</code>即可。之后便可通过终端运行<code>ollama -v</code>查看软件版本号。软件支持自动更新，无需担心。</p>
+<h2><a id="%E9%83%A8%E7%BD%B2deepseek" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署DeepSeek</h2>
+<h3><a id="%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%89%88%E6%9C%AC" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>选择合适的版本</h3>
+<p>到Ollama资料库查找DeepSeek-r1 <a href="https://ollama.com/library/deepseek-r1">https://ollama.com/library/deepseek-r1</a>。<a href="https://github.com/deepseek-ai/DeepSeek-R1">DeepSeek</a>可供下载的有一个满血版671b以及六个蒸馏模型，主要区别如下：</p>
+<ul>
+<li>DeepSeek-R1-Distill-Qwen-1.5B，要求内存至少8G；</li>
+<li>DeepSeek-R1-Distill-Qwen-7B，要求内存至少16GB；</li>
+<li>DeepSeek-R1-Distill-Llama-8B，要求内存至少16GB；</li>
+<li>DeepSeek-R1-Distill-Qwen-14B，要求内存至少32GB；</li>
+<li>DeepSeek-R1-Distill-Qwen-32B，要求内存建议至少32GB；</li>
+<li>DeepSeek-R1-Distill-Llama-70B，要求内存48GB以上；</li>
+<li>deepseek-r1:671b，俗称满血版，要求内存512GB以上。</li>
+</ul>
+<p>个人电脑使用蒸馏模型即可。</p>
+<h3><a id="%E9%83%A8%E7%BD%B2deepseek-32b" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署DeepSeek 32B</h3>
+<p>以<code>DeepSeek-R1-Distill-Qwen-14B</code>为例，在终端执行：</p>
+<pre class="line-numbers"><code class="language-zsh">ollama run deepseek-r1:32b
+</code></pre>
+<p>等待安装完成即可。</p>
+<h3><a id="%E9%85%8D%E7%BD%AE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>配置浏览器支持</h3>
+<p>安装浏览器插件<code>Page Assist</code>，之后便可以通过浏览器运行。</p>
+<ul>
+<li>Github <a href="https://github.com/n4ze3m/page-assist">https://github.com/n4ze3m/page-assist</a></li>
+<li>Firefox：<a href="https://addons.mozilla.org/en-US/firefox/addon/page-assist/">https://addons.mozilla.org/en-US/firefox/addon/page-assist</a></li>
+<li>Chrome <a href="https://chromewebstore.google.com/detail/page-assist-%E6%9C%AC%E5%9C%B0-ai-%E6%A8%A1%E5%9E%8B%E7%9A%84-web/jfgfiigpkhlkbnfnbobbkinehhfdhndo?pli=1">https://chromewebstore.google.com/detail/page-assist-%E6%9C%AC%E5%9C%B0-ai-%E6%A8%A1%E5%9E%8B%E7%9A%84-web/jfgfiigpkhlkbnfnbobbkinehhfdhndo?pli=1</a></li>
+</ul>
+<p>在浏览器中点击<code>Page Assist</code>插件图标，选择模型以及提示词后便可使用DeepSeek。开启网络搜索结果可能会更好。</p>
+<h3><a id="%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参数设置</h3>
+<p>来自官方的推荐参数设置。</p>
+<ul>
+<li>没有 system prompt</li>
+<li>温度：0.6</li>
+<li>参考搜索与文件上传的官方提示</li>
+<li>减轻模型旁路思维</li>
+</ul>
+<p>中文查询</p>
+<pre class="line-numbers"><code class="language-plain_text">search_answer_zh_template = \
+'''# 以下内容是基于用户发送的消息的搜索结果:
+{search_results}
+在我给你的搜索结果中，每个结果都是[webpage X begin]...[webpage X end]格式的，X代表每篇文章的数字索引。请在适当的情况下在句子末尾引用上下文。请按照引用编号[citation:X]的格式在答案中对应部分引用上下文。如果一句话源自多个上下文，请列出所有相关的引用编号，例如[citation:3][citation:5]，切记不要将引用集中在最后返回引用编号，而是在答案对应部分列出。
+在回答时，请注意以下几点：
+- 今天是{cur_date}。
+- 并非搜索结果的所有内容都与用户的问题密切相关，你需要结合问题，对搜索结果进行甄别、筛选。
+- 对于列举类的问题（如列举所有航班信息），尽量将答案控制在10个要点以内，并告诉用户可以查看搜索来源、获得完整信息。优先提供信息完整、最相关的列举项；如非必要，不要主动告诉用户搜索结果未提供的内容。
+- 对于创作类的问题（如写论文），请务必在正文的段落中引用对应的参考编号，例如[citation:3][citation:5]，不能只在文章末尾引用。你需要解读并概括用户的题目要求，选择合适的格式，充分利用搜索结果并抽取重要信息，生成符合用户要求、极具思想深度、富有创造力与专业性的答案。你的创作篇幅需要尽可能延长，对于每一个要点的论述要推测用户的意图，给出尽可能多角度的回答要点，且务必信息量大、论述详尽。
+- 如果回答很长，请尽量结构化、分段落总结。如果需要分点作答，尽量控制在5个点以内，并合并相关的内容。
+- 对于客观类的问答，如果问题的答案非常简短，可以适当补充一到两句相关信息，以丰富内容。
+- 你需要根据用户要求和回答内容选择合适、美观的回答格式，确保可读性强。
+- 你的回答应该综合多个相关网页来回答，不能重复引用一个网页。
+- 除非用户要求，否则你回答的语言需要和用户提问的语言保持一致。
+ 
+# 用户消息为：
+{question}'''
+</code></pre>
+<h2><a id="%E5%85%B6%E4%BB%96%E6%94%AF%E6%8C%81%E6%A8%A1%E5%9E%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>其他支持模型</h2>
+<p>ollama也可以安装其他模型，在网站可查看支持模型列表 <a href="https://ollama.com/library">https://ollama.com/library</a>。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>DeepSeek Github仓库 <a href="https://github.com/deepseek-ai/DeepSeek-R1">https://github.com/deepseek-ai/DeepSeek-R1</a></li>
+<li>DeepSeek 官方推荐的部署 DeepSeek-R1 最佳设置参数，和官网一样。 <a href="https://www.appinn.com/deepseek-r1-deploying-recommended-settings/">https://www.appinn.com/deepseek-r1-deploying-recommended-settings/</a></li>
+<li>用M1 Max MacBook Pro私有化部署DeepSeek-R1 <a href="https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro">https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[自建搜索引擎]]></title>
-    <link href="https://smartdig.github.io/self-hosted-search-engine.html"/>
+    <link href="https://smartdigg.github.io/self-hosted-search-engine.html"/>
     <updated>2024-11-30T10:44:45+08:00</updated>
-    <id>https://smartdig.github.io/self-hosted-search-engine.html</id>
+    <id>https://smartdigg.github.io/self-hosted-search-engine.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%85%AC%E5%85%B1%E5%AE%9E%E4%BE%8B">公共实例</a></li>
@@ -174,9 +270,9 @@ if z=$(curl -s 'https://install.zerotier.com/' | gpg); then echo &quot;$z&quot; 
   
   <entry>
     <title type="html"><![CDATA[SmartDNS 配置]]></title>
-    <link href="https://smartdig.github.io/configure-smartdns.html"/>
+    <link href="https://smartdigg.github.io/configure-smartdns.html"/>
     <updated>2024-05-26T12:09:24+08:00</updated>
-    <id>https://smartdig.github.io/configure-smartdns.html</id>
+    <id>https://smartdigg.github.io/configure-smartdns.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#smartdns%E5%AE%89%E8%A3%85">SmartDNS 安装</a>
@@ -580,9 +676,9 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
   
   <entry>
     <title type="html"><![CDATA[macOS 配置 DNS-over-HTTPS]]></title>
-    <link href="https://smartdig.github.io/configure-DNS-over-HTTPS-for-macOS.html"/>
+    <link href="https://smartdigg.github.io/configure-DNS-over-HTTPS-for-macOS.html"/>
     <updated>2024-05-24T18:55:49+08:00</updated>
-    <id>https://smartdig.github.io/configure-DNS-over-HTTPS-for-macOS.html</id>
+    <id>https://smartdigg.github.io/configure-DNS-over-HTTPS-for-macOS.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#cloudflared%E9%85%8D%E7%BD%AE">cloudflared 配置</a></li>
@@ -651,14 +747,15 @@ require_nolog = false
 disabled_server_names = ['alidns-doh', 'dnspod']
 </code></pre>
 <p>启动dnscrypt-proxy服务：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ brew services start dnscrypt-proxy
+<pre class="line-numbers"><code class="language-plain_text">$sudo brew services start dnscrypt-proxy
 </code></pre>
 <p>检查dnscrypt-proxy是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5300
 </code></pre>
 <p>管理dnscrypt-proxy服务：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ brew services start/stop/status/restart dnscrypt-proxy
+<pre class="line-numbers"><code class="language-plain_text">$sudo brew services start/stop/restart dnscrypt-proxy
 </code></pre>
+<p><strong>备注</strong>：不要使用不带<code>sudo</code>的命令：<code>brew services start/stop/restart dnscrypt-proxy</code>，这是为了避免在如下位置出现导致端口冲突提醒的配置文件：<code>~/Library/LaunchAgents/homebrew.mxcl.dnscrypt-proxy.plist</code>。</p>
 <h2><a id="mosdns%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mosdns配置</h2>
 <p>从Github下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。mosdns仅作分流和转发，使用端口<code>5304</code>。</p>
 <p>解压缩后，将整个文件夹移至<code>/opt/local/etc/</code>，修改配置文件<code>/opt/local/etc/config.yaml</code>：</p>
@@ -892,9 +989,9 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
   
   <entry>
     <title type="html"><![CDATA[LibreWolf浏览器配置]]></title>
-    <link href="https://smartdig.github.io/librewolf-browser-configuration.html"/>
+    <link href="https://smartdigg.github.io/librewolf-browser-configuration.html"/>
     <updated>2024-11-10T23:42:15+08:00</updated>
-    <id>https://smartdig.github.io/librewolf-browser-configuration.html</id>
+    <id>https://smartdigg.github.io/librewolf-browser-configuration.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85">LibreWolf浏览器安装</a></li>
@@ -938,6 +1035,11 @@ defaultPref(&quot;network.http.referer.XOriginPolicy&quot;, 2);
 //disable WebGL
 defaultPref(&quot;webgl.disabled&quot;, true);
 </code></pre>
+<p>一些实用的设置：<br />
+<code>about:config</code></p>
+<pre class="line-numbers"><code class="language-plain_text">browser.search.openintab, true
+ui.prefersReducedMotion=0
+</code></pre>
 <h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器管理</h2>
 <h3><a id="%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装扩展</h3>
 <p>官方建议尽可能少安装扩展，因为额外的扩展可能增加你的攻击面。</p>
@@ -971,13 +1073,14 @@ defaultPref(&quot;webgl.disabled&quot;, true);
   
   <entry>
     <title type="html"><![CDATA[macOS配置Homebrew]]></title>
-    <link href="https://smartdig.github.io/macos-configure-homebrew.html"/>
+    <link href="https://smartdigg.github.io/macos-configure-homebrew.html"/>
     <updated>2024-10-23T13:25:03+08:00</updated>
-    <id>https://smartdig.github.io/macos-configure-homebrew.html</id>
+    <id>https://smartdigg.github.io/macos-configure-homebrew.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools">重新安装CommandLineTools</a></li>
 <li><a href="#%E5%AE%89%E8%A3%85homebrew">安装Homebrew</a></li>
+<li><a href="#homebrew%E4%BD%BF%E7%94%A8">Homebrew使用</a></li>
 <li><a href="#%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90">恢复Homebrew默认源</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
@@ -1029,6 +1132,24 @@ $ rm -rf brew-install
 </ol>
 <pre class="line-numbers"><code class="language-zsh">test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
 </code></pre>
+<h2><a id="homebrew%E4%BD%BF%E7%94%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew使用</h2>
+<p>安装软件，例如<a href="librewolf-browser-configuration.html">LibreWolf浏览器</a></p>
+<pre class="line-numbers"><code class="language-zsh">brew install --cask librewolf
+</code></pre>
+<p>升级软件包</p>
+<pre class="line-numbers"><code class="language-zsh">brew upgrade ***
+</code></pre>
+<p>卸载软件</p>
+<pre class="line-numbers"><code class="language-zsh">$ brew uninstall ***
+</code></pre>
+<p>更新Homebrew自身</p>
+<pre class="line-numbers"><code class="language-plain_text">brew update 
+```zsh
+
+更新所有cask软件
+```zsh
+brew upgrade --cask $(brew list --cask)
+</code></pre>
 <h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复Homebrew默认源</h2>
 <p>参考清华帮助文档细节。</p>
 <pre class="line-numbers"><code class="language-zsh"># brew 程序本身，Homebrew / Linuxbrew 相同
@@ -1060,9 +1181,9 @@ brew update
   
   <entry>
     <title type="html"><![CDATA[超简单个人网页TiddlyWiki]]></title>
-    <link href="https://smartdig.github.io/super-simple-personal-webpage-tiddlywiki.html"/>
+    <link href="https://smartdigg.github.io/super-simple-personal-webpage-tiddlywiki.html"/>
     <updated>2024-09-13T14:35:05+08:00</updated>
-    <id>https://smartdig.github.io/super-simple-personal-webpage-tiddlywiki.html</id>
+    <id>https://smartdigg.github.io/super-simple-personal-webpage-tiddlywiki.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E4%B8%8B%E8%BD%BDtiddlywiki">下载TiddlyWiKi</a></li>
@@ -1124,9 +1245,9 @@ brew update
   
   <entry>
     <title type="html"><![CDATA[网络搜索引擎]]></title>
-    <link href="https://smartdig.github.io/search-engine.html"/>
+    <link href="https://smartdigg.github.io/search-engine.html"/>
     <updated>2023-11-22T01:38:16+08:00</updated>
-    <id>https://smartdig.github.io/search-engine.html</id>
+    <id>https://smartdigg.github.io/search-engine.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%95%86%E7%94%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E9%97%AE%E9%A2%98">商用搜索引擎问题</a></li>
@@ -1180,9 +1301,9 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
   
   <entry>
     <title type="html"><![CDATA[Brave浏览器安全配置]]></title>
-    <link href="https://smartdig.github.io/brave-browser-security-enhanced.html"/>
+    <link href="https://smartdigg.github.io/brave-browser-security-enhanced.html"/>
     <updated>2023-11-05T17:24:33+08:00</updated>
-    <id>https://smartdig.github.io/brave-browser-security-enhanced.html</id>
+    <id>https://smartdigg.github.io/brave-browser-security-enhanced.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8">安装Brave浏览器</a></li>
@@ -1269,9 +1390,9 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
   
   <entry>
     <title type="html"><![CDATA[安全、隐私和匿名]]></title>
-    <link href="https://smartdig.github.io/security-privacy-anonymity.html"/>
+    <link href="https://smartdigg.github.io/security-privacy-anonymity.html"/>
     <updated>2023-11-04T09:58:41+08:00</updated>
-    <id>https://smartdig.github.io/security-privacy-anonymity.html</id>
+    <id>https://smartdigg.github.io/security-privacy-anonymity.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%AE%89%E5%85%A8%E3%80%81%E9%9A%90%E7%A7%81%E5%92%8C%E5%8C%BF%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB">安全、隐私和匿名的关系</a>
@@ -1318,9 +1439,9 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
   
   <entry>
     <title type="html"><![CDATA[网络安全手册]]></title>
-    <link href="https://smartdig.github.io/network-security-manual.html"/>
+    <link href="https://smartdigg.github.io/network-security-manual.html"/>
     <updated>2023-08-16T12:54:11+08:00</updated>
-    <id>https://smartdig.github.io/network-security-manual.html</id>
+    <id>https://smartdigg.github.io/network-security-manual.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%89%8D%E6%8F%90">前提</a></li>
@@ -1340,6 +1461,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <li><a href="#%E5%8A%A0%E5%AF%86%E5%8D%B3%E6%97%B6%E9%80%9A%E8%AE%AF">加密即时通讯</a></li>
 <li><a href="#%E8%BE%93%E5%85%A5%E6%B3%95">输入法</a></li>
 <li><a href="#%E9%82%AE%E7%AE%B1">邮箱</a></li>
+<li><a href="#%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%99%A8">密码管理器</a></li>
 <li><a href="#%E4%BA%91%E6%9C%8D%E5%8A%A1">云服务</a></li>
 </ul>
 </li>
@@ -1431,6 +1553,8 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <h3><a id="%E9%82%AE%E7%AE%B1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>邮箱</h3>
 <p>无论何时都不要使用【中资邮箱】。使用PGP/GnuPG（GNU Privacy Guard，GPG）手动加密邮件内容。</p>
 <p>教程：<a href="https://yummydimsum.github.io/docs/06-communication/mailvelope/">借助 Mailvelope 使用 PGP 加密邮件</a>。</p>
+<h3><a id="%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>密码管理器</h3>
+<p>推荐<a href="https://keepassxc.org/project">KeepassXC</a>，<a href="https://bitwarden.com/">Bitwarden</a>等，条件允许情况下优先选择离线版或自建软件。</p>
 <h3><a id="%E4%BA%91%E6%9C%8D%E5%8A%A1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>云服务</h3>
 <ul>
 <li>不使用中资云服务（如百度网盘，阿里云、腾讯云、京东云的VPS），即使使用也不要上传任何私人资料；</li>
@@ -1507,9 +1631,9 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
   
   <entry>
     <title type="html"><![CDATA[Mac文件完整性检测]]></title>
-    <link href="https://smartdig.github.io/mac-files-integrity-verification.html"/>
+    <link href="https://smartdigg.github.io/mac-files-integrity-verification.html"/>
     <updated>2024-04-08T10:05:36+08:00</updated>
-    <id>https://smartdig.github.io/mac-files-integrity-verification.html</id>
+    <id>https://smartdigg.github.io/mac-files-integrity-verification.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#shasum">shasum</a></li>
@@ -1563,9 +1687,9 @@ $ openssl md5 /path/to/filename
   
   <entry>
     <title type="html"><![CDATA[macOS安装Rime输入法]]></title>
-    <link href="https://smartdig.github.io/macos-install-rime.html"/>
+    <link href="https://smartdigg.github.io/macos-install-rime.html"/>
     <updated>2024-02-17T15:00:58+08:00</updated>
-    <id>https://smartdig.github.io/macos-install-rime.html</id>
+    <id>https://smartdigg.github.io/macos-install-rime.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
@@ -1630,9 +1754,9 @@ installation_id: &quot;your_custom_id&quot;
   
   <entry>
     <title type="html"><![CDATA[如何快速搭建个人静态博客]]></title>
-    <link href="https://smartdig.github.io/how-to-quickly-build-a-personal-static-blog.html"/>
+    <link href="https://smartdigg.github.io/how-to-quickly-build-a-personal-static-blog.html"/>
     <updated>2023-07-23T23:20:07+08:00</updated>
-    <id>https://smartdig.github.io/how-to-quickly-build-a-personal-static-blog.html</id>
+    <id>https://smartdigg.github.io/how-to-quickly-build-a-personal-static-blog.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#%E9%87%8D%E8%A6%81%E6%8F%90%E9%86%92">重要提醒</a></li>
@@ -1699,9 +1823,9 @@ installation_id: &quot;your_custom_id&quot;
   
   <entry>
     <title type="html"><![CDATA[Hello World]]></title>
-    <link href="https://smartdig.github.io/hello-world.html"/>
+    <link href="https://smartdigg.github.io/hello-world.html"/>
     <updated>2023-07-23T22:28:06+08:00</updated>
-    <id>https://smartdig.github.io/hello-world.html</id>
+    <id>https://smartdigg.github.io/hello-world.html</id>
     <content type="html"><![CDATA[
 <p>最好永久记录！</p>
 
