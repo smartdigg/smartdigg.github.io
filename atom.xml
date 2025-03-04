@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-03-04T14:37:48+08:00</updated>
+  <updated>2025-03-05T02:47:27+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -38,7 +38,7 @@
 </ul>
 </div>
 <p>很多互联网公司支持使用满血版DeepSeek，与个人部署的DeepSeek的区别就在用户需要献出自己的手机号码、IP地址、设备信息、聊天记录乃至所有隐私及权利。</p>
-<p><img src="media/17398140475976/tengxunyuanbao.png" alt="tengxunyuanbao" /></p>
+<p><img src="media/17398140475976/tengxunyuanbao.webp" alt="tengxunyuanbao" /></p>
 <h2><a id="%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>准备</h2>
 <h3><a id="%E4%B8%8B%E8%BD%BDollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载Ollama</h3>
 <p>到Ollama网页下载程序，<a href="https://ollama.com/download">https://ollama.com/download</a>。</p>
