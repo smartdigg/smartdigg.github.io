@@ -163,11 +163,11 @@ $ rm -rf brew-install
 <ol start="5">
 <li>将<code>brew</code>程序的相关路径加入到环境变量中：</li>
 </ol>
-<pre class="line-numbers"><code class="language-zsh">test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
+<pre class="line-numbers"><code class="language-zsh">$ test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
 </code></pre>
 <h2><a id="homebrew%E4%BD%BF%E7%94%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew使用</h2>
 <p>安装软件，例如<a href="librewolf-browser-configuration.html">LibreWolf浏览器</a></p>
-<pre class="line-numbers"><code class="language-zsh">brew install --cask librewolf
+<pre class="line-numbers"><code class="language-zsh">$ brew install --cask librewolf
 </code></pre>
 <p>升级软件包</p>
 <pre class="line-numbers"><code class="language-zsh">brew upgrade ***
@@ -176,12 +176,10 @@ $ rm -rf brew-install
 <pre class="line-numbers"><code class="language-zsh">$ brew uninstall ***
 </code></pre>
 <p>更新Homebrew自身</p>
-<pre class="line-numbers"><code class="language-plain_text">brew update 
-```zsh
-
-更新所有cask软件
-```zsh
-brew upgrade --cask $(brew list --cask)
+<pre class="line-numbers"><code class="language-zsh">$ brew update 
+</code></pre>
+<p>更新所有cask软件</p>
+<pre class="line-numbers"><code class="language-zsh">$ brew upgrade --cask $(brew list --cask)
 </code></pre>
 <h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复Homebrew默认源</h2>
 <p>参考清华帮助文档细节。</p>
@@ -229,7 +227,7 @@ brew update
     <footer class="footer">
         <div class="content has-text-centered">
           <p>
-              Copyright &copy; 2024
+              Copyright &copy; 2025
               Powered by <a target="_blank" href="https://www.mweb.im">MWeb</a>,&nbsp; 
               Theme used <a target="_blank" href="https://bulma.io/">Bulma CSS</a>.
           </p>
@@ -263,7 +261,7 @@ brew update
     
 
 
-
+test
 
   </body>
 </html>
