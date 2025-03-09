@@ -313,13 +313,16 @@ plugins:
 </code></pre>
 <p>部分文件来源：</p>
 <ul>
-<li>china_ip_list.txt：<a href="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt">https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt</a></li>
-<li>reject-list.txt：<a href="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt">https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt</a></li>
-<li>direct-list.txt：<a href="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt">https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt</a></li>
-<li>proxy-list.txt：<a href="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt">https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt</a></li>
-<li>apple-cn.txt：<a href="https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt">https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt</a></li>
-<li>self-defined.txt：自行创建。</li>
+<li><code>china_ip_list.txt</code>：<a href="https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt">https://raw.githubusercontent.com/Loyalsoldier/geoip/release/text/cn.txt</a></li>
+<li><code>reject-list.txt</code>：<a href="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt">https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/reject-list.txt</a></li>
+<li><code>direct-list.txt</code>：<a href="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt">https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/direct-list.txt</a></li>
+<li><code>proxy-list.txt</code>：<a href="https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt">https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/proxy-list.txt</a></li>
+<li><code>apple-cn.txt</code>：<a href="https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt">https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt</a></li>
+<li><code>self-defined.txt</code>：自行创建。</li>
 </ul>
+<p>安装前检查配置是否正确：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ /opt/local/etc/mosdns/mosdns start -c /opt/local/etc/mosdns/config.yaml
+</code></pre>
 <p>安装mosdns服务：</p>
 <pre class="line-numbers"><code class="language-plain_text"># mosdns service install -d 工作目录绝对路径 -c 配置文件路径
 $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt/local/etc/mosdns/config.yaml
