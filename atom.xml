@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-05-19T00:58:31+08:00</updated>
+  <updated>2025-06-17T21:23:36+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -105,6 +105,114 @@
 <li>DeepSeek 官方推荐的部署 DeepSeek-R1 最佳设置参数，和官网一样。 <a href="https://www.appinn.com/deepseek-r1-deploying-recommended-settings/">https://www.appinn.com/deepseek-r1-deploying-recommended-settings/</a></li>
 <li>用M1 Max MacBook Pro私有化部署DeepSeek-R1 <a href="https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro">https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro</a></li>
 <li>腾讯元宝修改用户协议内容引发热议 <a href="https://news.iqilu.com/shandong/shandonggedi/20250304/5784371.shtml">https://news.iqilu.com/shandong/shandonggedi/20250304/5784371.shtml</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[VPS 搭建 DNS-over-HTTPS 服务器]]></title>
+    <link href="https://smartdigg.github.io/configure-DNS-over-HTTPS-on-VPS.html"/>
+    <updated>2025-02-23T02:35:50+08:00</updated>
+    <id>https://smartdigg.github.io/configure-DNS-over-HTTPS-on-VPS.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87">安装前准备</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6">安装证书</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85adguardhome">安装AdGuardHome</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AEnginx">配置Nginx</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>选择AdGuardHome配置DNS-over-HTTPS（doh）服务器优势：安装简单，可视化，广告拦截。以Debian系统为例。</p>
+<h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
+<ul>
+<li>域名<code>example.com</code></li>
+<li>DNS 添加A记录 <code>doh.example.com</code></li>
+<li>VPS，要求延迟要低。</li>
+</ul>
+<h2><a id="%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装证书</h2>
+<p>安装Nginx：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo apt install nginx
+</code></pre>
+<p>安装certbot：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo apt install certbot
+$ certbot --version
+</code></pre>
+<p>从Let's Encrypt获取证书：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo certbot certonly --standalone --preferred-challenges http --agree-tos --email you@example.com -d doh.example.com
+</code></pre>
+<p>证书放置在<code>/etc/letsencrypt/live/doh.example.com/</code>目录下。</p>
+<p>测试自动更新证书是否正常</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo certbot renew --dry-run
+</code></pre>
+<p>正常的话，设定两个月自动更新一次证书：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo crontab -e
+# 选择 `nano`，复制以下内容保存。
+0 0 15 */2 * /usr/bin/certbot renew --quiet
+</code></pre>
+<h2><a id="%E5%AE%89%E8%A3%85adguardhome" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装AdGuardHome</h2>
+<p>使用以下命令自动安装AdGuardHome：</p>
+<pre class="line-numbers"><code class="language-bash">curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v
+</code></pre>
+<p>VPS防火墙临时放行<code>3000</code>。浏览器访问<code>ip:3000</code>，根据引导进行操作。</p>
+<p>配置DOH（DNS-over-HTTPS）<br />
+<img src="media/17402493508620/doh_set.png" alt="doh_set" /></p>
+<p>这里不勾选<code>HTTPS自动重定向</code>，HTTPS端口填写<code>8443</code>。</p>
+<p>AdGuardHome控制命令：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo /opt/AdGuardHome/AdGuardHome -s start|stop|restart|statuslinstallluninstall
+</code></pre>
+<h2><a id="%E9%85%8D%E7%BD%AEnginx" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>配置Nginx</h2>
+<p>创建<code>/etc/nginx/conf.d/doh.conf</code>，内容如下：</p>
+<pre class="line-numbers"><code class="language-bash">server {
+    listen 80;
+    listen 443 ssl http2;
+    server_name doh.example.com;  #这里填写域名
+    index index.php index.html index.htm default.php default.htm default.html
+    root /usr/share/nginxt/html;   #网站根目录，指定一个空文件夹即可
+
+    #强制HTTPS
+    if ($server_port !~ 443){
+            rewrite ^(/.*)$ https://$host$1 permanent;
+    }
+
+    # HTTPS证书
+	ssl_certificate /etc/letsencrypt/live/doh.example.com/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/doh.example.com/privkey.pem;
+
+    #反向代理仪表盘(可以不配置)
+    location ^~ / {
+            proxy_pass https://127.0.0.1:8443/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header REMOTE-HOST $remote_addr;
+    }
+
+    #反向代理DoH
+    location ^~ /dns-query {
+            proxy_pass https://127.0.0.1:8443;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header REMOTE-HOST $remote_addr;
+    }
+}
+</code></pre>
+<p>测试Nginx配置是否正确：</p>
+<pre class="line-numbers"><code class="language-bash">$ nginx -t
+</code></pre>
+<p>重启Nginx：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo systemctl restart nginx.service
+</code></pre>
+<p>如果nginx代理配置没有问题，使用浏览器访问<code>https://doh.example.com/dns-query</code>会出现<code>Bad Request</code>信息：<br />
+<img src="media/17402493508620/dns_query_test.png" alt="dns_query_test" /></p>
+<p>之后便可以在浏览器或手机上使用自建的doh服务。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>AdGuardHome Github repo <a href="https://github.com/AdguardTeam/AdGuardHome/">https://github.com/AdguardTeam/AdGuardHome</a></li>
+<li>AdGuardHome 部署与使用指北 <a href="https://fordes.dev/posts/tutorials/ad-guard-home/">https://fordes.dev/posts/tutorials/ad-guard-home</a></li>
+<li>使用 AdGuardHome 搭建私人 DNS 广告过滤服务器 <a href="https://blog.renzicu.com/2023/11/438.html">https://blog.renzicu.com/2023/11/438.html</a></li>
 </ul>
 
 ]]></content>
@@ -1202,15 +1310,15 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[LibreWolf浏览器配置]]></title>
+    <title type="html"><![CDATA[LibreWolf  浏览器配置]]></title>
     <link href="https://smartdigg.github.io/librewolf-browser-configuration.html"/>
     <updated>2024-11-10T23:42:15+08:00</updated>
     <id>https://smartdigg.github.io/librewolf-browser-configuration.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
-<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85">LibreWolf浏览器安装</a></li>
-<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE">LibreWolf浏览器设置</a></li>
-<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86">LibreWolf浏览器管理</a>
+<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85">LibreWolf 浏览器安装</a></li>
+<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE">LibreWolf 浏览器设置</a></li>
+<li><a href="#librewolf-jun-17-2025%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86">LibreWolf Jun 17, 2025浏览器管理</a>
 <ul>
 <li><a href="#%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95">安装扩展</a></li>
 <li><a href="#%E6%9B%B4%E6%96%B0librewolf">更新LibreWolf</a></li>
@@ -1222,7 +1330,7 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 </ul>
 </div>
 <p>之前介绍过<a href="brave-browser-security-enhanced.html">Brave浏览器安全配置</a>，鉴于Google公司在Chromium项目中经常作妖，用户可以考虑使用LibreWolf浏览器。LibreWolf浏览器是一款基于Firefox的浏览器，安全性与隐私性不弱于Brave浏览器。可参考<a href="https://privacytests.org/">privacytests.org</a>浏览器测评。</p>
-<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器安装</h2>
+<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf 浏览器安装</h2>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install --cask librewolf
 </code></pre>
 <p>由于LibreWolf浏览器开发者没有购买开发者证书，因此使用前需要在终端授权。</p>
@@ -1231,7 +1339,7 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 <p>也可以一步到位安装：</p>
 <pre class="line-numbers"><code class="language-plain_text">brew install librewolf --no-quarantine
 </code></pre>
-<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器设置</h2>
+<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf 浏览器设置</h2>
 <p>LibreWolf浏览器基本上与Firefox一致，唯独在设置中增加LibreWolf选项。</p>
 <p><img src="media/17312533358317/Librewolf-setting.webp" alt="Librewolf-setting" /></p>
 <p>LibreWolf浏览器可以通过<code>about:config</code>来配置，另外也能通过修改配置文件<code>librewolf.overrides.cfg</code>来覆盖配置内容。</p>
@@ -1255,7 +1363,7 @@ defaultPref(&quot;webgl.disabled&quot;, true);
 browser.urlbar.openintab false
 ui.prefersReducedMotion=0
 </code></pre>
-<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf浏览器管理</h2>
+<h2><a id="librewolf-jun-17-2025%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf Jun 17, 2025浏览器管理</h2>
 <h3><a id="%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装扩展</h3>
 <p>官方建议尽可能少安装扩展，因为额外的扩展可能增加你的攻击面。</p>
 <ul>
@@ -1288,22 +1396,22 @@ ui.prefersReducedMotion=0
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[macOS配置Homebrew]]></title>
+    <title type="html"><![CDATA[macOS 配置 Homebrew]]></title>
     <link href="https://smartdigg.github.io/macos-configure-homebrew.html"/>
     <updated>2024-10-23T13:25:03+08:00</updated>
     <id>https://smartdigg.github.io/macos-configure-homebrew.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
-<li><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools">重新安装CommandLineTools</a></li>
-<li><a href="#%E5%AE%89%E8%A3%85homebrew">安装Homebrew</a></li>
-<li><a href="#homebrew%E4%BD%BF%E7%94%A8">Homebrew使用</a></li>
-<li><a href="#%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90">恢复Homebrew默认源</a></li>
+<li><a href="#%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools">重新安装 CommandLineTools</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85homebrew">安装 Homebrew</a></li>
+<li><a href="#homebrew%E4%BD%BF%E7%94%A8">Homebrew 使用</a></li>
+<li><a href="#%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90">恢复 Homebrew 默认源</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
 <p>本篇适用于macOS重装或降级后使用Homebrew，部分内容也适用于全新系统安装Homebrew。</p>
 <p>macOS重装或降级后，若使用Time Machine恢复，一般情况下Homebrew不能正常工作。这时就需重新配置Homebrew。</p>
-<h2><a id="%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重新安装CommandLineTools</h2>
+<h2><a id="%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重新安装 CommandLineTools</h2>
 <p>重置<code>CommandLineTools</code>：</p>
 <pre class="line-numbers"><code class="language-zsh">$ sudo xcode-select --reset
 </code></pre>
@@ -1314,7 +1422,7 @@ ui.prefersReducedMotion=0
 <pre class="line-numbers"><code class="language-zsh">$ sudo xcode-select --install
 </code></pre>
 <p>全新安装Homebrew，仅需执行最后一步。</p>
-<h2><a id="%E5%AE%89%E8%A3%85homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Homebrew</h2>
+<h2><a id="%E5%AE%89%E8%A3%85homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 Homebrew</h2>
 <p>以下设置适用于Apple Silicon CPU设备，即带M芯片，默认使用<code>zsh</code>。鉴于大陆github使用困难，本篇使用清华软件源。</p>
 <ol>
 <li>设置Homebrew环境变量：</li>
@@ -1348,7 +1456,7 @@ $ rm -rf brew-install
 </ol>
 <pre class="line-numbers"><code class="language-zsh">$ test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
 </code></pre>
-<h2><a id="homebrew%E4%BD%BF%E7%94%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew使用</h2>
+<h2><a id="homebrew%E4%BD%BF%E7%94%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew 使用</h2>
 <p>安装软件，例如<a href="librewolf-browser-configuration.html">LibreWolf浏览器</a></p>
 <pre class="line-numbers"><code class="language-zsh">$ brew install --cask librewolf
 </code></pre>
@@ -1364,7 +1472,7 @@ $ rm -rf brew-install
 <p>更新所有cask软件</p>
 <pre class="line-numbers"><code class="language-zsh">$ brew upgrade --cask $(brew list --cask)
 </code></pre>
-<h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复Homebrew默认源</h2>
+<h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复 Homebrew 默认源</h2>
 <p>参考清华帮助文档细节。</p>
 <pre class="line-numbers"><code class="language-zsh"># brew 程序本身，Homebrew / Linuxbrew 相同
 unset HOMEBREW_API_DOMAIN
@@ -1394,13 +1502,13 @@ brew update
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[超简单个人网页TiddlyWiki]]></title>
+    <title type="html"><![CDATA[超简单个人网页 TiddlyWiki]]></title>
     <link href="https://smartdigg.github.io/super-simple-personal-webpage-tiddlywiki.html"/>
     <updated>2024-09-13T14:35:05+08:00</updated>
     <id>https://smartdigg.github.io/super-simple-personal-webpage-tiddlywiki.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
-<li><a href="#%E4%B8%8B%E8%BD%BDtiddlywiki">下载TiddlyWiKi</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BDtiddlywiki">下载 TiddlyWiKi</a></li>
 <li><a href="#%E7%BC%96%E8%BE%91%E5%92%8C%E4%BF%9D%E5%AD%98">编辑和保存</a>
 <ul>
 <li><a href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6">安装插件</a></li>
@@ -1418,7 +1526,7 @@ brew update
 </ul>
 </div>
 <p>TiddlyWiki是一款很强大的个人知识管理系统，也可作为个人网页使用。好处是单文件、易备份、跨平台、上手难度低。</p>
-<h2><a id="%E4%B8%8B%E8%BD%BDtiddlywiki" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载TiddlyWiKi</h2>
+<h2><a id="%E4%B8%8B%E8%BD%BDtiddlywiki" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载 TiddlyWiKi</h2>
 <p>打开TiddlyWiki官网<a href="https://tiddlywiki.com/">https://tiddlywiki.com</a>，在GettingStarted部分下载空白副本，默认文件名为<code>empty.html</code>。</p>
 <p>也可以选择下载TiddlyWiKi经典版本<a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com/</a>。</p>
 <p>主要区别：经典TiddlyWiKi有多年历史，而新版TiddlyWiKi使用html5，外观更现代化。两个版本都在更新。</p>
@@ -1468,7 +1576,7 @@ brew update
 <li><a href="#%E5%AE%89%E5%85%A8%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E6%8E%A8%E8%8D%90">安全搜索引擎推荐</a></li>
 <li><a href="#%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">添加搜索引擎</a>
 <ul>
-<li><a href="#%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8">基于Chromium浏览器</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8">基于 Chromium 浏览器</a></li>
 <li><a href="#firefox">Firefox</a></li>
 </ul>
 </li>
@@ -1493,7 +1601,7 @@ brew update
 <li>其他搜索引擎及比较：<a href="https://searchengine.party">https://searchengine.party</a></li>
 </ul>
 <h2><a id="%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加搜索引擎</h2>
-<h3><a id="%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>基于Chromium浏览器</h3>
+<h3><a id="%E5%9F%BA%E4%BA%8Echromium%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>基于 Chromium 浏览器</h3>
 <p>以Brave浏览器为例，参考<a href="brave-browser-security-enhanced.html">Brave浏览器安全配置</a>。<br />
 从设置的侧边栏进入Search engine，在Manage search engines and site search页面下方Site search添加，</p>
 <p>例如添加Brave搜索引擎：</p>
@@ -1514,7 +1622,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Brave浏览器安全配置]]></title>
+    <title type="html"><![CDATA[Brave 浏览器安全配置]]></title>
     <link href="https://smartdigg.github.io/brave-browser-security-enhanced.html"/>
     <updated>2023-11-05T17:24:33+08:00</updated>
     <id>https://smartdigg.github.io/brave-browser-security-enhanced.html</id>
@@ -1845,7 +1953,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Mac文件完整性检测]]></title>
+    <title type="html"><![CDATA[Mac 文件完整性检测]]></title>
     <link href="https://smartdigg.github.io/mac-files-integrity-verification.html"/>
     <updated>2024-04-08T10:05:36+08:00</updated>
     <id>https://smartdigg.github.io/mac-files-integrity-verification.html</id>
@@ -1901,7 +2009,7 @@ $ openssl md5 /path/to/filename
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[macOS安装Rime输入法]]></title>
+    <title type="html"><![CDATA[macOS 安装Rime 输入法]]></title>
     <link href="https://smartdigg.github.io/macos-install-rime.html"/>
     <updated>2024-02-17T15:00:58+08:00</updated>
     <id>https://smartdigg.github.io/macos-install-rime.html</id>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
       
-    超简单个人网页 TiddlyWiki - 永久记录
+    VPS 搭建 DNS-over-HTTPS 服务器 - 永久记录
     
     </title>
     
@@ -79,7 +79,7 @@
                   <div class="post-body single-content">
                     
                     <h1 class="title">
-                            超简单个人网页 TiddlyWiki   
+                            VPS 搭建 DNS-over-HTTPS 服务器   
                       </h1>
                      
                     
@@ -88,7 +88,7 @@
                             <div class="media-content">
                               <div class="content">
                                 <p>
-                                 <span class="date">2023/12/11</span>
+                                 <span class="date">2024/09/11</span>
                                   
                                          
                                   
@@ -98,7 +98,11 @@
                                   <br />
                                   <span class="tran-tags">Tags:</span>&nbsp;
                                   
-                                    <a class="tag is-link is-light" href='tag_TiddlyWiki.html'>#TiddlyWiki</a>
+                                    <a class="tag is-link is-light" href='tag_VPS.html'>#VPS</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_DNS-over-HTTPS.html'>#DNS-over-HTTPS</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_AdGuardHome.html'>#AdGuardHome</a>
                                      
 
                                 </p>
@@ -109,58 +113,102 @@
                 </div>
                   <article class="markdown-body single-content">
                     <div class="mweb_toc"><ul>
-<li><a href="#%E4%B8%8B%E8%BD%BDtiddlywiki">下载 TiddlyWiKi</a></li>
-<li><a href="#%E7%BC%96%E8%BE%91%E5%92%8C%E4%BF%9D%E5%AD%98">编辑和保存</a>
-<ul>
-<li><a href="#%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6">安装插件</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87">插入图片</a>
-<ul>
-<li><a href="#%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87">网页图片</a></li>
-<li><a href="#%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87">本地图片</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E8%BD%AF%E4%BB%B6%E6%9B%B4%E6%96%B0">软件更新</a></li>
-<li><a href="#%E9%85%8D%E7%BD%AE%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5">配置个人网页</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87">安装前准备</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6">安装证书</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85adguardhome">安装AdGuardHome</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AEnginx">配置Nginx</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>TiddlyWiki是一款很强大的个人知识管理系统，也可作为个人网页使用。好处是单文件、易备份、跨平台、上手难度低。</p>
-<h2><a id="%E4%B8%8B%E8%BD%BDtiddlywiki" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载 TiddlyWiKi</h2>
-<p>打开TiddlyWiki官网<a href="https://tiddlywiki.com/">https://tiddlywiki.com</a>，在GettingStarted部分下载空白副本，默认文件名为<code>empty.html</code>。</p>
-<p>也可以选择下载TiddlyWiKi经典版本<a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com/</a>。</p>
-<p>主要区别：经典TiddlyWiKi有多年历史，而新版TiddlyWiKi使用html5，外观更现代化。两个版本都在更新。</p>
-<p>本文所介绍的是新版TiddlyWiKi，又称TiddlyWiKi 5。</p>
-<h2><a id="%E7%BC%96%E8%BE%91%E5%92%8C%E4%BF%9D%E5%AD%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编辑和保存</h2>
-<p>TiddlyWiKi作为单一html文件可直接通过浏览器打开、编辑与保存。也可使用如TiddlyDesktop等软件自动保存。在GettingStarted部分也有其他软件推荐。</p>
-<p>TiddlyDesktop需从Github下载安装<a href="https://github.com/TiddlyWiki/TiddlyDesktop/releases">https://github.com/TiddlyWiki/TiddlyDesktop/releases</a>。</p>
-<p>打开TiddlyDesktop，将<code>empty.html</code>文件拖入其中。TiddlyDesktop主界面有<code>advanced</code>选项，可选择是否启用自动备份。</p>
-<h3><a id="%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装插件</h3>
-<p>可选择安装Markdown、Relink、Highlighter等插件。TiddlyWiKi原生不支持Markdown编辑，但可通过Markdown插件实现。</p>
-<p>在设置中选择<code>Appearance</code>&gt;<code>Toolbars</code>&gt;<code>Page Toolbar</code>中勾选<code>new Markdown tiddler</code>，以后只需点击右侧图标便可添加Markdown笔记。</p>
-<h3><a id="%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>插入图片</h3>
-<p>TiddlyWiKi支持直接拖入图片，但这样一来会使得WiKi文件变得很大，相比而言，插入图片链接可节省很多空间。</p>
-<h4><a id="%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网页图片</h4>
-<p>在Markdown模式中，插入网页图片：</p>
-<pre class="line-numbers"><code class="language-plain_text">[img[https://i-blog.csdnimg.cn/blog_migrate/0b28e73406e0a641959929c1d1ffe32f.jpeg]]
+<p>选择AdGuardHome配置DNS-over-HTTPS（doh）服务器优势：安装简单，可视化，广告拦截。以Debian系统为例。</p>
+<h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
+<ul>
+<li>域名<code>example.com</code></li>
+<li>DNS 添加A记录 <code>doh.example.com</code></li>
+<li>VPS，要求延迟要低。</li>
+</ul>
+<h2><a id="%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装证书</h2>
+<p>安装Nginx：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo apt install nginx
 </code></pre>
-<h4><a id="%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>本地图片</h4>
-<p>在<code>empty.html</code>所在文件夹下新建文件夹<code>images</code>，将需要插入的图片放置到该文件夹下。</p>
-<p>在Markdown模式中，插入本地图片：</p>
-<pre class="line-numbers"><code class="language-plain_text">[img[./images/image-name.jpg]]
+<p>安装certbot：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo apt install certbot
+$ certbot --version
 </code></pre>
-<h2><a id="%E8%BD%AF%E4%BB%B6%E6%9B%B4%E6%96%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>软件更新</h2>
-<p>打开更新网页<a href="https://tiddlywiki.com/upgrade.html">https://tiddlywiki.com/upgrade.html</a>，将自己的WiKi文件拖入，按照提示操作。</p>
-<h2><a id="%E9%85%8D%E7%BD%AE%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>配置个人网页</h2>
-<p>参考<a href="how-to-quickly-build-a-personal-static-blog.html">如何快速搭建个人静态博客</a>，配置喜欢的域名，再利用GithubDesktop上传即可。</p>
+<p>从Let's Encrypt获取证书：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo certbot certonly --standalone --preferred-challenges http --agree-tos --email you@example.com -d doh.example.com
+</code></pre>
+<p>证书放置在<code>/etc/letsencrypt/live/doh.example.com/</code>目录下。</p>
+<p>测试自动更新证书是否正常</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo certbot renew --dry-run
+</code></pre>
+<p>正常的话，设定两个月自动更新一次证书：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo crontab -e
+# 选择 `nano`，复制以下内容保存。
+0 0 15 */2 * /usr/bin/certbot renew --quiet
+</code></pre>
+<h2><a id="%E5%AE%89%E8%A3%85adguardhome" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装AdGuardHome</h2>
+<p>使用以下命令自动安装AdGuardHome：</p>
+<pre class="line-numbers"><code class="language-bash">curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v
+</code></pre>
+<p>VPS防火墙临时放行<code>3000</code>。浏览器访问<code>ip:3000</code>，根据引导进行操作。</p>
+<p>配置DOH（DNS-over-HTTPS）<br />
+<img src="media/17402493508620/doh_set.png" alt="doh_set" /></p>
+<p>这里不勾选<code>HTTPS自动重定向</code>，HTTPS端口填写<code>8443</code>。</p>
+<p>AdGuardHome控制命令：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo /opt/AdGuardHome/AdGuardHome -s start|stop|restart|statuslinstallluninstall
+</code></pre>
+<h2><a id="%E9%85%8D%E7%BD%AEnginx" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>配置Nginx</h2>
+<p>创建<code>/etc/nginx/conf.d/doh.conf</code>，内容如下：</p>
+<pre class="line-numbers"><code class="language-bash">server {
+    listen 80;
+    listen 443 ssl http2;
+    server_name doh.example.com;  #这里填写域名
+    index index.php index.html index.htm default.php default.htm default.html
+    root /usr/share/nginxt/html;   #网站根目录，指定一个空文件夹即可
+
+    #强制HTTPS
+    if ($server_port !~ 443){
+            rewrite ^(/.*)$ https://$host$1 permanent;
+    }
+
+    # HTTPS证书
+	ssl_certificate /etc/letsencrypt/live/doh.example.com/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/doh.example.com/privkey.pem;
+
+    #反向代理仪表盘(可以不配置)
+    location ^~ / {
+            proxy_pass https://127.0.0.1:8443/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header REMOTE-HOST $remote_addr;
+    }
+
+    #反向代理DoH
+    location ^~ /dns-query {
+            proxy_pass https://127.0.0.1:8443;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header REMOTE-HOST $remote_addr;
+    }
+}
+</code></pre>
+<p>测试Nginx配置是否正确：</p>
+<pre class="line-numbers"><code class="language-bash">$ nginx -t
+</code></pre>
+<p>重启Nginx：</p>
+<pre class="line-numbers"><code class="language-bash">$ sudo systemctl restart nginx.service
+</code></pre>
+<p>如果nginx代理配置没有问题，使用浏览器访问<code>https://doh.example.com/dns-query</code>会出现<code>Bad Request</code>信息：<br />
+<img src="media/17402493508620/dns_query_test.png" alt="dns_query_test" /></p>
+<p>之后便可以在浏览器或手机上使用自建的doh服务。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
-<li>TiddlyWiKi <a href="https://tiddlywiki.com/">https://tiddlywiki.com</a></li>
-<li>TiddlyWiKi Classic <a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com</a></li>
-<li>Classic TiddlyThemes <a href="https://github.com/YakovL/TiddlyThemes">https://github.com/YakovL/TiddlyThemes</a></li>
-<li>TiddyWiki 简易指南 <a href="https://pkmer.cn/Pkmer-Docs/12-tiddywiki/tiddywiki/">https://pkmer.cn/Pkmer-Docs/12-tiddywiki/tiddywiki</a></li>
-<li>探索 TiddlyWiki 5：个人知识管理的利器 <a href="https://blog.csdn.net/gitblog_00041/article/details/136706046">https://blog.csdn.net/gitblog_00041/article/details/136706046</a></li>
+<li>AdGuardHome Github repo <a href="https://github.com/AdguardTeam/AdGuardHome/">https://github.com/AdguardTeam/AdGuardHome</a></li>
+<li>AdGuardHome 部署与使用指北 <a href="https://fordes.dev/posts/tutorials/ad-guard-home/">https://fordes.dev/posts/tutorials/ad-guard-home</a></li>
+<li>使用 AdGuardHome 搭建私人 DNS 广告过滤服务器 <a href="https://blog.renzicu.com/2023/11/438.html">https://blog.renzicu.com/2023/11/438.html</a></li>
 </ul>
 
                   </article>
