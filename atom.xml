@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-08-22T09:47:40+08:00</updated>
+  <updated>2025-08-22T10:22:26+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -31,8 +31,19 @@
 </code></pre>
 <p>配置文件位于<code>/opt/homebrew/etc/smartdns/</code>目录。</p>
 <p>同时，下载国内网站列表<a href="https://github.com/jiange1236/smartdns-rules">smartdns-rules</a>，主要是文件<code>direct-list.txt</code>以及<code>china-list.txt</code>。</p>
-<p>将上述文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>。同时在该文件夹下新建<code>self-defined.conf</code>，作为手动添加的网站，其中填入网址即可，例如：</p>
+<p>将上述文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>，同时在该文件夹下新建两个文件：</p>
+<ul>
+<li>新建<code>self-defined.conf</code>，手动添加且需要国内DNS解析的网站，格式如下：</li>
+</ul>
 <pre class="line-numbers"><code class="language-plain_text">duolingo.cn
+</code></pre>
+<ul>
+<li>新建<code>blacklist.conf</code>，手动添加的黑名单网站，格式如下：</li>
+</ul>
+<pre class="line-numbers"><code class="language-plain_text"># address /域名/#
+address /ruijie.com.cn/#
+address /2345.com/#
+address /mairuan.com/#
 </code></pre>
 <p>SmartDNS分流的配置文件<code>smartdns.conf</code>样例：</p>
 <pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
@@ -44,6 +55,14 @@ tcp-idle-time 300
 # 缓存大小与性能设置
 cache-size 32768
 prefetch-domain no
+# 持久化缓存设置(可选设置)
+cache-persist yes 
+cache-file /opt/homebrew/etc/smartdns/smartdns-cache
+serve-expired-prefetch-time 21600
+serve-expired yes
+serve-expired-ttl 259200
+serve-expired-reply-ttl 3 
+cache-checkpoint-time 86400
 
 #禁用 SmartDNS 全局的测速设置
 speed-check-mode none
@@ -68,9 +87,6 @@ server-tcp 127.0.0.1:5300
 # 设置国内上游DNS服务器
 server-https https://dns.alidns.com/dns-query -group china -exclude-default-group
 server-https https://doh.pub/dns-query -group china -exclude-default-group
-# CNNIC 公共 DNS、仅支持 UDP 查询
-server 1.2.4.8 -group domestic -exclude-default-group
-server 210.2.4.8 -group domestic -exclude-default-group
 
 # 设置域名集，包含手动添加的域名
 domain-set -name direct-list -file /opt/homebrew/etc/smartdns/direct-list.txt
@@ -86,6 +102,8 @@ nameserver /.cn/china
 
 # 引入去广告配置文件
 conf-file /opt/homebrew/etc/smartdns/anti-ad-for-smartdns.conf
+# 引入黑名单配置文件
+conf-file /opt/homebrew/etc/smartdns/blacklist.conf
 </code></pre>
 <p>部分解释：</p>
 <ul>
