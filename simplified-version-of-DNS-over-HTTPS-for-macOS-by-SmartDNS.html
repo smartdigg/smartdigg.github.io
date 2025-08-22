@@ -132,12 +132,10 @@
 <pre class="line-numbers"><code class="language-plain_text">duolingo.cn
 </code></pre>
 <ul>
-<li>新建<code>blacklist.conf</code>，手动添加的黑名单网站，格式如下：</li>
+<li>新建<code>blacklist.txt</code>，手动添加的黑名单网站，格式如下：</li>
 </ul>
-<pre class="line-numbers"><code class="language-plain_text"># address /域名/#
-address /ruijie.com.cn/#
-address /2345.com/#
-address /mairuan.com/#
+<pre class="line-numbers"><code class="language-plain_text">2345.com
+mairuan.com
 </code></pre>
 <p>SmartDNS分流的配置文件<code>smartdns.conf</code>样例：</p>
 <pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
@@ -196,23 +194,26 @@ nameserver /.cn/china
 
 # 引入去广告配置文件
 conf-file /opt/homebrew/etc/smartdns/anti-ad-for-smartdns.conf
+
 # 引入黑名单配置文件
-conf-file /opt/homebrew/etc/smartdns/blacklist.conf
+domain-set -name blacklist -file /opt/homebrew/etc/smartdns/blacklist.txt
+address /domain-set:blacklist/#
 </code></pre>
 <p>部分解释：</p>
 <ul>
 <li>设置有<code>-exclude-default-group</code>的上游 DNS 默认不会被使用，仅当 <code>domain-rules</code>或<code>nameserver</code>配置明确指定时使用。</li>
 <li><code>domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt</code>，定义一个域名集<code>china-list</code>，包含的域名列表在<code> /opt/homebrew/etc/smartdns/china-list.txt</code>文件中。</li>
 <li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用china分组的DNS服务器解析。</li>
+<li><code>address /domain-set:blacklist/#</code>，设置IP过滤规则，匹配的域名集为<code>blacklist</code>，使用<code>#</code>表示同时屏蔽IPV4，IPV6。可参考SmartDNS<a href="https://pymumu.github.io/smartdns/config/ad-block/">广告屏蔽规则</a>。</li>
 </ul>
 <h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS服务管理</h2>
-<p>启动SmartDNS：</p>
+<p>启动SmartDNS服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
 </code></pre>
 <p>检查SmartDNS是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
 </code></pre>
-<p>启动、重启与暂停SmartDNS：</p>
+<p>启动、重启与停止SmartDNS服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
 </code></pre>
 <p>启动检测DNS：</p>
@@ -225,6 +226,7 @@ conf-file /opt/homebrew/etc/smartdns/blacklist.conf
 <li>smartdns-rules <a href="https://github.com/jiange1236/smartdns-rules">https://github.com/jiange1236/smartdns-rules</a></li>
 <li>v2ray-rules-dat <a href="https://github.com/Loyalsoldier/v2ray-rules-dat/">https://github.com/Loyalsoldier/v2ray-rules-dat</a></li>
 <li>SmartDNS 搭建及使用 <a href="https://blog.mxdyeah.top/post/smartdns-how-to-use">https://blog.mxdyeah.top/post/smartdns-how-to-use</a></li>
+<li>广告屏蔽 <a href="https://pymumu.github.io/smartdns/config/ad-block/">https://pymumu.github.io/smartdns/config/ad-block</a></li>
 <li>我有特别的 DNS 配置和使用技巧 <a href="https://blog.skk.moe/post/i-have-my-unique-dns-setup/">https://blog.skk.moe/post/i-have-my-unique-dns-setup</a></li>
 </ul>
 
