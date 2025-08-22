@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-06-17T21:23:36+08:00</updated>
+  <updated>2025-08-22T09:47:40+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -13,7 +13,114 @@
   <generator uri="http://www.mweb.im/">MWeb</generator>
   
   <entry>
-    <title type="html"><![CDATA[如何在个人电脑上部署DeepSeek]]></title>
+    <title type="html"><![CDATA[macOS 配置 DNS-over-HTTPS SmartDNS 简化版]]></title>
+    <link href="https://smartdigg.github.io/simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html"/>
+    <updated>2025-08-21T21:58:27+08:00</updated>
+    <id>https://smartdigg.github.io/simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE">SmartDNS 安装及配置</a></li>
+<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS服务管理</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>在<a href="simplified-version-of-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS 简化版</a>的基础上用SmartDNS替换mosdns。可参考<a href="configure-smartdns.html">SmartDNS 配置</a>，本文采用不同的方法进行设置。</p>
+<h2><a id="smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装及配置</h2>
+<p>安装SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ brew install smartdns
+</code></pre>
+<p>配置文件位于<code>/opt/homebrew/etc/smartdns/</code>目录。</p>
+<p>同时，下载国内网站列表<a href="https://github.com/jiange1236/smartdns-rules">smartdns-rules</a>，主要是文件<code>direct-list.txt</code>以及<code>china-list.txt</code>。</p>
+<p>将上述文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>。同时在该文件夹下新建<code>self-defined.conf</code>，作为手动添加的网站，其中填入网址即可，例如：</p>
+<pre class="line-numbers"><code class="language-plain_text">duolingo.cn
+</code></pre>
+<p>SmartDNS分流的配置文件<code>smartdns.conf</code>样例：</p>
+<pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
+bind [::]:53
+bind-tcp [::]:53
+
+tcp-idle-time 300
+
+# 缓存大小与性能设置
+cache-size 32768
+prefetch-domain no
+
+#禁用 SmartDNS 全局的测速设置
+speed-check-mode none
+
+force-qtype-SOA 65
+
+#设置TTL最小值和最大值
+rr-ttl 60
+rr-ttl-min 0
+rr-ttl-max 400
+
+# 日志设置
+log-level error
+log-file /opt/homebrew/etc/smartdns/smartdns.log
+log-size 5M
+log-num 2
+
+# 设置默认DNS服务器
+server 127.0.0.1:5300
+server-tcp 127.0.0.1:5300
+
+# 设置国内上游DNS服务器
+server-https https://dns.alidns.com/dns-query -group china -exclude-default-group
+server-https https://doh.pub/dns-query -group china -exclude-default-group
+# CNNIC 公共 DNS、仅支持 UDP 查询
+server 1.2.4.8 -group domestic -exclude-default-group
+server 210.2.4.8 -group domestic -exclude-default-group
+
+# 设置域名集，包含手动添加的域名
+domain-set -name direct-list -file /opt/homebrew/etc/smartdns/direct-list.txt
+domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt
+domain-set -name self-defined -file /opt/homebrew/etc/smartdns/self-defined.conf
+
+# 设置分流规则，国内网站使用国内DNS
+nameserver /domain-set:direct-list/china
+nameserver /domain-set:china-list/china
+nameserver /domain-set:self-defined/china
+nameserver /nstool.netease.com/china
+nameserver /.cn/china
+
+# 引入去广告配置文件
+conf-file /opt/homebrew/etc/smartdns/anti-ad-for-smartdns.conf
+</code></pre>
+<p>部分解释：</p>
+<ul>
+<li>设置有<code>-exclude-default-group</code>的上游 DNS 默认不会被使用，仅当 <code>domain-rules</code>或<code>nameserver</code>配置明确指定时使用。</li>
+<li><code>domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt</code>，定义一个域名集<code>china-list</code>，包含的域名列表在<code> /opt/homebrew/etc/smartdns/china-list.txt</code>文件中。</li>
+<li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用china分组的DNS服务器解析。</li>
+</ul>
+<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS服务管理</h2>
+<p>启动SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
+</code></pre>
+<p>检查SmartDNS是否正常启动：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
+</code></pre>
+<p>启动、重启与暂停SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
+</code></pre>
+<p>启动检测DNS：</p>
+<ul>
+<li>国内：<a href="https://d-nstool.netease.com/">https://d-nstool.netease.com</a></li>
+<li>国内：<a href="https://ipleak.net/">https://ipleak.net</a></li>
+</ul>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>smartdns-rules <a href="https://github.com/jiange1236/smartdns-rules">https://github.com/jiange1236/smartdns-rules</a></li>
+<li>v2ray-rules-dat <a href="https://github.com/Loyalsoldier/v2ray-rules-dat/">https://github.com/Loyalsoldier/v2ray-rules-dat</a></li>
+<li>SmartDNS 搭建及使用 <a href="https://blog.mxdyeah.top/post/smartdns-how-to-use">https://blog.mxdyeah.top/post/smartdns-how-to-use</a></li>
+<li>我有特别的 DNS 配置和使用技巧 <a href="https://blog.skk.moe/post/i-have-my-unique-dns-setup/">https://blog.skk.moe/post/i-have-my-unique-dns-setup</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何在个人电脑上部署 DeepSeek]]></title>
     <link href="https://smartdigg.github.io/how-to-deploy-deepseek-on-your-computer.html"/>
     <updated>2025-02-18T01:40:47+08:00</updated>
     <id>https://smartdigg.github.io/how-to-deploy-deepseek-on-your-computer.html</id>
@@ -21,14 +128,14 @@
 <div class="mweb_toc"><ul>
 <li><a href="#%E5%87%86%E5%A4%87">准备</a>
 <ul>
-<li><a href="#%E4%B8%8B%E8%BD%BDollama">下载Ollama</a></li>
-<li><a href="#%E5%AE%89%E8%A3%85ollama">安装Ollama</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BDollama">下载 Ollama</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85ollama">安装 Ollama</a></li>
 </ul>
 </li>
-<li><a href="#%E9%83%A8%E7%BD%B2deepseek">部署DeepSeek</a>
+<li><a href="#%E9%83%A8%E7%BD%B2deepseek">部署 DeepSeek</a>
 <ul>
 <li><a href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%89%88%E6%9C%AC">选择合适的版本</a></li>
-<li><a href="#%E9%83%A8%E7%BD%B2deepseek-32b">部署DeepSeek 32B</a></li>
+<li><a href="#%E9%83%A8%E7%BD%B2deepseek-32b">部署 DeepSeek 32B</a></li>
 <li><a href="#%E9%85%8D%E7%BD%AE%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81">配置浏览器支持</a></li>
 <li><a href="#%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE">参数设置</a></li>
 </ul>
@@ -40,11 +147,11 @@
 <p>很多互联网公司支持使用满血版DeepSeek，与个人部署的DeepSeek的区别就在用户需要献出自己的手机号码、IP地址、设备信息、聊天记录乃至所有隐私及权利。</p>
 <p><img src="media/17398140475976/tengxunyuanbao.webp" alt="tengxunyuanbao" /></p>
 <h2><a id="%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>准备</h2>
-<h3><a id="%E4%B8%8B%E8%BD%BDollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载Ollama</h3>
+<h3><a id="%E4%B8%8B%E8%BD%BDollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载 Ollama</h3>
 <p>到Ollama网页下载程序，<a href="https://ollama.com/download">https://ollama.com/download</a>。</p>
-<h3><a id="%E5%AE%89%E8%A3%85ollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Ollama</h3>
+<h3><a id="%E5%AE%89%E8%A3%85ollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 Ollama</h3>
 <p>以macOS为例，一般情况下直接安装。如果没有图标出现，则需进入<code>/Applications/Ollama.app/Contents/Resources/</code>，打开该文件夹下<code>ollama</code>即可。之后便可通过终端运行<code>ollama -v</code>查看软件版本号。软件支持自动更新，无需担心。</p>
-<h2><a id="%E9%83%A8%E7%BD%B2deepseek" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署DeepSeek</h2>
+<h2><a id="%E9%83%A8%E7%BD%B2deepseek" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署 DeepSeek</h2>
 <h3><a id="%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%89%88%E6%9C%AC" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>选择合适的版本</h3>
 <p>到Ollama资料库查找DeepSeek-r1 <a href="https://ollama.com/library/deepseek-r1">https://ollama.com/library/deepseek-r1</a>。<a href="https://github.com/deepseek-ai/DeepSeek-R1">DeepSeek</a>可供下载的有一个满血版671b以及六个蒸馏模型，主要区别如下：</p>
 <ul>
@@ -57,7 +164,7 @@
 <li>deepseek-r1:671b，俗称满血版，要求内存512GB以上。</li>
 </ul>
 <p>个人电脑使用蒸馏模型即可。</p>
-<h3><a id="%E9%83%A8%E7%BD%B2deepseek-32b" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署DeepSeek 32B</h3>
+<h3><a id="%E9%83%A8%E7%BD%B2deepseek-32b" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署 DeepSeek 32B</h3>
 <p>以<code>DeepSeek-R1-Distill-Qwen-14B</code>为例，在终端执行：</p>
 <pre class="line-numbers"><code class="language-zsh">ollama run deepseek-r1:32b
 </code></pre>

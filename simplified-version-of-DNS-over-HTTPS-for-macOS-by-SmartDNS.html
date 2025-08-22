@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+    macOS 配置 DNS-over-HTTPS SmartDNS 简化版 - 永久记录
+    
+    </title>
+    
+
+    
+    
+    <link href="atom.xml" rel="alternate" title="永久记录" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/style.min.css">
+    <link rel="stylesheet" href="asset/css/doc.css">
+    <script src="asset/app.js"></script>
+</head>
+  <body>
+    <section class="hero">
+      <div class="hero-head">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="container">
+              <div class="navbar-brand">
+                
+                <a target="_self" class="navbar-item " href="index.html">Home</a>
+                
+                <a target="_self" class="navbar-item " href="archives.html">Archives</a>
+                
+                <a target="_self" class="navbar-item " href="about.html">About</a>
+                
+
+                <a role="button" id="navbarSNSRssSwitchBtn" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarSNSRssButtons">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+              </div>
+            
+              <div id="navbarSNSRssButtons" class="navbar-menu">
+                <div class="navbar-start">
+                  
+                </div>
+            
+                <div class="navbar-end">
+                  <div class="navbar-item">
+                    <!--buttons start-->
+                    <div class="buttons">
+                      
+                        
+                        
+                        
+                        
+                      
+                      <a href="atom.xml" target="_blank" title="RSS">
+                          <span class="icon is-large has-text-black-bis">
+                              <svg class="svg-inline--fa fa-rss fa-w-14 fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rss" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"></path></svg><!-- <i class="fas fa-rss fa-lg"></i> -->
+                          </span>
+                      </a>
+                    </div>
+                    <!--buttons end-->
+
+                  </div>
+                </div>
+                </div>
+              </div>
+            </nav>
+      </div>
+
+ <div class="hero-body ct-body"></div>
+      
+    </section>
+    <section class="ct-body">
+      <div class="container">
+          <div class="columns is-variable bd-klmn-columns is-4 is-centered">
+              <div class="column is-four-fifths">
+                  <div class="post-body single-content">
+                    
+                    <h1 class="title">
+                            macOS 配置 DNS-over-HTTPS SmartDNS 简化版   
+                      </h1>
+                     
+                    
+                      <div class="media">
+                            
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                 <span class="date">2025/02/11</span>
+                                  
+                                         
+                                  
+
+                                   
+                                      
+                                  <br />
+                                  <span class="tran-tags">Tags:</span>&nbsp;
+                                  
+                                    <a class="tag is-link is-light" href='tag_DNS-over-HTTPS.html'>#DNS-over-HTTPS</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_DNS%E5%88%86%E6%B5%81.html'>#DNS分流</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_macOS.html'>#macOS</a>
+                                     
+
+                                </p>
+                              </div>
+                            </div>
+                         
+                    </div>
+                </div>
+                  <article class="markdown-body single-content">
+                    <div class="mweb_toc"><ul>
+<li><a href="#smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE">SmartDNS 安装及配置</a></li>
+<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS服务管理</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>在<a href="simplified-version-of-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS 简化版</a>的基础上用SmartDNS替换mosdns。可参考<a href="configure-smartdns.html">SmartDNS 配置</a>，本文采用不同的方法进行设置。</p>
+<h2><a id="smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装及配置</h2>
+<p>安装SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ brew install smartdns
+</code></pre>
+<p>配置文件位于<code>/opt/homebrew/etc/smartdns/</code>目录。</p>
+<p>同时，下载国内网站列表<a href="https://github.com/jiange1236/smartdns-rules">smartdns-rules</a>，主要是文件<code>direct-list.txt</code>以及<code>china-list.txt</code>。</p>
+<p>将上述文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>。同时在该文件夹下新建<code>self-defined.conf</code>，作为手动添加的网站，其中填入网址即可，例如：</p>
+<pre class="line-numbers"><code class="language-plain_text">duolingo.cn
+</code></pre>
+<p>SmartDNS分流的配置文件<code>smartdns.conf</code>样例：</p>
+<pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
+bind [::]:53
+bind-tcp [::]:53
+
+tcp-idle-time 300
+
+# 缓存大小与性能设置
+cache-size 32768
+prefetch-domain no
+
+#禁用 SmartDNS 全局的测速设置
+speed-check-mode none
+
+force-qtype-SOA 65
+
+#设置TTL最小值和最大值
+rr-ttl 60
+rr-ttl-min 0
+rr-ttl-max 400
+
+# 日志设置
+log-level error
+log-file /opt/homebrew/etc/smartdns/smartdns.log
+log-size 5M
+log-num 2
+
+# 设置默认DNS服务器
+server 127.0.0.1:5300
+server-tcp 127.0.0.1:5300
+
+# 设置国内上游DNS服务器
+server-https https://dns.alidns.com/dns-query -group china -exclude-default-group
+server-https https://doh.pub/dns-query -group china -exclude-default-group
+# CNNIC 公共 DNS、仅支持 UDP 查询
+server 1.2.4.8 -group domestic -exclude-default-group
+server 210.2.4.8 -group domestic -exclude-default-group
+
+# 设置域名集，包含手动添加的域名
+domain-set -name direct-list -file /opt/homebrew/etc/smartdns/direct-list.txt
+domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt
+domain-set -name self-defined -file /opt/homebrew/etc/smartdns/self-defined.conf
+
+# 设置分流规则，国内网站使用国内DNS
+nameserver /domain-set:direct-list/china
+nameserver /domain-set:china-list/china
+nameserver /domain-set:self-defined/china
+nameserver /nstool.netease.com/china
+nameserver /.cn/china
+
+# 引入去广告配置文件
+conf-file /opt/homebrew/etc/smartdns/anti-ad-for-smartdns.conf
+</code></pre>
+<p>部分解释：</p>
+<ul>
+<li>设置有<code>-exclude-default-group</code>的上游 DNS 默认不会被使用，仅当 <code>domain-rules</code>或<code>nameserver</code>配置明确指定时使用。</li>
+<li><code>domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt</code>，定义一个域名集<code>china-list</code>，包含的域名列表在<code> /opt/homebrew/etc/smartdns/china-list.txt</code>文件中。</li>
+<li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用china分组的DNS服务器解析。</li>
+</ul>
+<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS服务管理</h2>
+<p>启动SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
+</code></pre>
+<p>检查SmartDNS是否正常启动：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
+</code></pre>
+<p>启动、重启与暂停SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
+</code></pre>
+<p>启动检测DNS：</p>
+<ul>
+<li>国内：<a href="https://d-nstool.netease.com/">https://d-nstool.netease.com</a></li>
+<li>国内：<a href="https://ipleak.net/">https://ipleak.net</a></li>
+</ul>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>smartdns-rules <a href="https://github.com/jiange1236/smartdns-rules">https://github.com/jiange1236/smartdns-rules</a></li>
+<li>v2ray-rules-dat <a href="https://github.com/Loyalsoldier/v2ray-rules-dat/">https://github.com/Loyalsoldier/v2ray-rules-dat</a></li>
+<li>SmartDNS 搭建及使用 <a href="https://blog.mxdyeah.top/post/smartdns-how-to-use">https://blog.mxdyeah.top/post/smartdns-how-to-use</a></li>
+<li>我有特别的 DNS 配置和使用技巧 <a href="https://blog.skk.moe/post/i-have-my-unique-dns-setup/">https://blog.skk.moe/post/i-have-my-unique-dns-setup</a></li>
+</ul>
+
+                  </article>
+                  <div class="comments-wrap">
+                    <div class="share-comments">
+                      
+
+                      
+
+                      
+                    </div>
+                  </div><!-- end comments wrap -->
+              </div>
+            </div><!-- end columns -->
+      </div><!-- end container -->
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+              Copyright &copy; 2025
+              Powered by <a target="_blank" href="https://www.mweb.im">MWeb</a>. 
+          </p>
+        </div>
+      </footer>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="asset/prism.js"></script>
+
+
+
+  
+    
+
+
+
+
+  </body>
+</html>
