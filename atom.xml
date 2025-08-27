@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-08-22T21:48:25+08:00</updated>
+  <updated>2025-08-27T12:13:37+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -232,6 +232,66 @@ address /domain-set:blacklist/#
 <li>DeepSeek 官方推荐的部署 DeepSeek-R1 最佳设置参数，和官网一样。 <a href="https://www.appinn.com/deepseek-r1-deploying-recommended-settings/">https://www.appinn.com/deepseek-r1-deploying-recommended-settings/</a></li>
 <li>用M1 Max MacBook Pro私有化部署DeepSeek-R1 <a href="https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro">https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro</a></li>
 <li>腾讯元宝修改用户协议内容引发热议 <a href="https://news.iqilu.com/shandong/shandonggedi/20250304/5784371.shtml">https://news.iqilu.com/shandong/shandonggedi/20250304/5784371.shtml</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[屏蔽互联网毒瘤]]></title>
+    <link href="https://smartdigg.github.io/how-to-block-internet-rubbish.html"/>
+    <updated>2025-08-22T10:21:41+08:00</updated>
+    <id>https://smartdigg.github.io/how-to-block-internet-rubbish.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%86%85%E5%AE%B9%E5%86%9C%E5%9C%BA%E7%BB%88%E7%BB%93%E8%80%85">内容农场终结者</a></li>
+<li><a href="#ublacklist">ublacklist</a></li>
+<li><a href="#ublock-origin">uBlock Origin</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%BB%91%E5%90%8D%E5%8D%95">自定义黑名单</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<h2><a id="%E5%86%85%E5%AE%B9%E5%86%9C%E5%9C%BA%E7%BB%88%E7%BB%93%E8%80%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>内容农场终结者</h2>
+<p>Firefox插件<a href="https://addons.mozilla.org/en-US/firefox/addon/content-farm-terminator/">Content Farm Terminator</a>，安装后即可使用。</p>
+<h2><a id="ublacklist" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>ublacklist</h2>
+<p>Firefox插件<a href="https://addons.mozilla.org/en-US/firefox/addon/ublacklist/">ublacklist</a>，可以阻止垃圾网页出现在搜索引擎的结果中。</p>
+<p>推荐列表：</p>
+<ul>
+<li><a href="https://www.eallion.com/ublacklist-subscription-compilation/">uBlacklist订阅合集</a>，订阅地址：</li>
+</ul>
+<pre class="line-numbers"><code class="language-plain_text">https://raw.githubusercontent.com/eallion/uBlacklist-subscription-compilation/main/uBlacklist.txt
+</code></pre>
+<ul>
+<li><a href="https://github.com/obgnail/chinese-internet-is-dead">chinese-internet-is-dead</a>，订阅地址：</li>
+</ul>
+<pre class="line-numbers"><code class="language-plain_text">https://raw.githubusercontent.com/obgnail/chinese-internet-is-dead/master/blocklist.txt
+或者使用 CDN 加速：
+https://cdn.jsdelivr.net/gh/obgnail/chinese-internet-is-dead@master/blocklist.txt
+</code></pre>
+<h2><a id="ublock-origin" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>uBlock Origin</h2>
+<p>Firefox插件<a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/">uBlock Origin</a>，知名的广告拦截软件。在过滤列表中导入<code>Huge AI Blocklist</code>即可。</p>
+<pre class="line-numbers"><code class="language-plain_text">https://raw.githubusercontent.com/laylavish/uBlockOrigin-HUGE-AI-Blocklist/main/list.txt
+</code></pre>
+<h2><a id="%E8%87%AA%E5%AE%9A%E4%B9%89%E9%BB%91%E5%90%8D%E5%8D%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>自定义黑名单</h2>
+<p>可以配合SmartDNS使用。在SmartDNS文件夹<code>/opt/homebrew/etc/smartdns/</code>新建文件<code>blacklist.txt</code>，其中内容为需要屏蔽的网站域名，格式如下：</p>
+<pre class="line-numbers"><code class="language-plain_text">baidu.com
+flash.cn
+makeding.com
+360.cn
+2345.com
+</code></pre>
+<p>在<code>smartdns.conf</code>文件中添加</p>
+<pre class="line-numbers"><code class="language-plain_text"># 引入黑名单配置文件
+domain-set -name blacklist -file /opt/homebrew/etc/smartdns/blacklist.txt
+address /domain-set:blacklist/#
+</code></pre>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li><a href="https://www.zhihu.com/question/66101490%20">为什么中国的互联网流氓软件横行？</a></li>
+<li><a href="https://www.zhihu.com/question/434638074">现在的很多国产软件为何如此恶臭？</a></li>
+<li><a href="https://www.huxiu.com/article/136799.html">我是如何坚持10多年站在反百度第一线的</a></li>
+<li><a href="https://www.cnblogs.com/pannengzhi/p/12386268.html">互联网毒瘤——内容农场</a></li>
+<li><a href="https://www.sohu.com/a/343227431_120166973">扒一扒业界毒瘤思杰马克丁，转型之前是天使转型之后是魔鬼 </a></li>
 </ul>
 
 ]]></content>
