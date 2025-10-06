@@ -4,13 +4,86 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-08-27T12:13:37+08:00</updated>
+  <updated>2025-10-06T22:56:19+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[macOS 安全使用习惯]]></title>
+    <link href="https://smartdigg.github.io/macos-security-practices.html"/>
+    <updated>2024-03-27T11:12:50+08:00</updated>
+    <id>https://smartdigg.github.io/macos-security-practices.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%90%AF%E7%94%A8filevault">启用 FileVault</a></li>
+<li><a href="#%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6">备份文件</a></li>
+<li><a href="#%E6%A3%80%E6%9F%A5mac%E9%9A%90%E7%A7%81%E8%AE%BE%E7%BD%AE">检查 Mac 隐私设置</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E6%9F%A5%E6%89%BE%E6%88%91%E7%9A%84mac">设置查找我的 Mac</a></li>
+<li><a href="#%E5%BC%80%E5%90%AF2fa">开启 2FA</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E8%BE%93%E5%85%A5%E6%B3%95">使用安全输入法</a></li>
+<li><a href="#%E6%B5%81%E9%87%8F%E5%8A%A0%E5%AF%86">流量加密</a></li>
+<li><a href="#%E9%98%B2%E7%81%AB%E5%A2%99">防火墙</a></li>
+<li><a href="#%E8%BF%9C%E7%A6%BB%E7%A0%B4%E8%A7%A3%E7%89%88%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%E8%BD%AF%E4%BB%B6">远离破解版以及中国大陆软件</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E6%B5%8F%E8%A7%88%E5%99%A8">使用安全浏览器</a></li>
+<li><a href="#%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81">下载验证</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<h2><a id="%E5%90%AF%E7%94%A8filevault" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>启用 FileVault</h2>
+<p>打开<code>System Settings</code>，单击<code>Privacy &amp; Security</code>，选择<code>FileVault</code>选项卡。单击开启FileVault，然后按照屏幕说明操作。</p>
+<h2><a id="%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>备份文件</h2>
+<p>使用 Apple 的<code>Time Machine</code>功能可以备份文件。</p>
+<ul>
+<li>连接一个外部硬盘驱动器，该硬盘驱动器应不小于您的 Mac 驱动器容量，且未存储其他文件</li>
+<li>在<code>System Settings</code>中，单击<code>General</code>，打开<code>Time Machine</code>应用程序</li>
+<li>单击选择备份硬盘，选择硬盘名称，然后单击<code>Setup Disk</code></li>
+<li>勾选<code>Auto Backup</code>，这样便无需记着手动备份</li>
+</ul>
+<h2><a id="%E6%A3%80%E6%9F%A5mac%E9%9A%90%E7%A7%81%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>检查 Mac 隐私设置</h2>
+<ul>
+<li>打开<code>System Settings</code>，转到<code>Privacy &amp; Security</code></li>
+<li>选择<code>Privacy</code>选项卡</li>
+<li>仔细检查每项权限，取消选中任何觉得不必要的权限（如果改变主意，随时可以恢复权限）</li>
+</ul>
+<h2><a id="%E8%AE%BE%E7%BD%AE%E6%9F%A5%E6%89%BE%E6%88%91%E7%9A%84mac" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置查找我的 Mac</h2>
+<ul>
+<li>首先，开启隐私设置中的<code>Location Services</code>，在可以使用您的位置的应用程序列表中选择<code>查找我的 Mac</code></li>
+<li>随后，单击 Apple 菜单图标，选择<code>System Settings</code>，然后选择<code>Privacy &amp; Security</code>，再选择<code>Location Services</code></li>
+<li>单击挂锁图标并输入密码</li>
+<li>选择<code>System Services</code>，选择<code>Find My Mac</code>，锁定挂锁以阻止进一步的更改</li>
+</ul>
+<h2><a id="%E5%BC%80%E5%90%AF2fa" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开启 2FA</h2>
+<ul>
+<li>转到<code>System Settings</code>，选择<code>Apple ID</code>，然后选择<code>Password &amp; Security</code></li>
+<li>随后，转到<code>Two-Factor Authentication</code>，单击<code>Turn On</code></li>
+<li>之后系统会要求您输入电话号码，以接收双因素身份验证代码</li>
+</ul>
+<h2><a id="%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E8%BE%93%E5%85%A5%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用安全输入法</h2>
+<p>建议安装Rime/Squirrel，参考<a href="macos-install-rime.html">macOS安装Rime输入法</a>，远离所有国产输入法。</p>
+<h2><a id="%E6%B5%81%E9%87%8F%E5%8A%A0%E5%AF%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>流量加密</h2>
+<p>使用 DNS-over-HTTPS，参考<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>或<a href="simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html">macOS 配置 DNS-over-HTTPS SmartDNS 简化版</a>。</p>
+<h2><a id="%E9%98%B2%E7%81%AB%E5%A2%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>防火墙</h2>
+<p>启用内置防火墙。转到<code>System Settings</code>，打开<code>Network</code>，单击<code>Firewall</code>选项卡，单击开启防火墙。</p>
+<p>Apple 的防火墙只保护传入流量，不会阻止向外发送数据。为了提高安全性，可以考虑使用提供更高级保护的第三方防火墙，例如Little Snitch。</p>
+<h2><a id="%E8%BF%9C%E7%A6%BB%E7%A0%B4%E8%A7%A3%E7%89%88%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%E8%BD%AF%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>远离破解版以及中国大陆软件</h2>
+<p>尽量从 Mac App Store 下载软件，远离流氓软件，特别是国产软件。远离破解版，非必要软件放入虚拟机。</p>
+<h2><a id="%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用安全浏览器</h2>
+<p>参考：<a href="brave-browser-security-enhanced.html">Brave 浏览器安全配置</a>或<a href="librewolf-browser-configuration.html">LibreWolf  浏览器配置</a>。</p>
+<h2><a id="%E4%B8%8B%E8%BD%BD%E9%AA%8C%E8%AF%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载验证</h2>
+<p>验证 sha256sum，md5等等。</p>
+<p>教程：<a href="mac-files-integrity-verification.html">Mac文件完整性检测</a>。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>macOS-Security-and-Privacy-Guide <a href="https://drduh.github.io/macOS-Security-and-Privacy-Guide/">https://drduh.github.io/macOS-Security-and-Privacy-Guide</a></li>
+<li>Mac 安全：保障 MacBook 安全的全面指南 <a href="https://www.kaspersky.com.cn/resource-center/preemptive-safety/mac-security">https://www.kaspersky.com.cn/resource-center/preemptive-safety/mac-security</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[macOS 配置 DNS-over-HTTPS SmartDNS 简化版]]></title>
@@ -287,11 +360,11 @@ address /domain-set:blacklist/#
 </code></pre>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
-<li><a href="https://www.zhihu.com/question/66101490%20">为什么中国的互联网流氓软件横行？</a></li>
-<li><a href="https://www.zhihu.com/question/434638074">现在的很多国产软件为何如此恶臭？</a></li>
-<li><a href="https://www.huxiu.com/article/136799.html">我是如何坚持10多年站在反百度第一线的</a></li>
-<li><a href="https://www.cnblogs.com/pannengzhi/p/12386268.html">互联网毒瘤——内容农场</a></li>
-<li><a href="https://www.sohu.com/a/343227431_120166973">扒一扒业界毒瘤思杰马克丁，转型之前是天使转型之后是魔鬼 </a></li>
+<li>为什么中国的互联网流氓软件横行？<a href="https://www.zhihu.com/question/66101490%20">https://www.zhihu.com/question/66101490%20</a></li>
+<li>现在的很多国产软件为何如此恶臭？<a href="https://www.zhihu.com/question/434638074">https://www.zhihu.com/question/434638074</a></li>
+<li>我是如何坚持10多年站在反百度第一线的 <a href="https://www.huxiu.com/article/136799.html">https://www.huxiu.com/article/136799.html</a></li>
+<li>互联网毒瘤——内容农场 <a href="https://www.cnblogs.com/pannengzhi/p/12386268.html">https://www.cnblogs.com/pannengzhi/p/12386268.html</a></li>
+<li>扒一扒业界毒瘤思杰马克丁，转型之前是天使转型之后是魔鬼 <a href="https://www.sohu.com/a/343227431_120166973">https://www.sohu.com/a/343227431_120166973</a></li>
 </ul>
 
 ]]></content>
@@ -2254,9 +2327,10 @@ installation_id: &quot;your_custom_id&quot;
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>薄荷拼音github仓库 <a href="https://github.com/Mintimate/oh-my-rime">https://github.com/Mintimate/oh-my-rime</a></li>
-<li>薄荷拼音主页 <a href="https://www.mintimate.cc/">https://www.mintimate.cc/</a></li>
-<li>小众软件介绍 <a href="https://www.appinn.com/oh-my-rime/">https://www.appinn.com/oh-my-rime/</a></li>
+<li>薄荷拼音主页 <a href="https://www.mintimate.cc/">https://www.mintimate.cc</a></li>
+<li>小众软件介绍 <a href="https://www.appinn.com/oh-my-rime/">https://www.appinn.com/oh-my-rime</a></li>
 <li>【鼠鬚管】輸入法源代码 <a href="https://github.com/rime/squirrel">https://github.com/rime/squirrel</a></li>
+<li>Rime Ice 小鹤双拼精简版 <a href="https://github.com/lakkiy/rime">https://github.com/lakkiy/rime</a></li>
 </ul>
 
 ]]></content>
@@ -2269,7 +2343,7 @@ installation_id: &quot;your_custom_id&quot;
     <id>https://smartdigg.github.io/how-to-quickly-build-a-personal-static-blog.html</id>
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
-<li><a href="#%E9%87%8D%E8%A6%81%E6%8F%90%E9%86%92">重要提醒</a></li>
+<li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li>
 <li><a href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87">安装前准备</a></li>
 <li><a href="#github%E9%85%8D%E7%BD%AE">Github配置</a></li>
 <li><a href="#mweb-pro%E9%85%8D%E7%BD%AE">Mweb Pro配置</a>
@@ -2285,7 +2359,7 @@ installation_id: &quot;your_custom_id&quot;
 </ul>
 </div>
 <p>本文的静态博客主要利用Github Page，也可以采用Cloudflare Page，方法类似。</p>
-<h2><a id="%E9%87%8D%E8%A6%81%E6%8F%90%E9%86%92" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重要提醒</h2>
+<h2><a id="%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>注意事项</h2>
 <p><strong>博客最重要的是内容，少折腾，坚持创作</strong>。</p>
 <h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
 <p>macOS安装两个软件<a href="https://apps.apple.com/us/app/mweb-pro/id1403919533">Mweb Pro</a>以及<a href="https://desktop.github.com/">Github Desktop</a>。</p>
