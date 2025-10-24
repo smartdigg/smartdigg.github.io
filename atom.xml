@@ -4,13 +4,76 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-10-06T22:56:19+08:00</updated>
+  <updated>2025-10-25T01:13:50+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[使用 coredns 自建 DoH 服务]]></title>
+    <link href="https://smartdigg.github.io/self-hosted-doh-server-by-coredns.html"/>
+    <updated>2025-10-05T11:34:20+08:00</updated>
+    <id>https://smartdigg.github.io/self-hosted-doh-server-by-coredns.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85coredns">安装 coredns</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AEcaddy%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">设置 caddy 反向代理</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8curl%E6%A3%80%E6%9F%A5-doh%E5%8F%AF%E7%94%A8%E6%80%A7">使用 Curl 检查 DoH 可用性</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>目标：搭建快速 DoH 服务器，替代 AdGuardHome 以及 Nginx，参考<a href="configure-DNS-over-HTTPS-on-VPS.html">VPS 搭建 DNS-over-HTTPS 服务器</a>。</p>
+<h2><a id="%E5%AE%89%E8%A3%85coredns" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 coredns</h2>
+<p>新建 coredns 配置文件：</p>
+<pre class="line-numbers"><code class="language-plain_text"># vi /etc/coredns/Corefile
+
+https://.:444 {
+    bind 127.0.0.1
+    forward . 1.1.1.1 1.0.0.1
+    log
+    errors
+    cache
+}
+</code></pre>
+<p>使用 hostNetwork 模式启动服务，监听444端口：</p>
+<pre class="line-numbers"><code class="language-plain_text"># docker run -d --restart unless-stopped --network host --name coredns \
+  -v /etc/coredns:/etc/coredns \
+  coredns/coredns \
+  -conf /etc/coredns/Corefile
+</code></pre>
+<h2><a id="%E8%AE%BE%E7%BD%AEcaddy%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置 caddy 反向代理</h2>
+<p>假设 DoH 服务器域名为<code>dns.example.com</code>。自行导入域名<code>example.com</code>的两个证书，放置于目录<code>/etc/letsencrypt/live/example.com/</code>（目录需自行创建）。</p>
+<p>编辑 caddy 配置文件：</p>
+<pre class="line-numbers"><code class="language-plain_text"># vi  /etc/caddy/Caddyfile
+
+dns.example.com {
+	tls /etc/letsencrypt/live/example.com/OriginCertificate.pem  /etc/letsencrypt/live/example.com/PrivateKey.pem
+
+	handle /dns-query {
+      reverse_proxy 127.0.0.1:444
+    } 
+}
+</code></pre>
+<p>排查 coredns 错误：</p>
+<pre class="line-numbers"><code class="language-plain_text"># docker logs coredns
+</code></pre>
+<p>防火墙放行444端口：</p>
+<pre class="line-numbers"><code class="language-plain_text"># ufw allow 444
+</code></pre>
+<h2><a id="%E4%BD%BF%E7%94%A8curl%E6%A3%80%E6%9F%A5-doh%E5%8F%AF%E7%94%A8%E6%80%A7" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用 Curl 检查 DoH 可用性</h2>
+<pre class="line-numbers"><code class="language-plain_text">$ curl --doh-url https://dns.example.com/dns-query https://www.ifeng.com
+</code></pre>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>自建DoH服务 <a href="https://wbuntu.com/deploy-a-doh-service/">https://wbuntu.com/deploy-a-doh-service/</a></li>
+<li>Recommended DoH server implementation <a href="https://github.com/DNSCrypt/doh-server">https://github.com/DNSCrypt/doh-server</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[macOS 安全使用习惯]]></title>
@@ -2401,17 +2464,6 @@ installation_id: &quot;your_custom_id&quot;
 <li>我是如何利用Github Pages搭建起我的博客，细数一路的坑 <a href="https://zhuanlan.zhihu.com/p/334815426">https://zhuanlan.zhihu.com/p/334815426</a></li>
 <li>GitHub Pages 搭建教程 <a href="https://sspai.com/post/54608">https://sspai.com/post/54608</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="https://smartdigg.github.io/hello-world.html"/>
-    <updated>2023-07-23T22:28:06+08:00</updated>
-    <id>https://smartdigg.github.io/hello-world.html</id>
-    <content type="html"><![CDATA[
-<p>最好永久记录！</p>
 
 ]]></content>
   </entry>
