@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>https://smartdigg.github.io/</loc>
-  <lastmod>2025-10-25T01:14:47+08:00</lastmod>
+  <lastmod>2025-10-29T23:01:31+08:00</lastmod>
 </url>
 
 <url>
@@ -23,6 +23,11 @@
 <url>
   <loc>https://smartdigg.github.io/how-to-deploy-deepseek-on-your-computer.html</loc>
   <lastmod>2025-01-11T00:00:00+08:00</lastmod>
+</url>
+
+<url>
+  <loc>https://smartdigg.github.io/using-aria2-in-macos.html</loc>
+  <lastmod>2024-11-11T11:11:11+08:00</lastmod>
 </url>
 
 <url>

@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-10-25T01:13:50+08:00</updated>
+  <updated>2025-10-29T22:59:02+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -368,6 +368,280 @@ address /domain-set:blacklist/#
 <li>DeepSeek 官方推荐的部署 DeepSeek-R1 最佳设置参数，和官网一样。 <a href="https://www.appinn.com/deepseek-r1-deploying-recommended-settings/">https://www.appinn.com/deepseek-r1-deploying-recommended-settings/</a></li>
 <li>用M1 Max MacBook Pro私有化部署DeepSeek-R1 <a href="https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro">https://blog.laoda.de/archives/deploy-deepseek-r1-using-m1-max-macbook-pro</a></li>
 <li>腾讯元宝修改用户协议内容引发热议 <a href="https://news.iqilu.com/shandong/shandonggedi/20250304/5784371.shtml">https://news.iqilu.com/shandong/shandonggedi/20250304/5784371.shtml</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在 macOS 上使用 aria2]]></title>
+    <link href="https://smartdigg.github.io/using-aria2-in-macos.html"/>
+    <updated>2025-10-27T20:04:04+08:00</updated>
+    <id>https://smartdigg.github.io/using-aria2-in-macos.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85aria2">安装 aria2</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%BF%85%E8%A6%81%E6%96%87%E4%BB%B6">创建必要文件</a></li>
+<li><a href="#%E7%BC%96%E8%BE%91%E5%90%AF%E5%8A%A8%E9%A1%B9">编辑启动项</a></li>
+<li><a href="#%E7%AE%A1%E7%90%86aria2">管理 aria2</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%89%8D%E7%AB%AF%E7%95%8C%E9%9D%A2">安装前端界面</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<h2><a id="%E5%AE%89%E8%A3%85aria2" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 aria2</h2>
+<pre class="line-numbers"><code class="language-plain_text">$ brew install aria2
+</code></pre>
+<h2><a id="%E5%88%9B%E5%BB%BA%E5%BF%85%E8%A6%81%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>创建必要文件</h2>
+<pre class="line-numbers"><code class="language-plain_text">$ mkdir  ~/.aria2
+$ touch ~/.aria2/aria2.conf ~/.aria2/aria2.session ~/.aria2/dht.dat ~/.aria2/dht6.dat 
+</code></pre>
+<p>编辑 <code>~/.aria2/aria2.conf</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text"># 下载目录。可使用绝对路径或相对路径, 默认: 当前启动位置
+dir=${HOME}/Downloads
+
+# 磁盘缓存, 0 为禁用缓存，默认:16M
+# 磁盘缓存的作用是把下载的数据块临时存储在内存中，然后集中写入硬盘，以减少磁盘 I/O ，提升读写性能，延长硬盘寿命。
+# 建议在有足够的内存空闲情况下适当增加，但不要超过剩余可用内存空间大小。
+# 此项值仅决定上限，实际对内存的占用取决于网速 (带宽) 和设备性能等其它因素。
+disk-cache=64M
+
+# 文件预分配方式, 可选：none, prealloc, trunc, falloc, 默认:prealloc
+# 预分配对于机械硬盘可有效降低磁盘碎片、提升磁盘读写性能、延长磁盘寿命。
+# 机械硬盘使用 ext4（具有扩展支持），btrfs，xfs 或 NTFS（仅 MinGW 编译版本）等文件系统建议设置为 falloc
+# 若无法下载，提示 fallocate failed.cause：Operation not supported 则说明不支持，请设置为 none
+# prealloc 分配速度慢, trunc 无实际作用，不推荐使用。
+# 固态硬盘不需要预分配，只建议设置为 none ，否则可能会导致双倍文件大小的数据写入，从而影响寿命。
+file-allocation=none
+
+# 断点续传
+continue=true
+
+# 获取服务器文件时间，默认:false
+remote-time=true
+
+
+## 进度保存设置 ##
+
+# 从会话文件中读取下载任务
+input-file=${HOME}/.aria2/aria2.session
+
+# 会话文件保存路径
+# Aria2 退出时或指定的时间间隔会保存 ` 错误 / 未完成 ` 的下载任务到会话文件
+save-session=${HOME}/.aria2/aria2.session
+
+# 任务状态改变后保存会话的间隔时间（秒）, 0 为仅在进程正常退出时保存, 默认:0
+# 为了及时保存任务状态、防止任务丢失，此项值只建议设置为 1
+save-session-interval=1
+
+
+## 下载连接设置 ##
+
+# 最大同时下载任务数, 运行时可修改, 默认:5
+max-concurrent-downloads=5
+
+# 单服务器最大连接线程数, 任务添加时可指定, 默认:1
+# 最大值为 16, 且受限于单任务最大连接线程数 (split) 所设定的值。
+max-connection-per-server=16
+
+# 单任务最大连接线程数, 任务添加时可指定, 默认:5
+split=64
+
+# 文件最小分段大小, 添加时可指定, 取值范围 1M-1024M (增强版最小值为 1K), 默认:20M
+# 比如此项值为 10M, 当文件为 20MB 会分成两段并使用两个来源下载, 文件为 15MB 则只使用一个来源下载。
+# 理论上值越小使用下载分段就越多，所能获得的实际线程数就越大，下载速度就越快，但受限于所下载文件服务器的策略。
+min-split-size=4M
+
+# GZip 支持，默认:false
+http-accept-gzip=true
+
+# 使用 UTF-8 处理 Content-Disposition ，默认:false
+content-disposition-default-utf8=true
+
+
+## BT/PT 下载设置 ##
+
+# BT 监听端口(TCP), 默认:6881-6999
+# 直通外网的设备，比如 VPS ，务必配置防火墙和安全组策略允许此端口入站
+# 内网环境的设备，比如 NAS ，除了防火墙设置，还需在路由器设置外网端口转发到此端口
+listen-port=6888
+
+# DHT 网络与 UDP tracker 监听端口(UDP), 默认:6881-6999
+# 因协议不同，可以与 BT 监听端口使用相同的端口，方便配置防火墙和端口转发策略。
+dht-listen-port=6888
+
+# 启用 IPv4 DHT 功能, PT 下载 (私有种子) 会自动禁用, 默认:true
+enable-dht=true
+
+# 启用 IPv6 DHT 功能, PT 下载 (私有种子) 会自动禁用，默认:false
+# 在没有 IPv6 支持的环境开启可能会导致 DHT 功能异常
+enable-dht6=true
+
+# IPv4 DHT 文件路径，默认：$HOME/.aria2/dht.dat
+dht-file-path=${HOME}/.aria2/dht.dat
+
+# IPv6 DHT 文件路径，默认：$HOME/.aria2/dht6.dat
+dht-file-path6=${HOME}/.aria2/dht6.dat
+
+# IPv4 DHT 网络引导节点
+dht-entry-point=dht.transmissionbt.com:6881
+
+# IPv6 DHT 网络引导节点
+dht-entry-point6=dht.transmissionbt.com:6881
+
+# 本地节点发现, PT 下载 (私有种子) 会自动禁用 默认:false
+bt-enable-lpd=true
+
+# 启用节点交换, PT 下载 (私有种子) 会自动禁用, 默认:true
+enable-peer-exchange=true
+
+# BT 下载最大连接数（单任务），运行时可修改。0 为不限制，默认:55
+# 理想情况下连接数越多下载越快，但在实际情况是只有少部分连接到的做种者上传速度快，其余的上传慢或者不上传。
+# 如果不限制，当下载非常热门的种子或任务数非常多时可能会因连接数过多导致进程崩溃或网络阻塞。
+# 进程崩溃：如果设备 CPU 性能一般，连接数过多导致 CPU 占用过高，因资源不足 Aria2 进程会强制被终结。
+# 网络阻塞：在内网环境下，即使下载没有占满带宽也会导致其它设备无法正常上网。因远古低性能路由器的转发性能瓶颈导致。
+bt-max-peers=128
+
+# BT 下载期望速度值（单任务），运行时可修改。单位 K 或 M 。默认:50K
+# BT 下载速度低于此选项值时会临时提高连接数来获得更快的下载速度，不过前提是有更多的做种者可供连接。
+# 实测临时提高连接数没有上限，但不会像不做限制一样无限增加，会根据算法进行合理的动态调节。
+bt-request-peer-speed-limit=10M
+
+# 全局最大上传速度限制, 运行时可修改, 默认:0 (无限制)
+# 设置过低可能影响 BT 下载速度
+max-overall-upload-limit=2M
+
+# 单任务上传速度限制, 默认:0 (无限制)
+max-upload-limit=0
+
+# 最小分享率。当种子的分享率达到此选项设置的值时停止做种, 0 为一直做种, 默认:1.0
+# 强烈建议您将此选项设置为大于等于 1.0
+seed-ratio=1.0
+
+# 最小做种时间（分钟）。设置为 0 时将在 BT 任务下载完成后停止做种。
+seed-time=0
+
+# BT 下载优先下载文件开头或结尾
+bt-prioritize-piece=head=32M,tail=32M
+
+# 保存通过 WebUI(RPC) 上传的种子文件(.torrent)，默认:true
+# 所有涉及种子文件保存的选项都建议开启，不保存种子文件有任务丢失的风险。
+# 通过 RPC 自定义临时下载目录可能不会保存种子文件。
+rpc-save-upload-metadata=true
+
+# 下载种子文件 (.torrent) 自动开始下载, 默认:true，可选：false|mem
+# true：保存种子文件
+# false：仅下载种子文件
+# mem：将种子保存在内存中
+follow-torrent=true
+
+# 保存磁力链接元数据为种子文件(.torrent), 默认:false
+bt-save-metadata=true
+
+# 加载已保存的元数据文件(.torrent)，默认:false
+bt-load-saved-metadata=true
+
+# 删除 BT 下载任务中未选择文件，默认:false
+bt-remove-unselected-file=true
+
+# BT 强制加密, 默认: false
+# 启用后将拒绝旧的 BT 握手协议并仅使用混淆握手及加密。可以解决部分运营商对 BT 下载的封锁，且有一定的防版权投诉与迅雷吸血效果。
+# 此选项相当于后面两个选项 (bt-require-crypto=true, bt-min-crypto-level=arc4) 的快捷开启方式，但不会修改这两个选项的值。
+bt-force-encryption=true
+
+# 分离仅做种任务，默认：false
+# 从正在下载的任务中排除已经下载完成且正在做种的任务，并开始等待列表中的下一个任务。
+bt-detach-seed-only=true
+
+
+## 客户端伪装 ##
+
+# 自定义 User Agent
+user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36 Edg/93.0.961.47
+
+# BT 客户端伪装
+# PT 下载需要保持 user-agent 和 peer-agent 两个参数一致
+# 部分 PT 站对 Aria2 有特殊封禁机制，客户端伪装不一定有效，且有封禁账号的风险。
+#user-agent=Deluge 1.3.15
+peer-agent=Deluge 1.3.15
+peer-id-prefix=-DE13F0-
+
+
+## RPC 设置 ##
+
+# 启用 JSON-RPC/XML-RPC 服务器, 默认:false
+enable-rpc=true
+
+# 接受所有远程请求, 默认:false
+rpc-allow-origin-all=true
+
+# 允许外部访问, 默认:false
+rpc-listen-all=true
+
+# RPC 监听端口, 默认:6800
+rpc-listen-port=6800
+
+# RPC 密钥
+rpc-secret=&lt;password&gt;
+
+# RPC 最大请求大小
+rpc-max-request-size=10M
+
+
+## 日志设置 ##
+
+# 控制台日志级别，可选 debug, info, notice, warn, error ，默认：notice
+console-log-level=info
+
+# 安静模式，禁止在控制台输出日志，默认：false
+quiet=false
+
+# 下载进度摘要输出间隔时间（秒），0 为禁止输出。默认：60
+summary-interval=0
+
+## BitTorrent trackers ##
+bt-tracker=
+</code></pre>
+<p>修改其中的<password>，记住改密码，稍后要用到。</p>
+<h2><a id="%E7%BC%96%E8%BE%91%E5%90%AF%E5%8A%A8%E9%A1%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编辑启动项</h2>
+<p>新建并编辑<code>~/Library/LaunchAgents/homebrew.mxcl.aria2.plist</code>，内容如下：</p>
+<pre class="line-numbers"><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+    &lt;dict&gt;
+        &lt;key&gt;Label&lt;/key&gt;
+        &lt;string&gt;homebrew.mxcl.aria2&lt;/string&gt;
+        &lt;key&gt;ProgramArguments&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;/opt/homebrew/opt/aria2/bin/aria2c&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;RunAtLoad&lt;/key&gt;
+        &lt;true /&gt;
+        &lt;key&gt;KeepAlive&lt;/key&gt;
+        &lt;true /&gt;
+        &lt;key&gt;StandardErrorPath&lt;/key&gt;
+        &lt;string&gt;/tmp/aria2.err.log&lt;/string&gt;
+        &lt;key&gt;StandardOutPath&lt;/key&gt;
+        &lt;string&gt;/tmp/aria2.out.log&lt;/string&gt;
+    &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+<h2><a id="%E7%AE%A1%E7%90%86aria2" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>管理 aria2</h2>
+<p>启动 aria2：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl load -w ~/Library/LaunchAgents/homebrew.mxcl.aria2.plist
+</code></pre>
+<p>停止 aria2：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.aria2.plist
+</code></pre>
+<p>查看日志：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cat /tmp/aria2.err.log
+$ cat /tmp/aria2.out.log
+</code></pre>
+<h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E7%AB%AF%E7%95%8C%E9%9D%A2" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前端界面</h2>
+<p>Chromium系浏览器安装 <a href="https://chromewebstore.google.com/detail/aria2-explorer/mpkodccbngfoacfalldjimigbofkhgjn?pli=1">Aria2 Explorer</a>，在 Aria2 Explorer 插件设置<code>Extension Option Settings</code>中<code>Aria2-RPC-Server</code>填入之前的密码，并保存。<br />
+<img src="media/17615666440499/aria2-explorer.webp" alt="aria2-explorer" /></p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>如何优雅地在 macOS 上使用 aria2 下载 <a href="https://blog.dov.moe/posts/17623">https://blog.dov.moe/posts/17623</a></li>
 </ul>
 
 ]]></content>
@@ -2394,75 +2668,6 @@ installation_id: &quot;your_custom_id&quot;
 <li>小众软件介绍 <a href="https://www.appinn.com/oh-my-rime/">https://www.appinn.com/oh-my-rime</a></li>
 <li>【鼠鬚管】輸入法源代码 <a href="https://github.com/rime/squirrel">https://github.com/rime/squirrel</a></li>
 <li>Rime Ice 小鹤双拼精简版 <a href="https://github.com/lakkiy/rime">https://github.com/lakkiy/rime</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[如何快速搭建个人静态博客]]></title>
-    <link href="https://smartdigg.github.io/how-to-quickly-build-a-personal-static-blog.html"/>
-    <updated>2023-07-23T23:20:07+08:00</updated>
-    <id>https://smartdigg.github.io/how-to-quickly-build-a-personal-static-blog.html</id>
-    <content type="html"><![CDATA[
-<div class="mweb_toc"><ul>
-<li><a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></li>
-<li><a href="#%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87">安装前准备</a></li>
-<li><a href="#github%E9%85%8D%E7%BD%AE">Github配置</a></li>
-<li><a href="#mweb-pro%E9%85%8D%E7%BD%AE">Mweb Pro配置</a>
-<ul>
-<li><a href="#%E7%BD%91%E9%A1%B5%E9%85%8D%E7%BD%AE">网页配置</a></li>
-<li><a href="#%E5%86%85%E5%AE%B9%E5%86%99%E4%BD%9C%E5%8F%8A%E9%A2%84%E8%A7%88">内容写作及预览</a></li>
-</ul>
-</li>
-<li><a href="#github-desktop%E9%85%8D%E7%BD%AE">Github Desktop配置</a></li>
-<li><a href="#%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83">博客发布</a></li>
-<li><a href="#%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C">进阶操作</a></li>
-<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
-</ul>
-</div>
-<p>本文的静态博客主要利用Github Page，也可以采用Cloudflare Page，方法类似。</p>
-<h2><a id="%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>注意事项</h2>
-<p><strong>博客最重要的是内容，少折腾，坚持创作</strong>。</p>
-<h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
-<p>macOS安装两个软件<a href="https://apps.apple.com/us/app/mweb-pro/id1403919533">Mweb Pro</a>以及<a href="https://desktop.github.com/">Github Desktop</a>。</p>
-<p>优点：无需命令行，简单，仅需关注内容创作。</p>
-<p>也可以选择安装<a href="https://getpublii.com/">Publii</a>或<a href="https://open.gridea.dev/">Gridea</a>，不限平台，配置简单。</p>
-<h2><a id="github%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github配置</h2>
-<p>首先注册Github帐号，并在个人主界面里选择创建一个新的仓库（Create a new repository）。</p>
-<p>进入页面后，在Repository name的位置填写域名，格式是<code>&lt;USERNAME&gt;.github.io</code>。借一张图，按图设置：</p>
-<p><img src="media/16901256071454/202305b.webp" alt="202305b" /></p>
-<p>以后你的博客网址便是<code>https://&lt;USERNAME&gt;.github.io</code>。</p>
-<h2><a id="mweb-pro%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mweb Pro配置</h2>
-<h3><a id="%E7%BD%91%E9%A1%B5%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网页配置</h3>
-<p>在Mweb Pro的设置中选择<code>Library &amp; Backup</code>，设置<code>Library Location</code>以及<code>Build Sites Save Location</code>。</p>
-<p>在Mweb Pro界面的左下角，加号选择<code>New Static Site Category</code>。</p>
-<p><img src="media/16901256071454/202305a.webp" alt="202305a" /></p>
-<p>紧接着配置名称<code>&lt;USERNAME&gt;.github.io</code>、博客主题、站点名、网址URL<code>https://&lt;USERNAME&gt;.github.io/</code>、时间格式以及网站描述。</p>
-<p><img src="media/16901256071454/202305c.webp" alt="202305c" /></p>
-<p>首次使用选择<code>Build Site</code>，也可以在博客有内容后再<code>Build Site</code>。这里的<code>Build Path</code>系自动生成，位置指向<code>Build Sites Save Location</code>下的子文件夹<code>&lt;USERNAME&gt;.github.io</code>。记住这个文件夹的位置，稍后要用到。</p>
-<h3><a id="%E5%86%85%E5%AE%B9%E5%86%99%E4%BD%9C%E5%8F%8A%E9%A2%84%E8%A7%88" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>内容写作及预览</h3>
-<p>之后在Mweb Pro的侧边栏选择<code>&lt;USERNAME&gt;.github.io</code>，在该分类下新建文件。博客的所有文章都保存在该分类下。</p>
-<p>在侧边栏<code>&lt;USERNAME&gt;.github.io</code>分类上点击右键，选择<code>Clear &amp; Rebuild Site</code>，之后再选择<code>Preview Site</code>便可打开浏览器预览。</p>
-<p><img src="media/16901256071454/202305d.webp" alt="202305d" /></p>
-<p>至此，本地静态博客完成。</p>
-<h2><a id="github-desktop%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Github Desktop配置</h2>
-<p>安装Github Desktop软件，登录后克隆你的仓库<code>&lt;USERNAME&gt;.github.io</code>。其中<code>Local Path</code>为上一步设置的名为<code>&lt;USERNAME&gt;.github.io</code>的文件夹。</p>
-<p>等待Clone完成后，界面上会显示几种管理修改你的项目的方式。借一张图，效果如下：<br />
-<img src="media/16901256071454/202305e.webp" alt="202305e" /></p>
-<h2><a id="%E5%8D%9A%E5%AE%A2%E5%8F%91%E5%B8%83" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>博客发布</h2>
-<p>打开Github Desktop。Github Desktop会在界面左侧显示文件夹的变动。</p>
-<p>先点击Github Desktop左下角的<code>Commit to master</code>，再点击<code>Push origin</code>就可以将内容上传。之后便可以去<code>https://&lt;USERNAME&gt;.github.io</code>查看博客最新内容。</p>
-<h2><a id="%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>进阶操作</h2>
-<p>可以修改主题、绑定个人域名、添加评论功能、设置Cloudflare加速，还可以设置自动发布等等。</p>
-<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
-<ul>
-<li>How to use Publish Script to Publish website <a href="https://www.mweb.im/how_to_use_shell_script.html">https://www.mweb.im/how_to_use_shell_script.html</a></li>
-<li>Publii 官网 <a href="https://getpublii.com/">https://getpublii.com</a></li>
-<li>MWeb 生成静态网站 &amp; 博客 <a href="https://zh.mweb.im/zh-mweb-static-blog.html">https://zh.mweb.im/zh-mweb-static-blog.html</a></li>
-<li>自定义或制作自己的静态网站模板 <a href="https://zh.mweb.im/zh-make_your_site_template.html">https://zh.mweb.im/zh-make_your_site_template.html</a></li>
-<li>我是如何利用Github Pages搭建起我的博客，细数一路的坑 <a href="https://zhuanlan.zhihu.com/p/334815426">https://zhuanlan.zhihu.com/p/334815426</a></li>
-<li>GitHub Pages 搭建教程 <a href="https://sspai.com/post/54608">https://sspai.com/post/54608</a></li>
 </ul>
 
 ]]></content>
