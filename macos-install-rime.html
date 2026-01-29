@@ -130,16 +130,16 @@
 <p>优点：开源、不联网、没有隐私问题。</p>
 <h2><a id="%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装</h2>
 <p>通过官网下载：<a href="https://rime.im/download/">https://rime.im/download/</a>，具体安装参考薄荷拼音的配置教程：<a href="https://www.mintimate.cc/zh/guide/installRime.html">安装Rime输入法</a>。</p>
-<p>在 macOS 上也可以通过Homebrew安装：</p>
+<p>在 macOS 上也可以通过 Homebrew 安装：</p>
 <pre class="line-numbers"><code class="language-bash">brew install --cask squirrel
 </code></pre>
-<p>记得去系统设置键盘添加Rime输入法。</p>
+<p>记得去系统设置键盘添加 Rime 输入法。</p>
 <h2><a id="%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载配置文件</h2>
 <p>选择配置文件的原则是简单，开箱即用，无需额外配置。推荐薄荷拼音 <a href="https://github.com/Mintimate/oh-my-rime">https://github.com/Mintimate/oh-my-rime</a>。</p>
 <p>将整个配置文件库下载下来。</p>
 <h2><a id="%E9%83%A8%E7%BD%B2" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署</h2>
 <ol>
-<li>点击菜单栏【ㄓ】-【用户设定】，将打开Rime默认配置文件夹<code>~/Library/Rime</code>。</li>
+<li>点击菜单栏【ㄓ】-【用户设定】，将打开 Rime 默认配置文件夹<code>~/Library/Rime</code>。</li>
 <li>清空该文件夹，然后将【配置文件】里所有文件粘贴进去。</li>
 <li>点击菜单栏【ㄓ】-【部署】，至此完成定制配置。</li>
 </ol>
@@ -150,7 +150,7 @@
 <p>修改候选词数量，需要更改<code>menu/page_size</code>后的数字。</p>
 <p>若只使用小鹤双拼输入法，注释掉<code>schema_list</code>中除<code>double_pinyin_flypy</code>外其他输入方案。</p>
 <h3><a id="%E7%9A%AE%E8%82%A4%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>皮肤配置</h3>
-<p>调整Rime默认配置文件夹<code>~/Library/Rime</code>中<code>squirrel.yaml</code>文件：</p>
+<p>调整 Rime 默认配置文件夹<code>~/Library/Rime</code>中<code>squirrel.yaml</code>文件：</p>
 <ul>
 <li><code>color_scheme</code>以及<code>color_scheme_dark</code>分别对应亮色与暗色主题。</li>
 <li><code>candidate_list_layout</code>可设置候选项排列方向。</li>
@@ -158,7 +158,7 @@
 <h3><a id="%E8%AF%8D%E5%85%B8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>词典</h3>
 <p>以小鹤双拼为例，根据配置文件<code>double_pinyin_flypy.schema.yaml</code>提示，需要修改默认配置文件夹<code>~/Library/Rime</code>中<code>rime_mint.dict.yaml</code>文件，调整<code>import_tables</code>列表即可。</p>
 <h3><a id="%E5%90%8C%E6%AD%A5%E9%85%8D%E7%BD%AE%E5%92%8C%E8%AF%8D%E5%BA%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>同步配置和词库</h3>
-<p>在Rime默认配置文件夹<code>~/Library/Rime</code>中<code>installation.yaml</code>文件中追加：</p>
+<p>在 Rime 默认配置文件夹<code>~/Library/Rime</code>中<code>installation.yaml</code>文件中追加：</p>
 <pre class="line-numbers"><code class="language-plain_text">sync_dic: &quot;/path/to/rsync&quot;
 installation_id: &quot;your_custom_id&quot;
 </code></pre>

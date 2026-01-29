@@ -120,15 +120,15 @@
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>选择AdGuardHome配置DNS-over-HTTPS（doh）服务器优势：安装简单，可视化，广告拦截。以Debian系统为例。</p>
+<p>选择 AdGuardHome 配置 DNS-over-HTTPS（doh）服务器优势：安装简单，可视化，广告拦截。以 Debian 系统为例。</p>
 <h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
 <ul>
 <li>域名<code>example.com</code></li>
-<li>DNS 添加A记录 <code>doh.example.com</code></li>
+<li>DNS 添加 A 记录 <code>doh.example.com</code></li>
 <li>VPS，要求延迟要低。</li>
 </ul>
 <h2><a id="%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装证书</h2>
-<p>安装Nginx：</p>
+<p>安装 Nginx：</p>
 <pre class="line-numbers"><code class="language-bash">$ sudo apt install nginx
 </code></pre>
 <p>安装certbot：</p>
@@ -148,11 +148,11 @@ $ certbot --version
 0 0 15 */2 * /usr/bin/certbot renew --quiet
 </code></pre>
 <h2><a id="%E5%AE%89%E8%A3%85adguardhome" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装AdGuardHome</h2>
-<p>使用以下命令自动安装AdGuardHome：</p>
+<p>使用以下命令自动安装 AdGuardHome：</p>
 <pre class="line-numbers"><code class="language-bash">curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v
 </code></pre>
 <p>VPS防火墙临时放行<code>3000</code>。浏览器访问<code>ip:3000</code>，根据引导进行操作。</p>
-<p>配置DOH（DNS-over-HTTPS）<br />
+<p>配置 DOH（DNS-over-HTTPS）<br />
 <img src="media/17402493508620/doh_set.png" alt="doh_set" /></p>
 <p>这里不勾选<code>HTTPS自动重定向</code>，HTTPS端口填写<code>8443</code>。</p>
 <p>AdGuardHome控制命令：</p>
@@ -202,8 +202,8 @@ $ certbot --version
 <pre class="line-numbers"><code class="language-bash">$ sudo systemctl restart nginx.service
 </code></pre>
 <p>如果nginx代理配置没有问题，使用浏览器访问<code>https://doh.example.com/dns-query</code>会出现<code>Bad Request</code>信息：<br />
-<img src="media/17402493508620/dns_query_test.png" alt="dns_query_test" /></p>
-<p>之后便可以在浏览器或手机上使用自建的doh服务。</p>
+<img src="media/17402493508620/dns_query_test.png" alt="dns_query_test" /><br />
+之后便可以在浏览器或手机上使用自建的doh服务。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>AdGuardHome Github repo <a href="https://github.com/AdguardTeam/AdGuardHome/">https://github.com/AdguardTeam/AdGuardHome</a></li>

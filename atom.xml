@@ -4,13 +4,154 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2025-10-29T22:59:02+08:00</updated>
+  <updated>2026-01-29T22:49:39+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
     
   </author>
   <generator uri="http://www.mweb.im/">MWeb</generator>
+  
+  <entry>
+    <title type="html"><![CDATA[自建个人文档版本管理系统 Gogs]]></title>
+    <link href="https://smartdigg.github.io/self-hosted-file-version-control-system-gogs.html"/>
+    <updated>2025-12-24T23:33:18+08:00</updated>
+    <id>https://smartdigg.github.io/self-hosted-file-version-control-system-gogs.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%87%86%E5%A4%87">安装准备</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85gogs">安装 Gogs</a></li>
+<li><a href="#%E5%8D%87%E7%BA%A7gogs">升级 Gogs</a></li>
+<li><a href="#%E8%BF%9B%E9%98%B6%E8%AE%BE%E7%BD%AE">进阶设置</a>
+<ul>
+<li><a href="#%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3">修改默认端口</a></li>
+<li><a href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">反向代理</a>
+<ul>
+<li><a href="#nginx">NGINX</a></li>
+<li><a href="#caddy">Caddy</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8">开机启动</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB">数据迁移</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>Gogs 官方号称是一个无痛的自托管 Git 服务，相较后继者 Gitea 更简单易懂，非常适合个人管理文档版本。</p>
+<h2><a id="%E5%AE%89%E8%A3%85%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装准备</h2>
+<p>确保 macOS 已安装 git：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ brew update
+$ brew install git
+</code></pre>
+<h2><a id="%E5%AE%89%E8%A3%85gogs" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 Gogs</h2>
+<p>可以到 Gogs 官网直接下载<a href="https://gogs.io/docs/installation/install_from_binary">https://gogs.io/docs/installation/install_from_binary</a>，例如 macOS arm64 最新版本是 <code>gogs_0.13.3_ darwin_arm64.zip</code>。解压缩后文件夹路径为 <code>/Users/username/path-to-gogs/gogs</code>，进入该目录并启动gogs服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cd /Users/username/path-to-gogs/gogs
+$ ./gogs web
+</code></pre>
+<p>浏览器打开安装页面 <a href="http://localhost:3000">http://localhost:3000</a> 进行下一步安装。</p>
+<p>安装界面：<br />
+<img src="media/17665903986851/gogs2.webp" alt="gogs2" /></p>
+<p>个人使用可以尽量简化：</p>
+<ul>
+<li>数据库类型：选择 <code>SQLite3</code></li>
+<li>数据库文件路径：<code>data/gogs.db</code></li>
+<li>仓库根目录：自定义，例如 <code>gogs-repositories</code></li>
+<li>以此用户运行： <code>macOS</code> 用户名</li>
+<li>SSH 服务端口：留空</li>
+<li>HTTP 端口：3000</li>
+<li>应用程序 URL：<code>http://localhost:3000</code></li>
+<li>日志路径：<code>log</code></li>
+</ul>
+<p>安装 Gogs 成功后，第一位注册用户默认是管理员。</p>
+<p>新建仓库：<br />
+<img src="media/17665903986851/gogs-new-repo.webp" alt="gogs-new-repo" /></p>
+<p>在 Finder 中新建文件夹作为仓库，进入该文件夹并执行如下命令：</p>
+<pre class="line-numbers"><code class="language-plain_text">touch README.md
+git init
+git add README.md
+git commit -m &quot;first commit&quot;
+git remote add origin http://localhost:3000/username/test-repository.git
+git push -u origin main
+</code></pre>
+<h2><a id="%E5%8D%87%E7%BA%A7gogs" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>升级 Gogs</h2>
+<p>找到 <code>gogs</code> 所在文件夹，并重命名 为<code>gogs_old</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ mv gogs gogs_old
+</code></pre>
+<p>到官网下载 Gogs 最新版本，解压后获得一个新的 <code>gogs</code> 文件夹。</p>
+<p>将 <code>gogs_old</code> 下三个文件夹 <code>custom</code>，<code>data</code>以及 <code>log </code>复制到新的 <code>gogs</code> 文件夹即可：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cp -R gogs_old/{custom,data,log} gogs
+</code></pre>
+<p>重新启动 <code>gogs</code> 服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cd gogs
+$ ./gogs web
+</code></pre>
+<h2><a id="%E8%BF%9B%E9%98%B6%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>进阶设置</h2>
+<h3><a id="%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>修改默认端口</h3>
+<p>Gogs 默认端口为<code>3000</code>，初次启动可改变端口，例如 <code>3001</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ ./gogs web -port 3001
+</code></pre>
+<h3><a id="%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>反向代理</h3>
+<h4><a id="nginx" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>NGINX</h4>
+<pre class="line-numbers"><code class="language-plain_text">server {
+    listen 80;
+    server_name git.crystalnetwork.us;
+
+    location / {
+        proxy_pass http://localhost:3000;
+    }
+}
+</code></pre>
+<h4><a id="caddy" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caddy</h4>
+<pre class="line-numbers"><code class="language-plain_text">git.example.com {
+    proxy / http://localhost:3000
+}
+</code></pre>
+<h3><a id="%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开机启动</h3>
+<p>创建 Launch Agent 文件： <code>~/Library/LaunchAgents/com.gogs.web.plist </code>，内容如下：</p>
+<pre class="line-numbers"><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+  &lt;dict&gt;
+    &lt;key&gt;KeepAlive&lt;/key&gt;
+    &lt;true/&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;com.gogs.web&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+          &lt;string&gt;sh&lt;/string&gt;
+          &lt;string&gt;-c&lt;/string&gt;
+          &lt;string&gt;cd /Users/username/path-to-gogs/gogs; ./gogs web&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;WorkingDirectory&lt;/key&gt;
+    &lt;string&gt;/Users/username/path-to-gogs/gogs/&lt;/string&gt;
+    &lt;key&gt;RunAtLoad&lt;/key&gt;
+    &lt;true/&gt;
+  &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+<p>加载 daemon 服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl load -w ~/Library/LaunchAgents/com.gogs.server.plist 
+</code></pre>
+<p>启动 <code>gogs</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl start com.gogs.web
+</code></pre>
+<p>停止 <code>gogs</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl stop com.gogs.web
+</code></pre>
+<h3><a id="%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>数据迁移</h3>
+<p>复制 <code>gogs</code> 以及 <code>gogs-repositories</code> 文件夹到新电脑，根据实际情况修改 <code>app.ini</code>。之后正常启动即可。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>Gogs 官网 <a href="https://gogs.io/">https://gogs.io</a></li>
+<li>Gogs 帮助文档faqs <a href="https://gogs.io/docs/intro/faqs">https://gogs.io/docs/intro/faqs</a></li>
+<li>macOS 搭建 Gitea 私有 Git 服务器教程 <a href="https://blog.csdn.net/m0_55316234/article/details/150212224">https://blog.csdn.net/m0_55316234/article/details/150212224</a></li>
+<li>Start the runner with LaunchDaemon(macOS) <a href="https://docs.gitea.com/usage/actions/act-runner#start-the-runner-with-launchdaemonmacos">https://docs.gitea.com/usage/actions/act-runner#start-the-runner-with-launchdaemonmacos</a></li>
+<li>如何使用Gogs搭建自己的git服务器 <a href="https://www.cnblogs.com/zhaotianff/p/17887191.html">https://www.cnblogs.com/zhaotianff/p/17887191.html</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[使用 coredns 自建 DoH 服务]]></title>
@@ -97,7 +238,7 @@ dns.example.com {
 </ul>
 </div>
 <h2><a id="%E5%90%AF%E7%94%A8filevault" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>启用 FileVault</h2>
-<p>打开<code>System Settings</code>，单击<code>Privacy &amp; Security</code>，选择<code>FileVault</code>选项卡。单击开启FileVault，然后按照屏幕说明操作。</p>
+<p>打开<code>System Settings</code>，单击<code>Privacy &amp; Security</code>，选择<code>FileVault</code>选项卡。单击开启 FileVault，然后按照屏幕说明操作。</p>
 <h2><a id="%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>备份文件</h2>
 <p>使用 Apple 的<code>Time Machine</code>功能可以备份文件。</p>
 <ul>
@@ -126,12 +267,12 @@ dns.example.com {
 <li>之后系统会要求您输入电话号码，以接收双因素身份验证代码</li>
 </ul>
 <h2><a id="%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E8%BE%93%E5%85%A5%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用安全输入法</h2>
-<p>建议安装Rime/Squirrel，参考<a href="macos-install-rime.html">macOS安装Rime输入法</a>，远离所有国产输入法。</p>
+<p>建议安装 Rime/Squirrel，参考<a href="macos-install-rime.html">macOS安装Rime输入法</a>，远离所有国产输入法。</p>
 <h2><a id="%E6%B5%81%E9%87%8F%E5%8A%A0%E5%AF%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>流量加密</h2>
 <p>使用 DNS-over-HTTPS，参考<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>或<a href="simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html">macOS 配置 DNS-over-HTTPS SmartDNS 简化版</a>。</p>
 <h2><a id="%E9%98%B2%E7%81%AB%E5%A2%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>防火墙</h2>
 <p>启用内置防火墙。转到<code>System Settings</code>，打开<code>Network</code>，单击<code>Firewall</code>选项卡，单击开启防火墙。</p>
-<p>Apple 的防火墙只保护传入流量，不会阻止向外发送数据。为了提高安全性，可以考虑使用提供更高级保护的第三方防火墙，例如Little Snitch。</p>
+<p>Apple 的防火墙只保护传入流量，不会阻止向外发送数据。为了提高安全性，可以考虑使用提供更高级保护的第三方防火墙，例如 Little Snitch。</p>
 <h2><a id="%E8%BF%9C%E7%A6%BB%E7%A0%B4%E8%A7%A3%E7%89%88%E4%BB%A5%E5%8F%8A%E4%B8%AD%E5%9B%BD%E5%A4%A7%E9%99%86%E8%BD%AF%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>远离破解版以及中国大陆软件</h2>
 <p>尽量从 Mac App Store 下载软件，远离流氓软件，特别是国产软件。远离破解版，非必要软件放入虚拟机。</p>
 <h2><a id="%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用安全浏览器</h2>
@@ -156,20 +297,20 @@ dns.example.com {
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE">SmartDNS 安装及配置</a></li>
-<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS服务管理</a></li>
+<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS 服务管理</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>在<a href="simplified-version-of-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS 简化版</a>的基础上用SmartDNS替换mosdns。可参考<a href="configure-smartdns.html">SmartDNS 配置</a>，本文采用不同的方法进行设置。</p>
+<p>在<a href="simplified-version-of-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS 简化版</a>的基础上用 SmartDNS 替换 mosdns。可参考<a href="configure-smartdns.html">SmartDNS 配置</a>，本文采用不同的方法进行设置。</p>
 <h2><a id="smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装及配置</h2>
-<p>安装SmartDNS：</p>
+<p>安装 SmartDNS：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install smartdns
 </code></pre>
 <p>配置文件位于<code>/opt/homebrew/etc/smartdns/</code>目录。</p>
 <p>同时，下载国内网站列表<a href="https://github.com/jiange1236/smartdns-rules">smartdns-rules</a>，主要是文件<code>direct-list.txt</code>以及<code>china-list.txt</code>。</p>
 <p>将上述文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>，同时在该文件夹下新建两个文件：</p>
 <ul>
-<li>新建<code>self-defined.conf</code>，手动添加且需要国内DNS解析的网站，格式如下：</li>
+<li>新建<code>self-defined.conf</code>，手动添加且需要国内 DNS 解析的网站，格式如下：</li>
 </ul>
 <pre class="line-numbers"><code class="language-plain_text">duolingo.cn
 </code></pre>
@@ -179,7 +320,7 @@ dns.example.com {
 <pre class="line-numbers"><code class="language-plain_text">2345.com
 mairuan.com
 </code></pre>
-<p>SmartDNS分流的配置文件<code>smartdns.conf</code>样例：</p>
+<p>SmartDNS 分流的配置文件<code>smartdns.conf</code>样例：</p>
 <pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
 bind [::]:53
 bind-tcp [::]:53
@@ -245,20 +386,20 @@ address /domain-set:blacklist/#
 <ul>
 <li>设置有<code>-exclude-default-group</code>的上游 DNS 默认不会被使用，仅当 <code>domain-rules</code>或<code>nameserver</code>配置明确指定时使用。</li>
 <li><code>domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt</code>，定义一个域名集<code>china-list</code>，包含的域名列表在<code> /opt/homebrew/etc/smartdns/china-list.txt</code>文件中。</li>
-<li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用china分组的DNS服务器解析。</li>
-<li><code>address /domain-set:blacklist/#</code>，设置IP过滤规则，匹配的域名集为<code>blacklist</code>，使用<code>#</code>表示同时屏蔽IPV4，IPV6。可参考SmartDNS<a href="https://pymumu.github.io/smartdns/config/ad-block/">广告屏蔽规则</a>。</li>
+<li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用 china 分组的 DNS 服务器解析。</li>
+<li><code>address /domain-set:blacklist/#</code>，设置 IP 过滤规则，匹配的域名集为<code>blacklist</code>，使用<code>#</code>表示同时屏蔽IPV4，IPV6。可参考 SmartDNS <a href="https://pymumu.github.io/smartdns/config/ad-block/">广告屏蔽规则</a>。</li>
 </ul>
-<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS服务管理</h2>
-<p>启动SmartDNS服务：</p>
+<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 服务管理</h2>
+<p>启动 SmartDNS 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
 </code></pre>
-<p>检查SmartDNS是否正常启动：</p>
+<p>检查 SmartDNS 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
 </code></pre>
-<p>启动、重启与停止SmartDNS服务：</p>
+<p>启动、重启与停止 SmartDNS 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
 </code></pre>
-<p>启动检测DNS：</p>
+<p>启动检测 DNS：</p>
 <ul>
 <li>国内：<a href="https://d-nstool.netease.com/">https://d-nstool.netease.com</a></li>
 <li>国内：<a href="https://ipleak.net/">https://ipleak.net</a></li>
@@ -306,10 +447,10 @@ address /domain-set:blacklist/#
 <h3><a id="%E4%B8%8B%E8%BD%BDollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载 Ollama</h3>
 <p>到Ollama网页下载程序，<a href="https://ollama.com/download">https://ollama.com/download</a>。</p>
 <h3><a id="%E5%AE%89%E8%A3%85ollama" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 Ollama</h3>
-<p>以macOS为例，一般情况下直接安装。如果没有图标出现，则需进入<code>/Applications/Ollama.app/Contents/Resources/</code>，打开该文件夹下<code>ollama</code>即可。之后便可通过终端运行<code>ollama -v</code>查看软件版本号。软件支持自动更新，无需担心。</p>
+<p>以 macOS 为例，一般情况下直接安装。如果没有图标出现，则需进入<code>/Applications/Ollama.app/Contents/Resources/</code>，打开该文件夹下<code>ollama</code>即可。之后便可通过终端运行<code>ollama -v</code>查看软件版本号。软件支持自动更新，无需担心。</p>
 <h2><a id="%E9%83%A8%E7%BD%B2deepseek" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署 DeepSeek</h2>
 <h3><a id="%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E7%89%88%E6%9C%AC" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>选择合适的版本</h3>
-<p>到Ollama资料库查找DeepSeek-r1 <a href="https://ollama.com/library/deepseek-r1">https://ollama.com/library/deepseek-r1</a>。<a href="https://github.com/deepseek-ai/DeepSeek-R1">DeepSeek</a>可供下载的有一个满血版671b以及六个蒸馏模型，主要区别如下：</p>
+<p>到 Ollama 资料库查找 DeepSeek-r1 <a href="https://ollama.com/library/deepseek-r1">https://ollama.com/library/deepseek-r1</a>。<a href="https://github.com/deepseek-ai/DeepSeek-R1">DeepSeek</a>可供下载的有一个满血版671b以及六个蒸馏模型，主要区别如下：</p>
 <ul>
 <li>DeepSeek-R1-Distill-Qwen-1.5B，要求内存至少8G；</li>
 <li>DeepSeek-R1-Distill-Qwen-7B，要求内存至少16GB；</li>
@@ -332,7 +473,7 @@ address /domain-set:blacklist/#
 <li>Firefox：<a href="https://addons.mozilla.org/en-US/firefox/addon/page-assist/">https://addons.mozilla.org/en-US/firefox/addon/page-assist</a></li>
 <li>Chrome <a href="https://chromewebstore.google.com/detail/page-assist-%E6%9C%AC%E5%9C%B0-ai-%E6%A8%A1%E5%9E%8B%E7%9A%84-web/jfgfiigpkhlkbnfnbobbkinehhfdhndo?pli=1">https://chromewebstore.google.com/detail/page-assist-%E6%9C%AC%E5%9C%B0-ai-%E6%A8%A1%E5%9E%8B%E7%9A%84-web/jfgfiigpkhlkbnfnbobbkinehhfdhndo?pli=1</a></li>
 </ul>
-<p>在浏览器中点击<code>Page Assist</code>插件图标，选择模型以及提示词后便可使用DeepSeek。开启网络搜索结果可能会更好。</p>
+<p>在浏览器中点击<code>Page Assist</code>插件图标，选择模型以及提示词后便可使用 DeepSeek。开启网络搜索结果可能会更好。</p>
 <h3><a id="%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参数设置</h3>
 <p>来自官方的推荐参数设置。</p>
 <ul>
@@ -361,7 +502,7 @@ address /domain-set:blacklist/#
 {question}'''
 </code></pre>
 <h2><a id="%E5%85%B6%E4%BB%96%E6%94%AF%E6%8C%81%E6%A8%A1%E5%9E%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>其他支持模型</h2>
-<p>ollama也可以安装其他模型，在网站可查看支持模型列表 <a href="https://ollama.com/library">https://ollama.com/library</a>。</p>
+<p>Ollama 也可以安装其他模型，在网站可查看支持模型列表 <a href="https://ollama.com/library">https://ollama.com/library</a>。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>DeepSeek Github仓库 <a href="https://github.com/deepseek-ai/DeepSeek-R1">https://github.com/deepseek-ai/DeepSeek-R1</a></li>
@@ -683,7 +824,7 @@ https://cdn.jsdelivr.net/gh/obgnail/chinese-internet-is-dead@master/blocklist.tx
 <pre class="line-numbers"><code class="language-plain_text">https://raw.githubusercontent.com/laylavish/uBlockOrigin-HUGE-AI-Blocklist/main/list.txt
 </code></pre>
 <h2><a id="%E8%87%AA%E5%AE%9A%E4%B9%89%E9%BB%91%E5%90%8D%E5%8D%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>自定义黑名单</h2>
-<p>可以配合SmartDNS使用。在SmartDNS文件夹<code>/opt/homebrew/etc/smartdns/</code>新建文件<code>blacklist.txt</code>，其中内容为需要屏蔽的网站域名，格式如下：</p>
+<p>可以配合 SmartDNS 使用。在 SmartDNS 文件夹<code>/opt/homebrew/etc/smartdns/</code>新建文件<code>blacklist.txt</code>，其中内容为需要屏蔽的网站域名，格式如下：</p>
 <pre class="line-numbers"><code class="language-plain_text">baidu.com
 flash.cn
 makeding.com
@@ -721,15 +862,15 @@ address /domain-set:blacklist/#
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>选择AdGuardHome配置DNS-over-HTTPS（doh）服务器优势：安装简单，可视化，广告拦截。以Debian系统为例。</p>
+<p>选择 AdGuardHome 配置 DNS-over-HTTPS（doh）服务器优势：安装简单，可视化，广告拦截。以 Debian 系统为例。</p>
 <h2><a id="%E5%AE%89%E8%A3%85%E5%89%8D%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装前准备</h2>
 <ul>
 <li>域名<code>example.com</code></li>
-<li>DNS 添加A记录 <code>doh.example.com</code></li>
+<li>DNS 添加 A 记录 <code>doh.example.com</code></li>
 <li>VPS，要求延迟要低。</li>
 </ul>
 <h2><a id="%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装证书</h2>
-<p>安装Nginx：</p>
+<p>安装 Nginx：</p>
 <pre class="line-numbers"><code class="language-bash">$ sudo apt install nginx
 </code></pre>
 <p>安装certbot：</p>
@@ -749,11 +890,11 @@ $ certbot --version
 0 0 15 */2 * /usr/bin/certbot renew --quiet
 </code></pre>
 <h2><a id="%E5%AE%89%E8%A3%85adguardhome" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装AdGuardHome</h2>
-<p>使用以下命令自动安装AdGuardHome：</p>
+<p>使用以下命令自动安装 AdGuardHome：</p>
 <pre class="line-numbers"><code class="language-bash">curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v
 </code></pre>
 <p>VPS防火墙临时放行<code>3000</code>。浏览器访问<code>ip:3000</code>，根据引导进行操作。</p>
-<p>配置DOH（DNS-over-HTTPS）<br />
+<p>配置 DOH（DNS-over-HTTPS）<br />
 <img src="media/17402493508620/doh_set.png" alt="doh_set" /></p>
 <p>这里不勾选<code>HTTPS自动重定向</code>，HTTPS端口填写<code>8443</code>。</p>
 <p>AdGuardHome控制命令：</p>
@@ -803,8 +944,8 @@ $ certbot --version
 <pre class="line-numbers"><code class="language-bash">$ sudo systemctl restart nginx.service
 </code></pre>
 <p>如果nginx代理配置没有问题，使用浏览器访问<code>https://doh.example.com/dns-query</code>会出现<code>Bad Request</code>信息：<br />
-<img src="media/17402493508620/dns_query_test.png" alt="dns_query_test" /></p>
-<p>之后便可以在浏览器或手机上使用自建的doh服务。</p>
+<img src="media/17402493508620/dns_query_test.png" alt="dns_query_test" /><br />
+之后便可以在浏览器或手机上使用自建的doh服务。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>AdGuardHome Github repo <a href="https://github.com/AdguardTeam/AdGuardHome/">https://github.com/AdguardTeam/AdGuardHome</a></li>
@@ -823,14 +964,14 @@ $ certbot --version
     <content type="html"><![CDATA[
 <div class="mweb_toc"><ul>
 <li><a href="#mosdns%E8%AE%BE%E7%BD%AE">mosdns设置</a></li>
-<li><a href="#dnscrypt-proxy%E8%AE%BE%E7%BD%AE">dnscrypt-proxy设置</a></li>
+<li><a href="#dnscrypt-proxy%E8%AE%BE%E7%BD%AE">Dnscrypt-proxy 设置</a></li>
 <li><a href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8">开机启动</a></li>
 </ul>
 </div>
 <p>详尽版 DNS-over-HTTPS 配置参考：<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>。</p>
-<p>简化版DoH只需要安装mosdns以及dnscrypt-proxy，不需要cloudflared以及AdGuardHome。mosdns负责分流以及国内连接，端口设置为<code>53</code>；dnscrypt-proxy负责国外网络连接，端口设置为<code>5300</code>。</p>
+<p>简化版 DoH 只需要安装 mosdns 以及 dnscrypt-proxy，不需要 cloudflared 以及 AdGuardHome。mosdns 负责分流以及国内连接，端口设置为<code>53</code>；dnscrypt-proxy 负责国外网络连接，端口设置为<code>5300</code>。</p>
 <h2><a id="mosdns%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mosdns设置</h2>
-<p>从Github下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。</p>
+<p>从 Github 下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。</p>
 <p>解压缩后将整个文件夹移至<code>/opt/local/etc/</code>，并修改配置文件<code>/opt/local/etc/config.yaml</code>：</p>
 <pre class="line-numbers"><code class="language-plain_text">log:
     level: info
@@ -959,29 +1100,29 @@ plugins:
 <li><code>apple-cn.txt</code>：<a href="https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt">https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt</a></li>
 <li><code>self-defined.txt</code>：自行创建。</li>
 </ul>
-<p>安装mosdns前检查配置是否正确：</p>
+<p>安装 mosdns 前检查配置是否正确：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ /opt/local/etc/mosdns/mosdns start -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
-<p>安装mosdns服务：<br />
+<p>安装 mosdns 服务：<br />
 格式如下：<code>mosdns service install -d 工作目录绝对路径 -c 配置文件路径</code>。</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
-<p>运行后将生成启动配置文件<code>/Library/LaunchDaemons/mosdns.plist</code>，该服务将设定mosdns随系统启动，但并不会立刻运行。</p>
-<p>修改mosdns服务：</p>
+<p>运行后将生成启动配置文件<code>/Library/LaunchDaemons/mosdns.plist</code>，该服务将设定 mosdns 随系统启动，但并不会立刻运行。</p>
+<p>修改 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ vim /Library/LaunchDaemons/mosdns.plist
 </code></pre>
 <p>修改<code>RunAtLoad</code>的值为<code>true</code>。</p>
-<p>启动mosdns：</p>
+<p>启动 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start
 </code></pre>
-<p>检查mosdns是否正常启动：</p>
+<p>检查 mosdns 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
 </code></pre>
-<p>管理mosdns服务：</p>
+<p>管理 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start/restart/stop/uninstall
 </code></pre>
-<h2><a id="dnscrypt-proxy%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>dnscrypt-proxy设置</h2>
-<p>安装dnscrypt-proxy：</p>
+<h2><a id="dnscrypt-proxy%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dnscrypt-proxy 设置</h2>
+<p>安装 dnscrypt-proxy：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install dnscrypt-proxy
 </code></pre>
 <p>安装后会自动生成启动配置文件<code>/Library/LaunchDaemons/dnscrypt-proxy.plist</code>。</p>
@@ -1000,25 +1141,25 @@ require_dnssec = false
 require_nolog = false
 disabled_server_names = ['alidns-doh','dnspod','tuna-doh-ipv6']
 </code></pre>
-<p>启动dnscrypt-proxy服务：</p>
+<p>启动 dnscrypt-proxy 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start dnscrypt-proxy
 </code></pre>
 <p><strong>备注</strong>：这里需要使用<code>sudo</code>命令，目的是为了避免在用户目录下出现重复的配置文件，否则将不断提醒端口占用。</p>
-<p>检查dnscrypt-proxy是否正常启动：</p>
+<p>检查 dnscrypt-proxy 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5300
 </code></pre>
-<p>管理dnscrypt-proxy服务：</p>
+<p>管理 dnscrypt-proxy 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop dnscrypt-proxy
 </code></pre>
 <h2><a id="%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开机启动</h2>
-<p>开机启动mosdns：</p>
+<p>开机启动 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo launchctl load -w /Library/LaunchDaemons/mosdns.plist
 </code></pre>
-<p>开机启动dnscrypt-proxy：</p>
+<p>开机启动 dnscrypt-proxy：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo launchctl load -w /Library/LaunchDaemons/dnscrypt-proxy.plist
 </code></pre>
 <p>系统设置：<br />
-进入WiFi详细界面，在DNS服务器栏中分别填入<code>127.0.0.1</code>以及<code>::1</code>，保存即可。</p>
+进入WiFi详细界面，在 DNS 服务器栏中分别填入<code>127.0.0.1</code>以及<code>::1</code>，保存即可。</p>
 <p><img src="media/17414919487590/Xnip-DoH-2024.webp" alt="Xnip-DoH-2024" /></p>
 
 ]]></content>
@@ -1039,7 +1180,7 @@ disabled_server_names = ['alidns-doh','dnspod','tuna-doh-ipv6']
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>中国大陆网络搜索环境逐渐恶化，信息检索结果缺乏真实性和可信度。当然用户可以选择国外的搜索引擎直接使用，但这些搜索引擎不保证稳定性或被墙的可能性。有条件的用户可以在自己的VPS上自建搜索引擎，并通过内网穿透使用。比较有名的有Whoogle Search，SearXNG，YaCy等。</p>
+<p>中国大陆网络搜索环境逐渐恶化，信息检索结果缺乏真实性和可信度。当然用户可以选择国外的搜索引擎直接使用，但这些搜索引擎不保证稳定性或被墙的可能性。有条件的用户可以在自己的 VPS 上自建搜索引擎，并通过内网穿透使用。比较有名的有 Whoogle Search，SearXNG，YaCy等。</p>
 <h2><a id="%E5%85%AC%E5%85%B1%E5%AE%9E%E4%BE%8B" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>公共实例</h2>
 <p>如果不想自建搜索引擎，也可以直接使用公共实例。</p>
 <ul>
@@ -1048,20 +1189,20 @@ disabled_server_names = ['alidns-doh','dnspod','tuna-doh-ipv6']
 <li>其他<a href="search-engine.html">网络搜索引擎</a></li>
 </ul>
 <h2><a id="whoogle-search" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Whoogle Search</h2>
-<p>Whoogle Search 搜索结果基于Google搜索，没有广告也没有追踪。详细介绍看Github主页<a href="https://github.com/benbusby/whoogle-search">https://github.com/benbusby/whoogle-search</a>。</p>
-<p>Docker CLI安装：</p>
+<p>Whoogle Search 搜索结果基于 Google 搜索，没有广告也没有追踪。详细介绍看 Github 主页<a href="https://github.com/benbusby/whoogle-search">https://github.com/benbusby/whoogle-search</a>。</p>
+<p>Docker CLI 安装：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo docker pull benbusby/whoogle-search
 $ sudo docker run --publish 5000:5000 --detach --name whoogle-search benbusby/whoogle-search:latest
 </code></pre>
-<p>也可以使用docker-compose安装：</p>
+<p>也可以使用 docker-compose 安装：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ git clone https://github.com/benbusby/whoogle-search.git
 $ cd whoogle-search
 $ sudo docker-compose up
 </code></pre>
-<p>Whoogle Search的端口为5000。</p>
+<p>Whoogle Search 的端口为5000。</p>
 <h2><a id="searxng" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SearXNG</h2>
-<p>相比Whoogle Search，SearXNG的搜索结果来自多个搜索引擎。</p>
-<p>安装searxng-docker：</p>
+<p>相比 Whoogle Search，SearXNG 的搜索结果来自多个搜索引擎。</p>
+<p>安装 searxng-docker：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ cd ~
 $ mkdir searxng-docker
 $ cd searxng-docker
@@ -1140,31 +1281,31 @@ networks:
 <pre class="line-numbers"><code class="language-plain_text">$ sed -i &quot;s|ultrasecretkey|$(openssl rand -hex 32)|g&quot; searxng/settings.yml
 </code></pre>
 <p>个人使用实例可以将<code>searxng/settings.yml</code>中<code>limiter</code>的值改成<code>false</code>。</p>
-<p>启动Docker镜像：</p>
+<p>启动 Docker 镜像：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo docker-compose up -d  
 </code></pre>
-<p>SearXNG端口为8080。</p>
+<p>SearXNG 端口为8080。</p>
 <h2><a id="yacy" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>YaCy</h2>
-<p>YaCy是一款分布式搜索引擎，搜索结果完全由用户自己掌控。YaCy可以单独安装使用，也可以加入P2P将索引分享给其他人使用。</p>
-<p>Docker安装(适合intel芯片)：</p>
+<p>YaCy 是一款分布式搜索引擎，搜索结果完全由用户自己掌控。YaCy 可以单独安装使用，也可以加入P2P将索引分享给其他人使用。</p>
+<p>Docker 安装(适合intel芯片)：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo docker run -d --name yacy_search_server -p 8090:8090 -p 8443:8443 -v yacy_search_server_data:/opt/yacy_search_server/DATA --restart unless-stopped --log-opt max-size=200m --log-opt max-file=2 yacy/yacy_search_server:latest
 </code></pre>
-<p>YaCy的端口为8090。</p>
+<p>YaCy 的端口为8090。</p>
 <h2><a id="%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8Fzerotier" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>内网穿透Zerotier</h2>
-<p>Zerotier是一款不错的内网穿透软件，需要在VPS及自己常用的设备上同时安装。VPS以Linux系统为例。</p>
+<p>Zerotier 是一款不错的内网穿透软件，需要在 VPS 及自己常用的设备上同时安装。VPS 以 Linux 系统为例。</p>
 <p>安装Zerotier：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ curl -s 'https://raw.githubusercontent.com/zerotier/ZeroTierOne/main/doc/contact%40zerotier.com.gpg' | gpg --import &amp;&amp; \  
 if z=$(curl -s 'https://install.zerotier.com/' | gpg); then echo &quot;$z&quot; | sudo bash; fi
 </code></pre>
-<p>开机启动Zerotier：</p>
+<p>开机启动 Zerotier：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo systemctl enable zerotier-one
 </code></pre>
 <p>加入网络：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo zerotier-cli join ################ 
 </code></pre>
-<p>其中<code>################</code>为你想加入网络的16位ID。然后登录zerotier官网允许设备即可。</p>
-<p>同样地，你也需要在日常使用的设备上安装zerotier，在<a href="https://www.zerotier.com/download/">Zerotier网站</a>上下载合适的版本。加入相同网络，并登录zerotier官网允许设备。</p>
-<p>在zerotier官网可以查看所加入网络下所有设备的IP地址，记下你的VPS的IP地址。假设VPS的IP地址为<code>10.147.17.102</code>，那么可以通过如下方式访问自建的搜索引擎：</p>
+<p>其中<code>################</code>为你想加入网络的16位 ID。然后登录 zerotier 官网允许设备即可。</p>
+<p>同样地，你也需要在日常使用的设备上安装 zerotier，在<a href="https://www.zerotier.com/download/">Zerotier网站</a>上下载合适的版本。加入相同网络，并登录zerotier官网允许设备。</p>
+<p>在 zerotier 官网可以查看所加入网络下所有设备的IP地址，记下你的 VPS 的 IP 地址。假设 VPS 的 IP 地址为<code>10.147.17.102</code>，那么可以通过如下方式访问自建的搜索引擎：</p>
 <ul>
 <li>Whoogle-search：<a href="http://10.147.17.102:5000">http://10.147.17.102:5000</a></li>
 <li>SearXNG：<a href="http://10.147.17.102:8080">http://10.147.17.102:8080</a></li>
@@ -1202,23 +1343,23 @@ if z=$(curl -s 'https://install.zerotier.com/' | gpg); then echo &quot;$z&quot; 
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>在<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>一文中，使用mosdns作为转发工具，本文将用SmartDNS替换mosdns，其余配置不变。</p>
+<p>在<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>一文中，使用 mosdns 作为转发工具，本文将用 SmartDNS 替换 mosdns，其余配置不变。</p>
 <p>优点：用户只需关注网站，无需关注IP地址。</p>
 <h2><a id="smartdns%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装</h2>
-<p>使用homebrew安装，也可以到官网下载安装<a href="https://github.com/mokeyish/smartdns-rs">https://github.com/mokeyish/smartdns-rs</a>。SmartDNS仅作分流和转发，使用端口<code>5304</code>。</p>
+<p>使用 homebrew 安装，也可以到官网下载安装<a href="https://github.com/mokeyish/smartdns-rs">https://github.com/mokeyish/smartdns-rs</a>。 SmartDNS 仅作分流和转发，使用端口<code>5304</code>。</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install smartdns
 </code></pre>
 <p>默认安装的配置文件位置：<code>/opt/homebrew/etc/smartdns/smartdns.conf</code>。</p>
 <h3><a id="%E5%9B%BD%E5%86%85%E7%BD%91%E7%AB%99%E5%88%86%E6%B5%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>国内网站分流</h3>
 <p>同时下载国内网站列表<a href="https://github.com/felixonmars/dnsmasq-china-list">felixonmars/dnsmasq-china-list</a>，将整个仓库下载下来。</p>
-<p>转化成SmartDNS规则：</p>
+<p>转化成 SmartDNS 规则：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ make SERVER=china smartdns-domain-rules
 </code></pre>
 <p>将自动生成三个文件：<code>accelerated-domains.china.domain.smartdns.conf</code>、<code>google.china.domain.smartdns.conf</code>以及<code>apple.china.domain.smartdns.conf</code>。</p>
 <p>将上述三个文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>。<br />
 同时，在该文件夹下新建<code>self-defined.conf</code>，作为个人常用国内网站列表，格式参考其他文件。</p>
 <h3><a id="%E8%B0%83%E6%95%B4smartdns%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>调整 SmartDNS 配置文件</h3>
-<p>修改SmartDNS配置文件<code>/opt/homebrew/etc/smartdns/smartdns.conf</code>，大部分不用调整，仅限转发：</p>
+<p>修改 SmartDNS 配置文件<code>/opt/homebrew/etc/smartdns/smartdns.conf</code>，大部分不用调整，仅限转发：</p>
 <pre class="line-numbers"><code class="language-plain_text"># dns server name, default is host name
 # server-name, 
 # example:
@@ -1547,25 +1688,25 @@ server-tcp 127.0.0.1:5305 -group china -exclude-default-group
 # domain-rules /domain-set:domain-list/ -speed-check-mode ping
 </code></pre>
 <h3><a id="smartdns%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 管理</h3>
-<p>暂停mosdns：</p>
+<p>暂停 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew services stop mosdns
 $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </code></pre>
-<p>启动SmartDNS：</p>
+<p>启动 SmartDNS：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
 </code></pre>
 <p>使用<code>sudo</code>命令会自动添加到开机启动项，启动配置文件位置：<code>/Library/LaunchDaemons/homebrew.mxcl.smartdns.plist</code>。</p>
 <p>如果不需要后台服务，可以执行命令：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/homebrew/opt/smartdns/sbin/smartdns run -c /opt/homebrew/etc/smartdns/smartdns.conf
 </code></pre>
-<p>检查SmartDNS是否正常启动：</p>
+<p>检查 SmartDNS 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5304
 </code></pre>
-<p>重启与暂停SmartDNS：</p>
+<p>重启与暂停 SmartDNS：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
 </code></pre>
 <h2><a id="smartdns%E5%B1%8F%E8%94%BD%E5%B9%BF%E5%91%8A%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 屏蔽广告（可选）</h2>
-<p>由于SmartDNS也具有屏蔽广告的功能，可以不再需要AdGuardHome，仅需将AdGuardHome关闭，并将SmartDNS端口设置为53即可。</p>
+<p>由于 SmartDNS 也具有屏蔽广告的功能，可以不再需要 AdGuardHome，仅需将 AdGuardHome 关闭，并将 SmartDNS 端口设置为53即可。</p>
 <ol>
 <li>下载配置文件到目录<code>/opt/homebrew/etc/smartdns/</code></li>
 </ol>
@@ -1576,7 +1717,7 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </ol>
 <pre class="line-numbers"><code class="language-plain_text">conf-file /opt/homebrew/etc/smartdns/anti-ad-smartdns.conf
 </code></pre>
-<p>其他广告列表见<a href="https://pymumu.github.io/smartdns/config/ad-block/">SmartDNS广告过滤列表</a>，可以定期下载更新文件，并重启SmartDNS生效。</p>
+<p>其他广告列表见<a href="https://pymumu.github.io/smartdns/config/ad-block/">SmartDNS广告过滤列表</a>，可以定期下载更新文件，并重启 SmartDNS 生效。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>Dnsmasq-china-list<br />
@@ -1602,25 +1743,25 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 <li><a href="#mosdns%E9%85%8D%E7%BD%AE">mosdns配置</a></li>
 <li><a href="#adguardhome%E9%85%8D%E7%BD%AE">AdGuardHome 配置</a>
 <ul>
-<li><a href="#%E7%AE%A1%E7%90%86adguardhome">管理AdGuardHome</a></li>
+<li><a href="#%E7%AE%A1%E7%90%86adguardhome">管理 AdGuardHome</a></li>
 </ul>
 </li>
 <li><a href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8">开机启动</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>基本要求：应对GFW以及国内的流氓互联网公司，所有流量必需经过DNS-over-HTTPS。</p>
+<p>基本要求：应对 GFW 以及国内的流氓互联网公司，所有流量必需经过 DNS-over-HTTPS。</p>
 <p>主要思路：</p>
 <ol>
-<li>使用cloudflared处理国内网站，端口5305；</li>
-<li>使用dnscrypt-proxy处理国外网站，端口5300；</li>
-<li>使用mosdns分流，端口5304；</li>
-<li>使用AdGuardHome去广告以及管理黑名单，端口53。</li>
+<li>使用 cloudflared 处理国内网站，端口5305；</li>
+<li>使用 dnscrypt-proxy 处理国外网站，端口5300；</li>
+<li>使用 mosdns 分流，端口5304；</li>
+<li>使用 AdGuardHome 去广告以及管理黑名单，端口53。</li>
 </ol>
 <p>备注：第四步为可选步骤，仅需将mosdns的端口修改为53。</p>
 <h2><a id="cloudflared%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>cloudflared 配置</h2>
-<p>使用homebrew安装，也可以到官网下载安装<a href="https://github.com/cloudflare/cloudflared">https://github.com/cloudflare/cloudflared</a>。cloudflared负责解析国内网站，使用端口<code>5305</code>。</p>
-<p>安装cloudflared：</p>
+<p>使用 homebrew 安装，也可以到官网下载安装<a href="https://github.com/cloudflare/cloudflared">https://github.com/cloudflare/cloudflared</a>。cloudflared 负责解析国内网站，使用端口<code>5305</code>。</p>
+<p>安装 cloudflared：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install cloudflared
 $ mkdir -p /usr/local/etc/cloudflared
 </code></pre>
@@ -1635,14 +1776,14 @@ proxy-dns-upstream:
 <pre class="line-numbers"><code class="language-plain_text">$ sudo cloudflared service install
 </code></pre>
 <p>该命令会生成启动配置文件<code>/Library/LaunchDaemons/com.cloudflare.cloudflared.plist</code>。</p>
-<p>检查cloudflared是否正常启动：</p>
+<p>检查 cloudflared 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5305
 </code></pre>
-<p>更新或重启cloudflared：</p>
+<p>更新或重启 cloudflared：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo cloudflared service uninstall &amp;&amp; sudo cloudflared service install
 </code></pre>
 <h2><a id="dnscrypt-proxy%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>dnscrypt-proxy 配置</h2>
-<p>使用homebrew安装，也可以从Github下载安装<a href="https://github.com/DNSCrypt/dnscrypt-proxy/">https://github.com/DNSCrypt/dnscrypt-proxy/</a>。dnscrypt-proxy负责解析国外网站，使用端口<code>5300</code>。</p>
+<p>使用 homebrew 安装，也可以从 Github 下载安装<a href="https://github.com/DNSCrypt/dnscrypt-proxy/">https://github.com/DNSCrypt/dnscrypt-proxy/</a>。dnscrypt-proxy 负责解析国外网站，使用端口<code>5300</code>。</p>
 <p>安装dnscrypt-proxy：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install dnscrypt-proxy
 </code></pre>
@@ -1665,15 +1806,15 @@ disabled_server_names = ['alidns-doh', 'dnspod']
 <p>启动dnscrypt-proxy服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$sudo brew services start dnscrypt-proxy
 </code></pre>
-<p>检查dnscrypt-proxy是否正常启动：</p>
+<p>检查 dnscrypt-proxy 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5300
 </code></pre>
-<p>管理dnscrypt-proxy服务：</p>
+<p>管理 dnscrypt-proxy 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$sudo brew services start/stop/restart dnscrypt-proxy
 </code></pre>
 <p><strong>备注</strong>：不要使用不带<code>sudo</code>的命令：<code>brew services start/stop/restart dnscrypt-proxy</code>，这是为了避免在如下位置出现导致端口冲突提醒的配置文件：<code>~/Library/LaunchAgents/homebrew.mxcl.dnscrypt-proxy.plist</code>。</p>
 <h2><a id="mosdns%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mosdns配置</h2>
-<p>从Github下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。mosdns仅作分流和转发，使用端口<code>5304</code>。</p>
+<p>从 Github 下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。mosdns 仅作分流和转发，使用端口<code>5304</code>。</p>
 <p>解压缩后，将整个文件夹移至<code>/opt/local/etc/</code>，修改配置文件<code>/opt/local/etc/config.yaml</code>：</p>
 <pre class="line-numbers"><code class="language-plain_text">log:
     level: info
@@ -1805,43 +1946,44 @@ plugins:
 <p>安装前检查配置是否正确：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ /opt/local/etc/mosdns/mosdns start -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
-<p>安装mosdns服务：</p>
+<p>安装 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text"># mosdns service install -d 工作目录绝对路径 -c 配置文件路径
 $ /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
 <p>服务仅设定为随系统自启，启动配置文件位置：<code>/Library/LaunchDaemons/mosdns.plist</code>。</p>
-<p>安装成功后并不会马上运行，需手动启动。查看mosdns的服务：</p>
+<p>安装成功后并不会马上运行，需手动启动。</p>
+<p>查看 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">cat /Library/LaunchDaemons/mosdns.plist
 </code></pre>
 <p>修改<code>RunAtLoad</code>的值为<code>true</code>。</p>
-<p>启动mosdns：</p>
+<p>启动 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start
 </code></pre>
-<p>检查mosdns是否正常启动：</p>
+<p>检查 mosdns 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5304
 </code></pre>
-<p>管理mosdns服务：</p>
+<p>管理 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service stop/uninstall
 </code></pre>
-<p>备注：mosdns可替代cloudflared服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别是cloudflared服务非常稳定。</p>
+<p>备注：mosdns 可替代 cloudflared 服务，仅需要修改配置文件中<code>forward_local</code>部分，示例代码已提示。唯一区别是 cloudflared 服务非常稳定。</p>
 <h2><a id="adguardhome%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>AdGuardHome 配置</h2>
-<p>从Github下载安装 <a href="https://github.com/AdguardTeam/AdGuardHome">https://github.com/AdguardTeam/AdGuardHome</a>。</p>
+<p>从 Github 下载安装 <a href="https://github.com/AdguardTeam/AdGuardHome">https://github.com/AdguardTeam/AdGuardHome</a>。</p>
 <p>解压缩，并将<code>AdGuardHome</code>文件夹移动至<code>/Applications/</code>目录下。</p>
-<p>启动AdGuardHome：</p>
+<p>启动 AdGuardHome：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ cd /Applications/AdGuardHome/ &amp;&amp; sudo /Applications/AdGuardHome/AdGuardHome 
 </code></pre>
 <p>网页管理界面监听接口选择<code>所有接口</code>，端口选择<code>3000</code>；<br />
-DNS服务器监听选择<code>所有接口</code>，端口选择<code>53</code>；<br />
+DNS 服务器监听选择<code>所有接口</code>，端口选择<code>53</code>；<br />
 然后设置用户名和用户密码。</p>
 <p>安装到系统服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ cd /Applications/AdGuardHome/ &amp;&amp; sudo /Applications/AdGuardHome/AdGuardHome -s install
 </code></pre>
 <p>安装后会生成启动配置文件：<code>/Library/LaunchDaemons/AdGuardHome.plist</code>。</p>
-<p>启动AdGuardHome服务：</p>
+<p>启动 AdGuardHome 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /Applications/AdGuardHome/AdGuardHome -s start
 </code></pre>
-<p>打开浏览器，输入网址 <a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/ </a>即可访问AdGuardHome的管理界面。</p>
-<p>在DNS设置中填入上游DNS服务器地址：<code>127.0.0.1:5304</code>以及<code>[::]:5304</code>。</p>
+<p>打开浏览器，输入网址 <a href="http://127.0.0.1:3000/">http://127.0.0.1:3000/ </a>即可访问 AdGuardHome 的管理界面。</p>
+<p>在 DNS 设置中填入上游 DNS 服务器地址：<code>127.0.0.1:5304</code>以及<code>[::]:5304</code>。</p>
 <p>过滤器可视情况添加：</p>
 <ol>
 <li>EasyList Adblock Plus 官方维护的广告规则。链接：<a href="https://easylist-downloads.adblockplus.org/easylist.txt">https://easylist-downloads.adblockplus.org/easylist.txt</a></li>
@@ -1854,18 +1996,18 @@ DNS服务器监听选择<code>所有接口</code>，端口选择<code>53</code>�
 <li>Github520 直连Github <a href="https://raw.hellogithub.com/hosts">https://raw.hellogithub.com/hosts</a></li>
 <li>HalfLife	合并自EasylistChina、EasylistLite、CJX’sAnnoyance <a href="https://cdn.jsdelivr.net/gh/o0HalfLife0o/list@master/ad-pc.txt">https://cdn.jsdelivr.net/gh/o0HalfLife0o/list@master/ad-pc.txt</a></li>
 </ol>
-<p>检查AdGuardHome是否正常启动：</p>
+<p>检查 AdGuardHome 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
 </code></pre>
-<h3><a id="%E7%AE%A1%E7%90%86adguardhome" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>管理AdGuardHome</h3>
+<h3><a id="%E7%AE%A1%E7%90%86adguardhome" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>管理 AdGuardHome</h3>
 <p>配置文件：<code>/Applications/AdGuardHome/AdGuardHome.yaml</code>。</p>
-<p>删除AdGuardHome系统服务：</p>
+<p>删除 AdGuardHome 系统服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ cd /Applications/AdGuardHome/ &amp;&amp; sudo /Applications/AdGuardHome/AdGuardHome -s uninstall
 </code></pre>
-<p>日常管理AdGuardHome：</p>
+<p>日常管理 AdGuardHome：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /Applications/AdGuardHome/AdGuardHome -s start/stop/restart/status
 </code></pre>
-<p>设置开机启动AdGuardHome：</p>
+<p>设置开机启动 AdGuardHome：</p>
 <pre class="line-numbers"><code class="language-plain_text">#启动AdGuardHome
 $ sudo launchctl start /Library/LaunchDaemons/AdGuardHome.plist 
 </code></pre>
@@ -1885,9 +2027,9 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 </code></pre>
 <p>最后，需要修改系统DNS：</p>
 <ol>
-<li>在Mac上，选取苹果菜单&gt;“系统设置”，然后点按边栏中的“网络”。</li>
+<li>在 Mac 上，选取苹果菜单&gt;“系统设置”，然后点按边栏中的“网络”。</li>
 <li>点按要使用的网络服务（例如Wi-Fi或以太网），然后点按“详细信息”。</li>
-<li>点按DNS，点按“DNS服务器”列表底部的“添加”按钮，然后输入DNS服务器的IPv4<code>127.0.0.1</code>或IPv6地址<code>::1</code>。</li>
+<li>点按 DNS ，点按“DNS服务器”列表底部的“添加”按钮，然后输入 DNS 服务器的IPv4<code>127.0.0.1</code>或IPv6地址<code>::1</code>。</li>
 <li>完成后，点按“好”。</li>
 </ol>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
@@ -1915,10 +2057,10 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 <div class="mweb_toc"><ul>
 <li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85">LibreWolf 浏览器安装</a></li>
 <li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE">LibreWolf 浏览器设置</a></li>
-<li><a href="#librewolf-jun-17-2025%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86">LibreWolf Jun 17, 2025浏览器管理</a>
+<li><a href="#librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86">LibreWolf 浏览器管理</a>
 <ul>
 <li><a href="#%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95">安装扩展</a></li>
-<li><a href="#%E6%9B%B4%E6%96%B0librewolf">更新LibreWolf</a></li>
+<li><a href="#%E6%9B%B4%E6%96%B0librewolf">更新 LibreWolf</a></li>
 <li><a href="#%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E">添加搜索引擎</a></li>
 <li><a href="#%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98">其他问题</a></li>
 </ul>
@@ -1926,20 +2068,20 @@ $ sudo launchctl load -w /Library/LaunchDaemons/AdGuardHome.plist
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>之前介绍过<a href="brave-browser-security-enhanced.html">Brave浏览器安全配置</a>，鉴于Google公司在Chromium项目中经常作妖，用户可以考虑使用LibreWolf浏览器。LibreWolf浏览器是一款基于Firefox的浏览器，安全性与隐私性不弱于Brave浏览器。可参考<a href="https://privacytests.org/">privacytests.org</a>浏览器测评。</p>
+<p>之前介绍过<a href="brave-browser-security-enhanced.html">Brave浏览器安全配置</a>，鉴于 Google 公司在 Chromium 项目中经常作妖，用户可以考虑使用 LibreWolf 浏览器。LibreWolf 浏览器是一款基于 Firefox 的浏览器，安全性与隐私性不弱于 Brave 浏览器。可参考<a href="https://privacytests.org/">privacytests.org</a>浏览器测评。</p>
 <h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf 浏览器安装</h2>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install --cask librewolf
 </code></pre>
-<p>由于LibreWolf浏览器开发者没有购买开发者证书，因此使用前需要在终端授权。</p>
+<p>由于 LibreWolf 浏览器开发者没有购买开发者证书，因此使用前需要在终端授权。</p>
 <pre class="line-numbers"><code class="language-plain_text">$ xattr -cr /Applications/LibreWolf.app 
 </code></pre>
 <p>也可以一步到位安装：</p>
 <pre class="line-numbers"><code class="language-plain_text">brew install librewolf --no-quarantine
 </code></pre>
 <h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf 浏览器设置</h2>
-<p>LibreWolf浏览器基本上与Firefox一致，唯独在设置中增加LibreWolf选项。</p>
+<p>LibreWolf 浏览器基本上与 Firefox 一致，唯独在设置中增加 LibreWolf 选项。</p>
 <p><img src="media/17312533358317/Librewolf-setting.webp" alt="Librewolf-setting" /></p>
-<p>LibreWolf浏览器可以通过<code>about:config</code>来配置，另外也能通过修改配置文件<code>librewolf.overrides.cfg</code>来覆盖配置内容。</p>
+<p>LibreWolf 浏览器可以通过<code>about:config</code>来配置，另外也能通过修改配置文件<code>librewolf.overrides.cfg</code>来覆盖配置内容。</p>
 <p><code>librewolf.overrides.cfg</code>配置文件默认不存在，如需使用需要手动创建：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ mkdir $HOME/.librewolf 
 $ touch $HOME/.librewolf/librewolf.overrides.cfg
@@ -1960,7 +2102,7 @@ defaultPref(&quot;webgl.disabled&quot;, true);
 browser.urlbar.openintab false
 ui.prefersReducedMotion=0
 </code></pre>
-<h2><a id="librewolf-jun-17-2025%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf Jun 17, 2025浏览器管理</h2>
+<h2><a id="librewolf%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>LibreWolf 浏览器管理</h2>
 <h3><a id="%E5%AE%89%E8%A3%85%E6%89%A9%E5%B1%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装扩展</h3>
 <p>官方建议尽可能少安装扩展，因为额外的扩展可能增加你的攻击面。</p>
 <ul>
@@ -1968,13 +2110,13 @@ ui.prefersReducedMotion=0
 <li>Canvas Blocker <a href="https://addons.mozilla.org/en-US/firefox/addon/canvasblocker/">https://addons.mozilla.org/en-US/firefox/addon/canvasblocker</a>；<br />
 其他拓展可参考<a href="network-security-manual.html">网络安全手册</a>。</li>
 </ul>
-<h3><a id="%E6%9B%B4%E6%96%B0librewolf" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>更新LibreWolf</h3>
+<h3><a id="%E6%9B%B4%E6%96%B0librewolf" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>更新 LibreWolf</h3>
 <pre class="line-numbers"><code class="language-plain_text">brew update &amp;&amp; brew upgrade
 </code></pre>
 <h3><a id="%E6%B7%BB%E5%8A%A0%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>添加搜索引擎</h3>
-<p>LibreWolf添加搜索引擎方式与Firefox相同：点击搜索框中的绿色加号，按指引操作即可。如果工具栏没有搜索框，可以右键点击工具栏，选择自定义工具栏，再将搜索栏拖放到需要的位置。</p>
+<p>LibreWolf 添加搜索引擎方式与 Firefox 相同：点击搜索框中的绿色加号，按指引操作即可。如果工具栏没有搜索框，可以右键点击工具栏，选择自定义工具栏，再将搜索栏拖放到需要的位置。</p>
 <p><img src="media/17312533358317/x001.webp" alt="x001" /></p>
-<p>部分搜索引擎不会弹出绿色加号，例如Bing <a href="https://www2.bing.com">https://www2.bing.com</a>，可以进入设置手动添加。</p>
+<p>部分搜索引擎不会弹出绿色加号，例如 Bing <a href="https://www2.bing.com">https://www2.bing.com</a>，可以进入设置手动添加。</p>
 <p><img src="media/17312533358317/x003.webp" alt="x003" /></p>
 <h3><a id="%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>其他问题</h3>
 <ul>
@@ -2003,11 +2145,12 @@ ui.prefersReducedMotion=0
 <li><a href="#%E5%AE%89%E8%A3%85homebrew">安装 Homebrew</a></li>
 <li><a href="#homebrew%E4%BD%BF%E7%94%A8">Homebrew 使用</a></li>
 <li><a href="#%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90">恢复 Homebrew 默认源</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4homebrew">删除 Homebrew</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>本篇适用于macOS重装或降级后使用Homebrew，部分内容也适用于全新系统安装Homebrew。</p>
-<p>macOS重装或降级后，若使用Time Machine恢复，一般情况下Homebrew不能正常工作。这时就需重新配置Homebrew。</p>
+<p>本篇适用于 macOS 重装或降级后使用 Homebrew，部分内容也适用于全新系统安装 Homebrew。</p>
+<p>macOS 重装或降级后，若使用 Time Machine 恢复，一般情况下 Homebrew 不能正常工作。这时就需重新配置 Homebrew。</p>
 <h2><a id="%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85commandlinetools" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>重新安装 CommandLineTools</h2>
 <p>重置<code>CommandLineTools</code>：</p>
 <pre class="line-numbers"><code class="language-zsh">$ sudo xcode-select --reset
@@ -2018,18 +2161,18 @@ ui.prefersReducedMotion=0
 <p>全新安装<code>CommandLineTools</code>：</p>
 <pre class="line-numbers"><code class="language-zsh">$ sudo xcode-select --install
 </code></pre>
-<p>全新安装Homebrew，仅需执行最后一步。</p>
+<p>全新安装 Homebrew，仅需执行最后一步。</p>
 <h2><a id="%E5%AE%89%E8%A3%85homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 Homebrew</h2>
-<p>以下设置适用于Apple Silicon CPU设备，即带M芯片，默认使用<code>zsh</code>。鉴于大陆github使用困难，本篇使用清华软件源。</p>
+<p>以下设置适用于 Apple Silicon CPU 设备，即带 M 芯片，默认使用<code>zsh</code>。鉴于大陆 Github 使用困难，本篇使用清华软件源。</p>
 <ol>
-<li>设置Homebrew环境变量：</li>
+<li>设置 Homebrew 环境变量：</li>
 </ol>
 <pre class="line-numbers"><code class="language-zsh">$ export HOMEBREW_BREW_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git&quot;
 $ export HOMEBREW_CORE_GIT_REMOTE=&quot;https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git&quot;
 $ export HOMEBREW_INSTALL_FROM_API=1
 </code></pre>
 <ol start="2">
-<li>配置Homebrew Bottles环境变量：</li>
+<li>配置 Homebrew Bottles 环境变量：</li>
 </ol>
 <pre class="line-numbers"><code class="language-zsh">$ echo 'export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api&quot;' &gt;&gt; ~/.zprofile
 $ echo 'export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;' &gt;&gt; ~/.zprofile
@@ -2037,12 +2180,12 @@ $ export HOMEBREW_API_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew
 $ export HOMEBREW_BOTTLE_DOMAIN=&quot;https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&quot;
 </code></pre>
 <ol start="3">
-<li>（可选）配置Homebrew PyPi环境变量：</li>
+<li>（可选）配置 Homebrew PyPi 环境变量：</li>
 </ol>
 <pre class="line-numbers"><code class="language-zsh">$ export HOMEBREW_PIP_INDEX_URL=&quot;https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple&quot;
 </code></pre>
 <ol start="4">
-<li>安装Homebrew：</li>
+<li>安装 Homebrew：</li>
 </ol>
 <pre class="line-numbers"><code class="language-zsh">$ git clone --depth=1 https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/install.git brew-install
 $ cd brew-install &amp;&amp; sudo ./install.sh
@@ -2052,6 +2195,7 @@ $ rm -rf brew-install
 <li>将<code>brew</code>程序的相关路径加入到环境变量中：</li>
 </ol>
 <pre class="line-numbers"><code class="language-zsh">$ test -r ~/.zprofile &amp;&amp; echo 'eval &quot;$(/opt/homebrew/bin/brew shellenv)&quot;' &gt;&gt; ~/.zprofile
+$ export HOMEBREW_NO_ANALYTICS=1
 </code></pre>
 <h2><a id="homebrew%E4%BD%BF%E7%94%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Homebrew 使用</h2>
 <p>安装软件，例如<a href="librewolf-browser-configuration.html">LibreWolf浏览器</a></p>
@@ -2063,10 +2207,10 @@ $ rm -rf brew-install
 <p>卸载软件</p>
 <pre class="line-numbers"><code class="language-zsh">$ brew uninstall ***
 </code></pre>
-<p>更新Homebrew自身</p>
+<p>更新 Homebrew 自身</p>
 <pre class="line-numbers"><code class="language-zsh">$ brew update 
 </code></pre>
-<p>更新所有cask软件</p>
+<p>更新所有 cask 软件</p>
 <pre class="line-numbers"><code class="language-zsh">$ brew upgrade --cask $(brew list --cask)
 </code></pre>
 <h2><a id="%E6%81%A2%E5%A4%8Dhomebrew%E9%BB%98%E8%AE%A4%E6%BA%90" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>恢复 Homebrew 默认源</h2>
@@ -2089,9 +2233,13 @@ done
 brew update
 </code></pre>
 <p>同时检查<code>~/.zprofile</code>内容，删除带有<code>mirrors.tuna.tsinghua.edu.cn</code>的行。</p>
+<h2><a id="%E5%88%A0%E9%99%A4homebrew" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>删除 Homebrew</h2>
+<pre class="line-numbers"><code class="language-plain_text">$ /bin/bash -c &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)&quot;
+</code></pre>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>Homebrew 官方安装文档 <a href="https://docs.brew.sh/Installation">https://docs.brew.sh/Installation</a></li>
+<li>Homebrew更换国内镜像源 <a href="https://www.cnblogs.com/Flat-White/p/19008881">https://www.cnblogs.com/Flat-White/p/19008881</a></li>
 <li>清华 Homebrew 软件仓库配置 <a href="https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/">https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/</a></li>
 </ul>
 
@@ -2122,34 +2270,34 @@ brew update
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>TiddlyWiki是一款很强大的个人知识管理系统，也可作为个人网页使用。好处是单文件、易备份、跨平台、上手难度低。</p>
+<p>TiddlyWiki 是一款很强大的个人知识管理系统，也可作为个人网页使用。好处是单文件、易备份、跨平台、上手难度低。</p>
 <h2><a id="%E4%B8%8B%E8%BD%BDtiddlywiki" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载 TiddlyWiKi</h2>
-<p>打开TiddlyWiki官网<a href="https://tiddlywiki.com/">https://tiddlywiki.com</a>，在GettingStarted部分下载空白副本，默认文件名为<code>empty.html</code>。</p>
-<p>也可以选择下载TiddlyWiKi经典版本<a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com/</a>。</p>
-<p>主要区别：经典TiddlyWiKi有多年历史，而新版TiddlyWiKi使用html5，外观更现代化。两个版本都在更新。</p>
-<p>本文所介绍的是新版TiddlyWiKi，又称TiddlyWiKi 5。</p>
+<p>打开 TiddlyWiki 官网<a href="https://tiddlywiki.com/">https://tiddlywiki.com</a>，在 GettingStarted 部分下载空白副本，默认文件名为<code>empty.html</code>。</p>
+<p>也可以选择下载 TiddlyWiKi 经典版本<a href="https://classic.tiddlywiki.com/">https://classic.tiddlywiki.com/</a>。</p>
+<p>主要区别：经典 TiddlyWiKi 有多年历史，而新版 TiddlyWiKi 使用html5，外观更现代化。两个版本都在更新。</p>
+<p>本文所介绍的是新版 TiddlyWiKi，又称 TiddlyWiKi 5。</p>
 <h2><a id="%E7%BC%96%E8%BE%91%E5%92%8C%E4%BF%9D%E5%AD%98" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>编辑和保存</h2>
-<p>TiddlyWiKi作为单一html文件可直接通过浏览器打开、编辑与保存。也可使用如TiddlyDesktop等软件自动保存。在GettingStarted部分也有其他软件推荐。</p>
-<p>TiddlyDesktop需从Github下载安装<a href="https://github.com/TiddlyWiki/TiddlyDesktop/releases">https://github.com/TiddlyWiki/TiddlyDesktop/releases</a>。</p>
-<p>打开TiddlyDesktop，将<code>empty.html</code>文件拖入其中。TiddlyDesktop主界面有<code>advanced</code>选项，可选择是否启用自动备份。</p>
+<p>TiddlyWiKi 作为单一 html 文件可直接通过浏览器打开、编辑与保存。也可使用如 TiddlyDesktop 等软件自动保存。在 GettingStarted 部分也有其他软件推荐。</p>
+<p>TiddlyDesktop 需从 Github 下载安装<a href="https://github.com/TiddlyWiki/TiddlyDesktop/releases">https://github.com/TiddlyWiki/TiddlyDesktop/releases</a>。</p>
+<p>打开 TiddlyDesktop，将<code>empty.html</code>文件拖入其中。TiddlyDesktop 主界面有<code>advanced</code>选项，可选择是否启用自动备份。</p>
 <h3><a id="%E5%AE%89%E8%A3%85%E6%8F%92%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装插件</h3>
-<p>可选择安装Markdown、Relink、Highlighter等插件。TiddlyWiKi原生不支持Markdown编辑，但可通过Markdown插件实现。</p>
-<p>在设置中选择<code>Appearance</code>&gt;<code>Toolbars</code>&gt;<code>Page Toolbar</code>中勾选<code>new Markdown tiddler</code>，以后只需点击右侧图标便可添加Markdown笔记。</p>
+<p>可选择安装 Markdown、Relink、Highlighter 等插件。TiddlyWiKi 原生不支持 Markdown 编辑，但可通过 Markdown 插件实现。</p>
+<p>在设置中选择<code>Appearance</code>&gt;<code>Toolbars</code>&gt;<code>Page Toolbar</code>中勾选<code>new Markdown tiddler</code>，以后只需点击右侧图标便可添加 Markdown 笔记。</p>
 <h3><a id="%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>插入图片</h3>
-<p>TiddlyWiKi支持直接拖入图片，但这样一来会使得WiKi文件变得很大，相比而言，插入图片链接可节省很多空间。</p>
+<p>TiddlyWiKi 支持直接拖入图片，但这样一来会使得 WiKi 文件变得很大，相比而言，插入图片链接可节省很多空间。</p>
 <h4><a id="%E7%BD%91%E9%A1%B5%E5%9B%BE%E7%89%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>网页图片</h4>
-<p>在Markdown模式中，插入网页图片：</p>
+<p>在 Markdown 模式中，插入网页图片：</p>
 <pre class="line-numbers"><code class="language-plain_text">[img[https://i-blog.csdnimg.cn/blog_migrate/0b28e73406e0a641959929c1d1ffe32f.jpeg]]
 </code></pre>
 <h4><a id="%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>本地图片</h4>
 <p>在<code>empty.html</code>所在文件夹下新建文件夹<code>images</code>，将需要插入的图片放置到该文件夹下。</p>
-<p>在Markdown模式中，插入本地图片：</p>
+<p>在 Markdown 模式中，插入本地图片：</p>
 <pre class="line-numbers"><code class="language-plain_text">[img[./images/image-name.jpg]]
 </code></pre>
 <h2><a id="%E8%BD%AF%E4%BB%B6%E6%9B%B4%E6%96%B0" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>软件更新</h2>
-<p>打开更新网页<a href="https://tiddlywiki.com/upgrade.html">https://tiddlywiki.com/upgrade.html</a>，将自己的WiKi文件拖入，按照提示操作。</p>
+<p>打开更新网页<a href="https://tiddlywiki.com/upgrade.html">https://tiddlywiki.com/upgrade.html</a>，将自己的 WiKi 文件拖入，按照提示操作。</p>
 <h2><a id="%E9%85%8D%E7%BD%AE%E4%B8%AA%E4%BA%BA%E7%BD%91%E9%A1%B5" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>配置个人网页</h2>
-<p>参考<a href="how-to-quickly-build-a-personal-static-blog.html">如何快速搭建个人静态博客</a>，配置喜欢的域名，再利用GithubDesktop上传即可。</p>
+<p>参考<a href="how-to-quickly-build-a-personal-static-blog.html">如何快速搭建个人静态博客</a>，配置喜欢的域名，再利用 GithubDesktop 上传即可。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>TiddlyWiKi <a href="https://tiddlywiki.com/">https://tiddlywiki.com</a></li>
@@ -2238,15 +2386,15 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>Brave浏览器是一款关注隐私和安全的开源浏览器，提供简洁的安全配置。从<a href="https://privacytests.org/">PrivacyTests.org</a>可以看出Brave浏览器在日常使用中可以提供相当好的保护。</p>
+<p>Brave 浏览器是一款关注隐私和安全的开源浏览器，提供简洁的安全配置。从<a href="https://privacytests.org/">PrivacyTests.org</a>可以看出Brave浏览器在日常使用中可以提供相当好的保护。</p>
 <h2><a id="%E5%AE%89%E8%A3%85brave%E6%B5%8F%E8%A7%88%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装Brave浏览器</h2>
-<p>从Brave浏览器主页下载：<a href="https://brave.com/">https://brave.com</a>。</p>
-<p>也可以到Github Brave页面下载：<a href="https://github.com/brave/brave-browser">https://github.com/brave/brave-browser</a>。</p>
+<p>从 Brave 浏览器主页下载：<a href="https://brave.com/">https://brave.com</a>。</p>
+<p>也可以到 Github Brave 页面下载：<a href="https://github.com/brave/brave-browser">https://github.com/brave/brave-browser</a>。</p>
 <p>以下设置仅提供日常网络安全保护（网址加密、阻止广告、跟踪、指纹等），并不代表上网匿名。<br />
 通过一些网站如<a href="https://browserleaks.com/">https://browserleaks.com</a>或<a href="https://coveryourtracks.eff.org/">https://coveryourtracks.eff.org</a>等可以轻易看到你的IP地址以及浏览器信息。</p>
 <p>追求更高安全的匿名可使用虚拟机+VPN+TOR浏览器。</p>
 <h2><a id="%E8%AE%BE%E7%BD%AE%E5%AE%89%E5%85%A8%E5%A2%9E%E5%BC%BA" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>设置安全增强</h2>
-<p>安装Brave浏览器后，从右上角进入设置（Settings）。</p>
+<p>安装 Brave 浏览器后，从右上角进入设置（Settings）。</p>
 <h3><a id="shields" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shields</h3>
 <ul>
 <li><code>Trackers &amp; ads blocking</code>：选择<code>Standard</code>；</li>
@@ -2341,11 +2489,11 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <h3><a id="%E6%B2%A1%E6%9C%89%E9%9A%90%E7%A7%81%E6%88%96%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有隐私或匿名的安全</h3>
 <p>谷歌提供了世界一流的安全性，却没有隐私或匿名。</p>
 <h3><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名的隐私</h3>
-<p>类似<a href="privacy.com">Privacy.com</a>、<a href="https://ironvest.com/">IronVest</a>（曾经的Blur）提供的掩码卡(Masked card)服务，他们清楚地知道你是谁。不过，他们会向你提供虚拟电话号码、电子邮件地址和银行卡，让你提供给其他公司和个人，从而保护你的真实信息，帮助你保护自己的隐私。</p>
+<p>类似<a href="privacy.com">Privacy.com</a>、<a href="https://ironvest.com/">IronVest</a>（曾经的 Blur）提供的掩码卡(Masked card)服务，他们清楚地知道你是谁。不过，他们会向你提供虚拟电话号码、电子邮件地址和银行卡，让你提供给其他公司和个人，从而保护你的真实信息，帮助你保护自己的隐私。</p>
 <h3><a id="%E6%B2%A1%E6%9C%89%E5%AE%89%E5%85%A8%E7%9A%84%E5%8C%BF%E5%90%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有安全的匿名</h3>
 <p>以现金为例，以现金支付商品可以保持您的匿名。但是，如果卖家不发货（除非您有收据），您就没有任何安全保障。</p>
 <h3><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8%E5%92%8C%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名的安全和隐私</h3>
-<p>以Signal为例，Signal注册需要您的电话号码，因此可以通过法院命令甚至网络搜索来找到您的身份，具体取决于您使用的电话号码。即使您的身份不受保护和控制，您的Signal消息内容和您传输的信息也将受到保护和控制。</p>
+<p>以 Signal 为例，Signal 注册需要您的电话号码，因此可以通过法院命令甚至网络搜索来找到您的身份，具体取决于您使用的电话号码。即使您的身份不受保护和控制，您的 Signal 消息内容和您传输的信息也将受到保护和控制。</p>
 <h3><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E6%88%96%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名或安全的隐私</h3>
 <p>想想你在野外上厕所的情景。你可以找一些小树丛躲在后面，这样可以保护你的隐私，但却没有安全性或匿名性。没有任何东西可以阻止任何人找到你，如果警察要求你出示证件，你也得不到任何保护。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
@@ -2471,7 +2619,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <li>鼠鬚管Squirrel，教程：<a href="macos-install-rime.html">macOS安装Rime输入法</a>。</li>
 </ul>
 <h3><a id="%E9%82%AE%E7%AE%B1" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>邮箱</h3>
-<p>无论何时都不要使用【中资邮箱】。使用PGP/GnuPG（GNU Privacy Guard，GPG）手动加密邮件内容。</p>
+<p>无论何时都不要使用【中资邮箱】。使用 PGP/GnuPG（GNU Privacy Guard，GPG）手动加密邮件内容。</p>
 <p>教程：<a href="https://yummydimsum.github.io/docs/06-communication/mailvelope/">借助 Mailvelope 使用 PGP 加密邮件</a>。</p>
 <h3><a id="%E5%AF%86%E7%A0%81%E7%AE%A1%E7%90%86%E5%99%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>密码管理器</h3>
 <p>推荐<a href="https://keepassxc.org/project">KeepassXC</a>，<a href="https://bitwarden.com/">Bitwarden</a>等，条件允许情况下优先选择离线版或自建软件。</p>
@@ -2480,8 +2628,8 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <li>不使用中资云服务（如百度网盘，阿里云、腾讯云、京东云的VPS），即使使用也不要上传任何私人资料；</li>
 <li>尽量避免云服务（如Google Docs、Notion）；</li>
 <li>如果需要使用Google Drive、One Drive、Dropbox等商业网盘服务，为防政府/服务商监视用户、数据泄露、删除数据造成损失，建议将文件在本地加密后再上传；</li>
-<li>配合使用自由开源的加密工具Cryptomator在本地将数据加密后再上传云端（适用于全平台）；</li>
-<li>将文件存入VeraCrypt创建的【虚拟加密盘】中，再将虚拟加密盘上传到网盘（仅适用于桌面级设备）。</li>
+<li>配合使用自由开源的加密工具 Cryptomator 在本地将数据加密后再上传云端（适用于全平台）；</li>
+<li>将文件存入 VeraCrypt 创建的【虚拟加密盘】中，再将虚拟加密盘上传到网盘（仅适用于桌面级设备）。</li>
 </ul>
 <p>更多软件推荐<a href="https://www.privacytools.io">privacytools</a>。</p>
 <h2><a id="%E8%BA%AB%E4%BB%BD%E5%AE%89%E5%85%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>身份安全</h2>
@@ -2562,7 +2710,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>鉴别文件的完整性或鉴别文件内容是否被修改，主要通过<code>MD5</code>和<code>SHA</code>来完成。macOS下使用终端的一些简单命令即可完成。</p>
+<p>鉴别文件的完整性或鉴别文件内容是否被修改，主要通过<code>MD5</code>和<code>SHA</code>来完成。macOS 下使用终端的一些简单命令即可完成。</p>
 <h2><a id="shasum" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>shasum</h2>
 <p><code>shasum</code>命令默认检测<code>SHA1</code>值，而通过参数<code>-a</code>可以修改为224、256、384或512。</p>
 <p>用法：打开终端，输入如下命令，替换<code>/path/to/filename</code>为要验证的文件地址，也可以直接将文件拖动到终端。</p>
@@ -2592,7 +2740,7 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <pre class="line-numbers"><code class="language-zsh">$ md5 ~/Downloads/debian-12.5.0-arm64-DVD-1.iso
 </code></pre>
 <h2><a id="openssl" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>openssl</h2>
-<p>还可以用openssl来验证sha1，md5等。</p>
+<p>还可以用 openssl 来验证sha1，md5等。</p>
 <pre class="line-numbers"><code class="language-zsh">$ openssl sha1 /path/to/filename
 $ openssl md5 /path/to/filename
 </code></pre>
@@ -2600,74 +2748,6 @@ $ openssl md5 /path/to/filename
 <ul>
 <li>在macOS/OS X上不借助第三方软件计算文件MD5/SHA <a href="https://sspai.com/post/35730">https://sspai.com/post/35730</a></li>
 <li>如何校验本站下载的文件的完整性 <a href="https://sysin.org/blog/shasum/">https://sysin.org/blog/shasum</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[macOS 安装Rime 输入法]]></title>
-    <link href="https://smartdigg.github.io/macos-install-rime.html"/>
-    <updated>2024-02-17T15:00:58+08:00</updated>
-    <id>https://smartdigg.github.io/macos-install-rime.html</id>
-    <content type="html"><![CDATA[
-<div class="mweb_toc"><ul>
-<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
-<li><a href="#%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">下载配置文件</a></li>
-<li><a href="#%E9%83%A8%E7%BD%B2">部署</a></li>
-<li><a href="#%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE">可选配置</a>
-<ul>
-<li><a href="#%E4%BF%AE%E6%94%B9%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88">修改输入方案</a></li>
-<li><a href="#%E7%9A%AE%E8%82%A4%E9%85%8D%E7%BD%AE">皮肤配置</a></li>
-<li><a href="#%E8%AF%8D%E5%85%B8">词典</a></li>
-<li><a href="#%E5%90%8C%E6%AD%A5%E9%85%8D%E7%BD%AE%E5%92%8C%E8%AF%8D%E5%BA%93">同步配置和词库</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
-</ul>
-</div>
-<p>优点：开源、不联网、没有隐私问题。</p>
-<h2><a id="%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装</h2>
-<p>通过官网下载：<a href="https://rime.im/download/">https://rime.im/download/</a>，具体安装参考薄荷拼音的配置教程：<a href="https://www.mintimate.cc/zh/guide/installRime.html">安装Rime输入法</a>。</p>
-<p>在 macOS 上也可以通过Homebrew安装：</p>
-<pre class="line-numbers"><code class="language-bash">brew install --cask squirrel
-</code></pre>
-<p>记得去系统设置键盘添加Rime输入法。</p>
-<h2><a id="%E4%B8%8B%E8%BD%BD%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>下载配置文件</h2>
-<p>选择配置文件的原则是简单，开箱即用，无需额外配置。推荐薄荷拼音 <a href="https://github.com/Mintimate/oh-my-rime">https://github.com/Mintimate/oh-my-rime</a>。</p>
-<p>将整个配置文件库下载下来。</p>
-<h2><a id="%E9%83%A8%E7%BD%B2" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>部署</h2>
-<ol>
-<li>点击菜单栏【ㄓ】-【用户设定】，将打开Rime默认配置文件夹<code>~/Library/Rime</code>。</li>
-<li>清空该文件夹，然后将【配置文件】里所有文件粘贴进去。</li>
-<li>点击菜单栏【ㄓ】-【部署】，至此完成定制配置。</li>
-</ol>
-<p>使用快捷键<code>Control</code>+ <code>~</code>，可以控制简繁体、emoji、全角半角等。</p>
-<h2><a id="%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>可选配置</h2>
-<h3><a id="%E4%BF%AE%E6%94%B9%E8%BE%93%E5%85%A5%E6%96%B9%E6%A1%88" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>修改输入方案</h3>
-<p>编辑默认配置文件夹<code>~/Library/Rime</code>中<code>default.custom.yaml</code>文件。</p>
-<p>修改候选词数量，需要更改<code>menu/page_size</code>后的数字。</p>
-<p>若只使用小鹤双拼输入法，注释掉<code>schema_list</code>中除<code>double_pinyin_flypy</code>外其他输入方案。</p>
-<h3><a id="%E7%9A%AE%E8%82%A4%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>皮肤配置</h3>
-<p>调整Rime默认配置文件夹<code>~/Library/Rime</code>中<code>squirrel.yaml</code>文件：</p>
-<ul>
-<li><code>color_scheme</code>以及<code>color_scheme_dark</code>分别对应亮色与暗色主题。</li>
-<li><code>candidate_list_layout</code>可设置候选项排列方向。</li>
-</ul>
-<h3><a id="%E8%AF%8D%E5%85%B8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>词典</h3>
-<p>以小鹤双拼为例，根据配置文件<code>double_pinyin_flypy.schema.yaml</code>提示，需要修改默认配置文件夹<code>~/Library/Rime</code>中<code>rime_mint.dict.yaml</code>文件，调整<code>import_tables</code>列表即可。</p>
-<h3><a id="%E5%90%8C%E6%AD%A5%E9%85%8D%E7%BD%AE%E5%92%8C%E8%AF%8D%E5%BA%93" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>同步配置和词库</h3>
-<p>在Rime默认配置文件夹<code>~/Library/Rime</code>中<code>installation.yaml</code>文件中追加：</p>
-<pre class="line-numbers"><code class="language-plain_text">sync_dic: &quot;/path/to/rsync&quot;
-installation_id: &quot;your_custom_id&quot;
-</code></pre>
-<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
-<ul>
-<li>薄荷拼音github仓库 <a href="https://github.com/Mintimate/oh-my-rime">https://github.com/Mintimate/oh-my-rime</a></li>
-<li>薄荷拼音主页 <a href="https://www.mintimate.cc/">https://www.mintimate.cc</a></li>
-<li>小众软件介绍 <a href="https://www.appinn.com/oh-my-rime/">https://www.appinn.com/oh-my-rime</a></li>
-<li>【鼠鬚管】輸入法源代码 <a href="https://github.com/rime/squirrel">https://github.com/rime/squirrel</a></li>
-<li>Rime Ice 小鹤双拼精简版 <a href="https://github.com/lakkiy/rime">https://github.com/lakkiy/rime</a></li>
 </ul>
 
 ]]></content>

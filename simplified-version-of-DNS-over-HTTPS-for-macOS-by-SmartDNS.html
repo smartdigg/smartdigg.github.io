@@ -114,20 +114,20 @@
                   <article class="markdown-body single-content">
                     <div class="mweb_toc"><ul>
 <li><a href="#smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE">SmartDNS 安装及配置</a></li>
-<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS服务管理</a></li>
+<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS 服务管理</a></li>
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>在<a href="simplified-version-of-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS 简化版</a>的基础上用SmartDNS替换mosdns。可参考<a href="configure-smartdns.html">SmartDNS 配置</a>，本文采用不同的方法进行设置。</p>
+<p>在<a href="simplified-version-of-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS 简化版</a>的基础上用 SmartDNS 替换 mosdns。可参考<a href="configure-smartdns.html">SmartDNS 配置</a>，本文采用不同的方法进行设置。</p>
 <h2><a id="smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装及配置</h2>
-<p>安装SmartDNS：</p>
+<p>安装 SmartDNS：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install smartdns
 </code></pre>
 <p>配置文件位于<code>/opt/homebrew/etc/smartdns/</code>目录。</p>
 <p>同时，下载国内网站列表<a href="https://github.com/jiange1236/smartdns-rules">smartdns-rules</a>，主要是文件<code>direct-list.txt</code>以及<code>china-list.txt</code>。</p>
 <p>将上述文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>，同时在该文件夹下新建两个文件：</p>
 <ul>
-<li>新建<code>self-defined.conf</code>，手动添加且需要国内DNS解析的网站，格式如下：</li>
+<li>新建<code>self-defined.conf</code>，手动添加且需要国内 DNS 解析的网站，格式如下：</li>
 </ul>
 <pre class="line-numbers"><code class="language-plain_text">duolingo.cn
 </code></pre>
@@ -137,7 +137,7 @@
 <pre class="line-numbers"><code class="language-plain_text">2345.com
 mairuan.com
 </code></pre>
-<p>SmartDNS分流的配置文件<code>smartdns.conf</code>样例：</p>
+<p>SmartDNS 分流的配置文件<code>smartdns.conf</code>样例：</p>
 <pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
 bind [::]:53
 bind-tcp [::]:53
@@ -203,20 +203,20 @@ address /domain-set:blacklist/#
 <ul>
 <li>设置有<code>-exclude-default-group</code>的上游 DNS 默认不会被使用，仅当 <code>domain-rules</code>或<code>nameserver</code>配置明确指定时使用。</li>
 <li><code>domain-set -name china-list -file /opt/homebrew/etc/smartdns/china-list.txt</code>，定义一个域名集<code>china-list</code>，包含的域名列表在<code> /opt/homebrew/etc/smartdns/china-list.txt</code>文件中。</li>
-<li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用china分组的DNS服务器解析。</li>
-<li><code>address /domain-set:blacklist/#</code>，设置IP过滤规则，匹配的域名集为<code>blacklist</code>，使用<code>#</code>表示同时屏蔽IPV4，IPV6。可参考SmartDNS<a href="https://pymumu.github.io/smartdns/config/ad-block/">广告屏蔽规则</a>。</li>
+<li><code>nameserver /domain-set:direct-list/china</code>，设置分流规则，匹配的域名集为<code>direct-list</code>，指定使用 china 分组的 DNS 服务器解析。</li>
+<li><code>address /domain-set:blacklist/#</code>，设置 IP 过滤规则，匹配的域名集为<code>blacklist</code>，使用<code>#</code>表示同时屏蔽IPV4，IPV6。可参考 SmartDNS <a href="https://pymumu.github.io/smartdns/config/ad-block/">广告屏蔽规则</a>。</li>
 </ul>
-<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS服务管理</h2>
-<p>启动SmartDNS服务：</p>
+<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 服务管理</h2>
+<p>启动 SmartDNS 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
 </code></pre>
-<p>检查SmartDNS是否正常启动：</p>
+<p>检查 SmartDNS 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
 </code></pre>
-<p>启动、重启与停止SmartDNS服务：</p>
+<p>启动、重启与停止 SmartDNS 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
 </code></pre>
-<p>启动检测DNS：</p>
+<p>启动检测 DNS：</p>
 <ul>
 <li>国内：<a href="https://d-nstool.netease.com/">https://d-nstool.netease.com</a></li>
 <li>国内：<a href="https://ipleak.net/">https://ipleak.net</a></li>

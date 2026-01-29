@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      
+    自建个人文档版本管理系统 Gogs - 永久记录
+    
+    </title>
+    
+
+    
+    
+    <link href="atom.xml" rel="alternate" title="永久记录" type="application/atom+xml">
+    <link rel="stylesheet" href="asset/css/style.min.css">
+    <link rel="stylesheet" href="asset/css/doc.css">
+    <script src="asset/app.js"></script>
+</head>
+  <body>
+    <section class="hero">
+      <div class="hero-head">
+          <nav class="navbar" role="navigation" aria-label="main navigation">
+              <div class="container">
+              <div class="navbar-brand">
+                
+                <a target="_self" class="navbar-item " href="index.html">Home</a>
+                
+                <a target="_self" class="navbar-item " href="archives.html">Archives</a>
+                
+                <a target="_self" class="navbar-item " href="about.html">About</a>
+                
+
+                <a role="button" id="navbarSNSRssSwitchBtn" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarSNSRssButtons">
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                  <span aria-hidden="true"></span>
+                </a>
+              </div>
+            
+              <div id="navbarSNSRssButtons" class="navbar-menu">
+                <div class="navbar-start">
+                  
+                </div>
+            
+                <div class="navbar-end">
+                  <div class="navbar-item">
+                    <!--buttons start-->
+                    <div class="buttons">
+                      
+                        
+                        
+                        
+                        
+                      
+                      <a href="atom.xml" target="_blank" title="RSS">
+                          <span class="icon is-large has-text-black-bis">
+                              <svg class="svg-inline--fa fa-rss fa-w-14 fa-lg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rss" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M128.081 415.959c0 35.369-28.672 64.041-64.041 64.041S0 451.328 0 415.959s28.672-64.041 64.041-64.041 64.04 28.673 64.04 64.041zm175.66 47.25c-8.354-154.6-132.185-278.587-286.95-286.95C7.656 175.765 0 183.105 0 192.253v48.069c0 8.415 6.49 15.472 14.887 16.018 111.832 7.284 201.473 96.702 208.772 208.772.547 8.397 7.604 14.887 16.018 14.887h48.069c9.149.001 16.489-7.655 15.995-16.79zm144.249.288C439.596 229.677 251.465 40.445 16.503 32.01 7.473 31.686 0 38.981 0 48.016v48.068c0 8.625 6.835 15.645 15.453 15.999 191.179 7.839 344.627 161.316 352.465 352.465.353 8.618 7.373 15.453 15.999 15.453h48.068c9.034-.001 16.329-7.474 16.005-16.504z"></path></svg><!-- <i class="fas fa-rss fa-lg"></i> -->
+                          </span>
+                      </a>
+                    </div>
+                    <!--buttons end-->
+
+                  </div>
+                </div>
+                </div>
+              </div>
+            </nav>
+      </div>
+
+ <div class="hero-body ct-body"></div>
+      
+    </section>
+    <section class="ct-body">
+      <div class="container">
+          <div class="columns is-variable bd-klmn-columns is-4 is-centered">
+              <div class="column is-four-fifths">
+                  <div class="post-body single-content">
+                    
+                    <h1 class="title">
+                            自建个人文档版本管理系统 Gogs   
+                      </h1>
+                     
+                    
+                      <div class="media">
+                            
+                            <div class="media-content">
+                              <div class="content">
+                                <p>
+                                 <span class="date">2025/07/11</span>
+                                  
+                                         
+                                  
+
+                                   
+                                      
+                                  <br />
+                                  <span class="tran-tags">Tags:</span>&nbsp;
+                                  
+                                    <a class="tag is-link is-light" href='tag_macOS.html'>#macOS</a>
+                                  
+                                    <a class="tag is-link is-light" href='tag_gogs.html'>#gogs</a>
+                                     
+
+                                </p>
+                              </div>
+                            </div>
+                         
+                    </div>
+                </div>
+                  <article class="markdown-body single-content">
+                    <div class="mweb_toc"><ul>
+<li><a href="#%E5%AE%89%E8%A3%85%E5%87%86%E5%A4%87">安装准备</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85gogs">安装 Gogs</a></li>
+<li><a href="#%E5%8D%87%E7%BA%A7gogs">升级 Gogs</a></li>
+<li><a href="#%E8%BF%9B%E9%98%B6%E8%AE%BE%E7%BD%AE">进阶设置</a>
+<ul>
+<li><a href="#%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3">修改默认端口</a></li>
+<li><a href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86">反向代理</a>
+<ul>
+<li><a href="#nginx">NGINX</a></li>
+<li><a href="#caddy">Caddy</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8">开机启动</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB">数据迁移</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>Gogs 官方号称是一个无痛的自托管 Git 服务，相较后继者 Gitea 更简单易懂，非常适合个人管理文档版本。</p>
+<h2><a id="%E5%AE%89%E8%A3%85%E5%87%86%E5%A4%87" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装准备</h2>
+<p>确保 macOS 已安装 git：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ brew update
+$ brew install git
+</code></pre>
+<h2><a id="%E5%AE%89%E8%A3%85gogs" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安装 Gogs</h2>
+<p>可以到 Gogs 官网直接下载<a href="https://gogs.io/docs/installation/install_from_binary">https://gogs.io/docs/installation/install_from_binary</a>，例如 macOS arm64 最新版本是 <code>gogs_0.13.3_ darwin_arm64.zip</code>。解压缩后文件夹路径为 <code>/Users/username/path-to-gogs/gogs</code>，进入该目录并启动gogs服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cd /Users/username/path-to-gogs/gogs
+$ ./gogs web
+</code></pre>
+<p>浏览器打开安装页面 <a href="http://localhost:3000">http://localhost:3000</a> 进行下一步安装。</p>
+<p>安装界面：<br />
+<img src="media/17665903986851/gogs2.webp" alt="gogs2" /></p>
+<p>个人使用可以尽量简化：</p>
+<ul>
+<li>数据库类型：选择 <code>SQLite3</code></li>
+<li>数据库文件路径：<code>data/gogs.db</code></li>
+<li>仓库根目录：自定义，例如 <code>gogs-repositories</code></li>
+<li>以此用户运行： <code>macOS</code> 用户名</li>
+<li>SSH 服务端口：留空</li>
+<li>HTTP 端口：3000</li>
+<li>应用程序 URL：<code>http://localhost:3000</code></li>
+<li>日志路径：<code>log</code></li>
+</ul>
+<p>安装 Gogs 成功后，第一位注册用户默认是管理员。</p>
+<p>新建仓库：<br />
+<img src="media/17665903986851/gogs-new-repo.webp" alt="gogs-new-repo" /></p>
+<p>在 Finder 中新建文件夹作为仓库，进入该文件夹并执行如下命令：</p>
+<pre class="line-numbers"><code class="language-plain_text">touch README.md
+git init
+git add README.md
+git commit -m &quot;first commit&quot;
+git remote add origin http://localhost:3000/username/test-repository.git
+git push -u origin main
+</code></pre>
+<h2><a id="%E5%8D%87%E7%BA%A7gogs" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>升级 Gogs</h2>
+<p>找到 <code>gogs</code> 所在文件夹，并重命名 为<code>gogs_old</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ mv gogs gogs_old
+</code></pre>
+<p>到官网下载 Gogs 最新版本，解压后获得一个新的 <code>gogs</code> 文件夹。</p>
+<p>将 <code>gogs_old</code> 下三个文件夹 <code>custom</code>，<code>data</code>以及 <code>log </code>复制到新的 <code>gogs</code> 文件夹即可：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cp -R gogs_old/{custom,data,log} gogs
+</code></pre>
+<p>重新启动 <code>gogs</code> 服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ cd gogs
+$ ./gogs web
+</code></pre>
+<h2><a id="%E8%BF%9B%E9%98%B6%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>进阶设置</h2>
+<h3><a id="%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E7%AB%AF%E5%8F%A3" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>修改默认端口</h3>
+<p>Gogs 默认端口为<code>3000</code>，初次启动可改变端口，例如 <code>3001</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ ./gogs web -port 3001
+</code></pre>
+<h3><a id="%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>反向代理</h3>
+<h4><a id="nginx" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>NGINX</h4>
+<pre class="line-numbers"><code class="language-plain_text">server {
+    listen 80;
+    server_name git.crystalnetwork.us;
+
+    location / {
+        proxy_pass http://localhost:3000;
+    }
+}
+</code></pre>
+<h4><a id="caddy" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caddy</h4>
+<pre class="line-numbers"><code class="language-plain_text">git.example.com {
+    proxy / http://localhost:3000
+}
+</code></pre>
+<h3><a id="%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开机启动</h3>
+<p>创建 Launch Agent 文件： <code>~/Library/LaunchAgents/com.gogs.web.plist </code>，内容如下：</p>
+<pre class="line-numbers"><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+  &lt;dict&gt;
+    &lt;key&gt;KeepAlive&lt;/key&gt;
+    &lt;true/&gt;
+    &lt;key&gt;Label&lt;/key&gt;
+    &lt;string&gt;com.gogs.web&lt;/string&gt;
+    &lt;key&gt;ProgramArguments&lt;/key&gt;
+    &lt;array&gt;
+          &lt;string&gt;sh&lt;/string&gt;
+          &lt;string&gt;-c&lt;/string&gt;
+          &lt;string&gt;cd /Users/username/path-to-gogs/gogs; ./gogs web&lt;/string&gt;
+    &lt;/array&gt;
+    &lt;key&gt;WorkingDirectory&lt;/key&gt;
+    &lt;string&gt;/Users/username/path-to-gogs/gogs/&lt;/string&gt;
+    &lt;key&gt;RunAtLoad&lt;/key&gt;
+    &lt;true/&gt;
+  &lt;/dict&gt;
+&lt;/plist&gt;
+</code></pre>
+<p>加载 daemon 服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl load -w ~/Library/LaunchAgents/com.gogs.server.plist 
+</code></pre>
+<p>启动 <code>gogs</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl start com.gogs.web
+</code></pre>
+<p>停止 <code>gogs</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl stop com.gogs.web
+</code></pre>
+<h3><a id="%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>数据迁移</h3>
+<p>复制 <code>gogs</code> 以及 <code>gogs-repositories</code> 文件夹到新电脑，根据实际情况修改 <code>app.ini</code>。之后正常启动即可。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>Gogs 官网 <a href="https://gogs.io/">https://gogs.io</a></li>
+<li>Gogs 帮助文档faqs <a href="https://gogs.io/docs/intro/faqs">https://gogs.io/docs/intro/faqs</a></li>
+<li>macOS 搭建 Gitea 私有 Git 服务器教程 <a href="https://blog.csdn.net/m0_55316234/article/details/150212224">https://blog.csdn.net/m0_55316234/article/details/150212224</a></li>
+<li>Start the runner with LaunchDaemon(macOS) <a href="https://docs.gitea.com/usage/actions/act-runner#start-the-runner-with-launchdaemonmacos">https://docs.gitea.com/usage/actions/act-runner#start-the-runner-with-launchdaemonmacos</a></li>
+<li>如何使用Gogs搭建自己的git服务器 <a href="https://www.cnblogs.com/zhaotianff/p/17887191.html">https://www.cnblogs.com/zhaotianff/p/17887191.html</a></li>
+</ul>
+
+                  </article>
+                  <div class="comments-wrap">
+                    <div class="share-comments">
+                      
+
+                      
+
+                      
+                    </div>
+                  </div><!-- end comments wrap -->
+              </div>
+            </div><!-- end columns -->
+      </div><!-- end container -->
+    </section>
+
+
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+              Copyright &copy; 2025
+              Powered by <a target="_blank" href="https://www.mweb.im">MWeb</a>. 
+          </p>
+        </div>
+      </footer>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">MathJax.Hub.Config({TeX: { equationNumbers: { autoNumber: "AMS" } }});</script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="asset/prism.js"></script>
+
+
+
+  
+    
+
+
+
+
+  </body>
+</html>

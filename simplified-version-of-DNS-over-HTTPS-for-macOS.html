@@ -114,14 +114,14 @@
                   <article class="markdown-body single-content">
                     <div class="mweb_toc"><ul>
 <li><a href="#mosdns%E8%AE%BE%E7%BD%AE">mosdns设置</a></li>
-<li><a href="#dnscrypt-proxy%E8%AE%BE%E7%BD%AE">dnscrypt-proxy设置</a></li>
+<li><a href="#dnscrypt-proxy%E8%AE%BE%E7%BD%AE">Dnscrypt-proxy 设置</a></li>
 <li><a href="#%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8">开机启动</a></li>
 </ul>
 </div>
 <p>详尽版 DNS-over-HTTPS 配置参考：<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>。</p>
-<p>简化版DoH只需要安装mosdns以及dnscrypt-proxy，不需要cloudflared以及AdGuardHome。mosdns负责分流以及国内连接，端口设置为<code>53</code>；dnscrypt-proxy负责国外网络连接，端口设置为<code>5300</code>。</p>
+<p>简化版 DoH 只需要安装 mosdns 以及 dnscrypt-proxy，不需要 cloudflared 以及 AdGuardHome。mosdns 负责分流以及国内连接，端口设置为<code>53</code>；dnscrypt-proxy 负责国外网络连接，端口设置为<code>5300</code>。</p>
 <h2><a id="mosdns%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>mosdns设置</h2>
-<p>从Github下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。</p>
+<p>从 Github 下载安装<a href="https://github.com/IrineSistiana/mosdns">https://github.com/IrineSistiana/mosdns</a>。</p>
 <p>解压缩后将整个文件夹移至<code>/opt/local/etc/</code>，并修改配置文件<code>/opt/local/etc/config.yaml</code>：</p>
 <pre class="line-numbers"><code class="language-plain_text">log:
     level: info
@@ -250,29 +250,29 @@ plugins:
 <li><code>apple-cn.txt</code>：<a href="https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt">https://github.com/Loyalsoldier/v2ray-rules-dat/blob/release/apple-cn.txt</a></li>
 <li><code>self-defined.txt</code>：自行创建。</li>
 </ul>
-<p>安装mosdns前检查配置是否正确：</p>
+<p>安装 mosdns 前检查配置是否正确：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ /opt/local/etc/mosdns/mosdns start -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
-<p>安装mosdns服务：<br />
+<p>安装 mosdns 服务：<br />
 格式如下：<code>mosdns service install -d 工作目录绝对路径 -c 配置文件路径</code>。</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service install -d /opt/local/etc/mosdns/ -c /opt/local/etc/mosdns/config.yaml
 </code></pre>
-<p>运行后将生成启动配置文件<code>/Library/LaunchDaemons/mosdns.plist</code>，该服务将设定mosdns随系统启动，但并不会立刻运行。</p>
-<p>修改mosdns服务：</p>
+<p>运行后将生成启动配置文件<code>/Library/LaunchDaemons/mosdns.plist</code>，该服务将设定 mosdns 随系统启动，但并不会立刻运行。</p>
+<p>修改 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ vim /Library/LaunchDaemons/mosdns.plist
 </code></pre>
 <p>修改<code>RunAtLoad</code>的值为<code>true</code>。</p>
-<p>启动mosdns：</p>
+<p>启动 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start
 </code></pre>
-<p>检查mosdns是否正常启动：</p>
+<p>检查 mosdns 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:53
 </code></pre>
-<p>管理mosdns服务：</p>
+<p>管理 mosdns 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/local/etc/mosdns/mosdns service start/restart/stop/uninstall
 </code></pre>
-<h2><a id="dnscrypt-proxy%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>dnscrypt-proxy设置</h2>
-<p>安装dnscrypt-proxy：</p>
+<h2><a id="dnscrypt-proxy%E8%AE%BE%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dnscrypt-proxy 设置</h2>
+<p>安装 dnscrypt-proxy：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install dnscrypt-proxy
 </code></pre>
 <p>安装后会自动生成启动配置文件<code>/Library/LaunchDaemons/dnscrypt-proxy.plist</code>。</p>
@@ -291,25 +291,25 @@ require_dnssec = false
 require_nolog = false
 disabled_server_names = ['alidns-doh','dnspod','tuna-doh-ipv6']
 </code></pre>
-<p>启动dnscrypt-proxy服务：</p>
+<p>启动 dnscrypt-proxy 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start dnscrypt-proxy
 </code></pre>
 <p><strong>备注</strong>：这里需要使用<code>sudo</code>命令，目的是为了避免在用户目录下出现重复的配置文件，否则将不断提醒端口占用。</p>
-<p>检查dnscrypt-proxy是否正常启动：</p>
+<p>检查 dnscrypt-proxy 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5300
 </code></pre>
-<p>管理dnscrypt-proxy服务：</p>
+<p>管理 dnscrypt-proxy 服务：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop dnscrypt-proxy
 </code></pre>
 <h2><a id="%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开机启动</h2>
-<p>开机启动mosdns：</p>
+<p>开机启动 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo launchctl load -w /Library/LaunchDaemons/mosdns.plist
 </code></pre>
-<p>开机启动dnscrypt-proxy：</p>
+<p>开机启动 dnscrypt-proxy：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo launchctl load -w /Library/LaunchDaemons/dnscrypt-proxy.plist
 </code></pre>
 <p>系统设置：<br />
-进入WiFi详细界面，在DNS服务器栏中分别填入<code>127.0.0.1</code>以及<code>::1</code>，保存即可。</p>
+进入WiFi详细界面，在 DNS 服务器栏中分别填入<code>127.0.0.1</code>以及<code>::1</code>，保存即可。</p>
 <p><img src="media/17414919487590/Xnip-DoH-2024.webp" alt="Xnip-DoH-2024" /></p>
 
                   </article>

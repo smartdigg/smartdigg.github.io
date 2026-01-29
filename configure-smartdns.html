@@ -124,23 +124,23 @@
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>在<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>一文中，使用mosdns作为转发工具，本文将用SmartDNS替换mosdns，其余配置不变。</p>
+<p>在<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>一文中，使用 mosdns 作为转发工具，本文将用 SmartDNS 替换 mosdns，其余配置不变。</p>
 <p>优点：用户只需关注网站，无需关注IP地址。</p>
 <h2><a id="smartdns%E5%AE%89%E8%A3%85" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装</h2>
-<p>使用homebrew安装，也可以到官网下载安装<a href="https://github.com/mokeyish/smartdns-rs">https://github.com/mokeyish/smartdns-rs</a>。SmartDNS仅作分流和转发，使用端口<code>5304</code>。</p>
+<p>使用 homebrew 安装，也可以到官网下载安装<a href="https://github.com/mokeyish/smartdns-rs">https://github.com/mokeyish/smartdns-rs</a>。 SmartDNS 仅作分流和转发，使用端口<code>5304</code>。</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew install smartdns
 </code></pre>
 <p>默认安装的配置文件位置：<code>/opt/homebrew/etc/smartdns/smartdns.conf</code>。</p>
 <h3><a id="%E5%9B%BD%E5%86%85%E7%BD%91%E7%AB%99%E5%88%86%E6%B5%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>国内网站分流</h3>
 <p>同时下载国内网站列表<a href="https://github.com/felixonmars/dnsmasq-china-list">felixonmars/dnsmasq-china-list</a>，将整个仓库下载下来。</p>
-<p>转化成SmartDNS规则：</p>
+<p>转化成 SmartDNS 规则：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ make SERVER=china smartdns-domain-rules
 </code></pre>
 <p>将自动生成三个文件：<code>accelerated-domains.china.domain.smartdns.conf</code>、<code>google.china.domain.smartdns.conf</code>以及<code>apple.china.domain.smartdns.conf</code>。</p>
 <p>将上述三个文件移动至文件夹<code>/opt/homebrew/etc/smartdns/</code>。<br />
 同时，在该文件夹下新建<code>self-defined.conf</code>，作为个人常用国内网站列表，格式参考其他文件。</p>
 <h3><a id="%E8%B0%83%E6%95%B4smartdns%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>调整 SmartDNS 配置文件</h3>
-<p>修改SmartDNS配置文件<code>/opt/homebrew/etc/smartdns/smartdns.conf</code>，大部分不用调整，仅限转发：</p>
+<p>修改 SmartDNS 配置文件<code>/opt/homebrew/etc/smartdns/smartdns.conf</code>，大部分不用调整，仅限转发：</p>
 <pre class="line-numbers"><code class="language-plain_text"># dns server name, default is host name
 # server-name, 
 # example:
@@ -469,25 +469,25 @@ server-tcp 127.0.0.1:5305 -group china -exclude-default-group
 # domain-rules /domain-set:domain-list/ -speed-check-mode ping
 </code></pre>
 <h3><a id="smartdns%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 管理</h3>
-<p>暂停mosdns：</p>
+<p>暂停 mosdns：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ brew services stop mosdns
 $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </code></pre>
-<p>启动SmartDNS：</p>
+<p>启动 SmartDNS：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start smartdns
 </code></pre>
 <p>使用<code>sudo</code>命令会自动添加到开机启动项，启动配置文件位置：<code>/Library/LaunchDaemons/homebrew.mxcl.smartdns.plist</code>。</p>
 <p>如果不需要后台服务，可以执行命令：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo /opt/homebrew/opt/smartdns/sbin/smartdns run -c /opt/homebrew/etc/smartdns/smartdns.conf
 </code></pre>
-<p>检查SmartDNS是否正常启动：</p>
+<p>检查 SmartDNS 是否正常启动：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo lsof -Pni UDP:5304
 </code></pre>
-<p>重启与暂停SmartDNS：</p>
+<p>重启与暂停 SmartDNS：</p>
 <pre class="line-numbers"><code class="language-plain_text">$ sudo brew services start/restart/stop smartdns
 </code></pre>
 <h2><a id="smartdns%E5%B1%8F%E8%94%BD%E5%B9%BF%E5%91%8A%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 屏蔽广告（可选）</h2>
-<p>由于SmartDNS也具有屏蔽广告的功能，可以不再需要AdGuardHome，仅需将AdGuardHome关闭，并将SmartDNS端口设置为53即可。</p>
+<p>由于 SmartDNS 也具有屏蔽广告的功能，可以不再需要 AdGuardHome，仅需将 AdGuardHome 关闭，并将 SmartDNS 端口设置为53即可。</p>
 <ol>
 <li>下载配置文件到目录<code>/opt/homebrew/etc/smartdns/</code></li>
 </ol>
@@ -498,7 +498,7 @@ $ sudo /opt/local/etc/mosdns/mosdns service uninstall
 </ol>
 <pre class="line-numbers"><code class="language-plain_text">conf-file /opt/homebrew/etc/smartdns/anti-ad-smartdns.conf
 </code></pre>
-<p>其他广告列表见<a href="https://pymumu.github.io/smartdns/config/ad-block/">SmartDNS广告过滤列表</a>，可以定期下载更新文件，并重启SmartDNS生效。</p>
+<p>其他广告列表见<a href="https://pymumu.github.io/smartdns/config/ad-block/">SmartDNS广告过滤列表</a>，可以定期下载更新文件，并重启 SmartDNS 生效。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>Dnsmasq-china-list<br />

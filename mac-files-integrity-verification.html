@@ -115,7 +115,7 @@
 <li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
 </ul>
 </div>
-<p>鉴别文件的完整性或鉴别文件内容是否被修改，主要通过<code>MD5</code>和<code>SHA</code>来完成。macOS下使用终端的一些简单命令即可完成。</p>
+<p>鉴别文件的完整性或鉴别文件内容是否被修改，主要通过<code>MD5</code>和<code>SHA</code>来完成。macOS 下使用终端的一些简单命令即可完成。</p>
 <h2><a id="shasum" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>shasum</h2>
 <p><code>shasum</code>命令默认检测<code>SHA1</code>值，而通过参数<code>-a</code>可以修改为224、256、384或512。</p>
 <p>用法：打开终端，输入如下命令，替换<code>/path/to/filename</code>为要验证的文件地址，也可以直接将文件拖动到终端。</p>
@@ -145,7 +145,7 @@
 <pre class="line-numbers"><code class="language-zsh">$ md5 ~/Downloads/debian-12.5.0-arm64-DVD-1.iso
 </code></pre>
 <h2><a id="openssl" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>openssl</h2>
-<p>还可以用openssl来验证sha1，md5等。</p>
+<p>还可以用 openssl 来验证sha1，md5等。</p>
 <pre class="line-numbers"><code class="language-zsh">$ openssl sha1 /path/to/filename
 $ openssl md5 /path/to/filename
 </code></pre>
