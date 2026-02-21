@@ -99,8 +99,6 @@
                                   <span class="tran-tags">Tags:</span>&nbsp;
                                   
                                     <a class="tag is-link is-light" href='tag_macOS.html'>#macOS</a>
-                                  
-                                    <a class="tag is-link is-light" href='tag_gogs.html'>#gogs</a>
                                      
 
                                 </p>
@@ -200,7 +198,7 @@ $ ./gogs web
 }
 </code></pre>
 <h3><a id="%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>开机启动</h3>
-<p>创建 Launch Agent 文件： <code>~/Library/LaunchAgents/com.gogs.web.plist </code>，内容如下：</p>
+<p>创建 Launch Agent 文件： <code>~/Library/LaunchAgents/io.gogs.web.plist </code>，内容如下：</p>
 <pre class="line-numbers"><code class="language-plain_text">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
 &lt;plist version=&quot;1.0&quot;&gt;
@@ -208,7 +206,7 @@ $ ./gogs web
     &lt;key&gt;KeepAlive&lt;/key&gt;
     &lt;true/&gt;
     &lt;key&gt;Label&lt;/key&gt;
-    &lt;string&gt;com.gogs.web&lt;/string&gt;
+    &lt;string&gt;io.gogs.web&lt;/string&gt;
     &lt;key&gt;ProgramArguments&lt;/key&gt;
     &lt;array&gt;
           &lt;string&gt;sh&lt;/string&gt;
@@ -223,20 +221,24 @@ $ ./gogs web
 &lt;/plist&gt;
 </code></pre>
 <p>加载 daemon 服务：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ launchctl load -w ~/Library/LaunchAgents/com.gogs.server.plist 
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl load -w ~/Library/LaunchAgents/io.gogs.server.plist 
 </code></pre>
 <p>启动 <code>gogs</code>：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ launchctl start com.gogs.web
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl start io.gogs.web
 </code></pre>
 <p>停止 <code>gogs</code>：</p>
-<pre class="line-numbers"><code class="language-plain_text">$ launchctl stop com.gogs.web
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl stop io.gogs.web
+</code></pre>
+<p>重启 <code>gogs</code>：</p>
+<pre class="line-numbers"><code class="language-plain_text">$ launchctl restart io.gogs.web
 </code></pre>
 <h3><a id="%E6%95%B0%E6%8D%AE%E8%BF%81%E7%A7%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>数据迁移</h3>
-<p>复制 <code>gogs</code> 以及 <code>gogs-repositories</code> 文件夹到新电脑，根据实际情况修改 <code>app.ini</code>。之后正常启动即可。</p>
+<p>复制 <code>gogs</code> 以及 <code>gogs-repositories</code> 文件夹到新电脑，根据实际情况修改 <code>custom/conf/app.ini</code>。之后正常启动即可。</p>
 <h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
 <ul>
 <li>Gogs 官网 <a href="https://gogs.io/">https://gogs.io</a></li>
 <li>Gogs 帮助文档faqs <a href="https://gogs.io/docs/intro/faqs">https://gogs.io/docs/intro/faqs</a></li>
+<li>Gogs issues <a href="https://github.com/gogs/gogs/issues/7322">https://github.com/gogs/gogs/issues/7322</a></li>
 <li>macOS 搭建 Gitea 私有 Git 服务器教程 <a href="https://blog.csdn.net/m0_55316234/article/details/150212224">https://blog.csdn.net/m0_55316234/article/details/150212224</a></li>
 <li>Start the runner with LaunchDaemon(macOS) <a href="https://docs.gitea.com/usage/actions/act-runner#start-the-runner-with-launchdaemonmacos">https://docs.gitea.com/usage/actions/act-runner#start-the-runner-with-launchdaemonmacos</a></li>
 <li>如何使用Gogs搭建自己的git服务器 <a href="https://www.cnblogs.com/zhaotianff/p/17887191.html">https://www.cnblogs.com/zhaotianff/p/17887191.html</a></li>

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
   <loc>https://smartdigg.github.io/</loc>
-  <lastmod>2026-01-29T22:52:52+08:00</lastmod>
+  <lastmod>2026-02-16T22:44:02+08:00</lastmod>
 </url>
 
 <url>
@@ -28,6 +28,11 @@
 <url>
   <loc>https://smartdigg.github.io/how-to-deploy-deepseek-on-your-computer.html</loc>
   <lastmod>2025-01-11T00:00:00+08:00</lastmod>
+</url>
+
+<url>
+  <loc>https://smartdigg.github.io/Docker-install-freshrss.html</loc>
+  <lastmod>2024-12-11T11:11:11+08:00</lastmod>
 </url>
 
 <url>
@@ -63,6 +68,11 @@
 <url>
   <loc>https://smartdigg.github.io/configure-DNS-over-HTTPS-for-macOS.html</loc>
   <lastmod>2024-04-11T11:11:11+08:00</lastmod>
+</url>
+
+<url>
+  <loc>https://smartdigg.github.io/VPS-install-mtproxy.html</loc>
+  <lastmod>2024-03-11T11:11:11+08:00</lastmod>
 </url>
 
 <url>
