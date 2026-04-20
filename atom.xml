@@ -4,7 +4,7 @@
   <title><![CDATA[永久记录]]></title>
   <link href="https://smartdigg.github.io/atom.xml" rel="self"/>
   <link href="https://smartdigg.github.io/"/>
-  <updated>2026-02-01T23:40:47+08:00</updated>
+  <updated>2026-04-17T23:37:14+08:00</updated>
   <id>https://smartdigg.github.io/</id>
   <author>
     <name><![CDATA[]]></name>
@@ -158,6 +158,139 @@ $ ./gogs web
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Debian 使用 SmartDNS 配置 DNS-over-HTTPS]]></title>
+    <link href="https://smartdigg.github.io/Debian-configure-DNS-over-HTTPS-by-smartdns.html"/>
+    <updated>2026-03-26T22:23:57+08:00</updated>
+    <id>https://smartdigg.github.io/Debian-configure-DNS-over-HTTPS-by-smartdns.html</id>
+    <content type="html"><![CDATA[
+<div class="mweb_toc"><ul>
+<li><a href="#smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE">SmartDNS 安装及配置</a>
+<ul>
+<li><a href="#smartdns%E5%8E%BB%E5%B9%BF%E5%91%8A">SmartDNS 去广告</a></li>
+<li><a href="#smartdns%E6%B7%BB%E5%8A%A0%E9%BB%91%E5%90%8D%E5%8D%95">SmartDNS 添加黑名单</a></li>
+</ul>
+</li>
+<li><a href="#smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86">SmartDNS 服务管理</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
+</ul>
+</div>
+<p>本文类似 <a href="simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html">macOS 配置 DNS-over-HTTPS SmartDNS 简化版</a>，配置适用于 Debian 系 Linux 发行版，Ubuntu 系统存在 53 端口占用问题。</p>
+<h2><a id="smartdns%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 安装及配置</h2>
+<p>安装 SmartDNS：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo apt-get install smartdns
+</code></pre>
+<p>配置文件位于<code>/etc/smartdns/</code>目录。</p>
+<p>SmartDNS 配置文件 <code>/etc/smartdns/smartdns.conf</code> 样例：</p>
+<pre class="line-numbers"><code class="language-plain_text"># 设置监听的DNS端口
+bind [::]:53
+bind-tcp [::]:53
+
+tcp-idle-time 300
+
+# 缓存大小与性能设置
+cache-size 32768
+prefetch-domain yes
+
+# 持久化缓存设置(可选设置)
+cache-persist yes 
+cache-file /tmp/smartdns.cache
+
+serve-expired-prefetch-time 21600
+serve-expired yes
+serve-expired-ttl 86400
+serve-expired-reply-ttl 30
+cache-checkpoint-time 86400
+
+#禁用 SmartDNS 全局的测速设置
+speed-check-mode none
+
+force-qtype-SOA 65
+
+#设置TTL最小值和最大值
+rr-ttl 60
+rr-ttl-min 0
+rr-ttl-max 400
+
+# 日志设置
+log-level error
+log-file /var/log/smartdns.log
+log-size 5M
+log-num 2
+
+# 设置默认DNS服务器
+# 设置国内上游DNS服务器
+server-https https://dns.alidns.com/dns-query 
+server-https https://doh.pub/dns-query 
+server-https https://120.53.53.53/dns-query
+
+server-tls dns.alidns.com
+server-tls dot.pub
+
+server-h3 h3://dns.alidns.com/dns-query
+</code></pre>
+<h3><a id="smartdns%E5%8E%BB%E5%B9%BF%E5%91%8A" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 去广告</h3>
+<p>下载广告过滤文件到<code>/etc/smartdns</code>目录：</p>
+<pre class="line-numbers"><code class="language-plain_text">wget https://anti-ad.net/anti-ad-for-smartdns.conf -O /etc/smartdns/anti-ad-smartdns.conf
+</code></pre>
+<p>可用的去广告列表：</p>
+<ul>
+<li>anti-AD: <code>https://anti-ad.net/anti-ad-for-smartdns.conf</code></li>
+<li>adrules: <code>https://adrules.top/smart-dns.conf</code></li>
+<li>neodevhost: <code>https://raw.githubusercontent.com/neodevpro/neodevhost/master/lite_smartdns.conf</code></li>
+</ul>
+<p>在配置文件 <code>/etc/smartdns/smartdns.conf</code> 最后添加：</p>
+<pre class="line-numbers"><code class="language-plain_text"># 引入去广告配置文件
+conf-file /etc/smartdns/anti-ad-for-smartdns.conf
+conf-file /etc/smartdns/smart-dns.conf
+</code></pre>
+<h3><a id="smartdns%E6%B7%BB%E5%8A%A0%E9%BB%91%E5%90%8D%E5%8D%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 添加黑名单</h3>
+<p>需要手动添加黑名单，新建<code>blacklist.txt</code>，格式如下：</p>
+<pre class="line-numbers"><code class="language-plain_text">2345.com
+mairuan.com
+hao123.com
+</code></pre>
+<p>在配置文件 <code>/etc/smartdns/smartdns.conf</code> 最后添加：</p>
+<pre class="line-numbers"><code class="language-plain_text"># 引入黑名单
+domain-set -name blacklist -file /etc/smartdns/blacklist.txt
+address /domain-set:blacklist/#
+</code></pre>
+<h2><a id="smartdns%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>SmartDNS 服务管理</h2>
+<p>启动 SmartDNS 服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo systemctl start smartdns
+sudo systemctl enable smartdns
+</code></pre>
+<p>查看 SmartDNS 状态：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo systemctl status smartdns
+</code></pre>
+<p>检查 SmartDNS 是否正常启动：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo lsof -Pni UDP:53
+</code></pre>
+<p>或者：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo netstat -lnup | grep smartdns
+</code></pre>
+<p>测试 DNS 解析：</p>
+<pre class="line-numbers"><code class="language-plain_text">dig @127.0.0.1 www.baidu.com
+</code></pre>
+<p>查看 SmartDNS 错误：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo journalctl -u smartdns
+# or
+sudo cat /var/log/smartdns.log
+</code></pre>
+<p>启动、重启与停止 SmartDNS 服务：</p>
+<pre class="line-numbers"><code class="language-plain_text">sudo systemctl start/restart/stop smartdns
+</code></pre>
+<p>每次修改 SmartDNS 配置文件都重启 SmartDNS 服务。</p>
+<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
+<ul>
+<li>SmartDNS 主页 <a href="https://pymumu.github.io/smartdns/download/">https://pymumu.github.io/smartdns/download/</a></li>
+<li>Linux 下安装 SmartDNS <a href="https://powersen.cn/article/gewr3ily/">https://powersen.cn/article/gewr3ily</a></li>
+<li>SmartDNS Installation on Linux <a href="https://deepwiki.com/pymumu/smartdns/3.2-installation-on-linux">https://deepwiki.com/pymumu/smartdns/3.2-installation-on-linux</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[使用 coredns 自建 DoH 服务]]></title>
     <link href="https://smartdigg.github.io/self-hosted-doh-server-by-coredns.html"/>
     <updated>2025-10-05T11:34:20+08:00</updated>
@@ -271,9 +404,9 @@ dns.example.com {
 <li>之后系统会要求您输入电话号码，以接收双因素身份验证代码</li>
 </ul>
 <h2><a id="%E4%BD%BF%E7%94%A8%E5%AE%89%E5%85%A8%E8%BE%93%E5%85%A5%E6%B3%95" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>使用安全输入法</h2>
-<p>建议安装 Rime/Squirrel，参考<a href="macos-install-rime.html">macOS安装Rime输入法</a>，远离所有国产输入法。</p>
+<p>建议安装 Rime/Squirrel，参考 <a href="macos-install-rime.html">macOS安装Rime输入法</a>，远离所有国产输入法。</p>
 <h2><a id="%E6%B5%81%E9%87%8F%E5%8A%A0%E5%AF%86" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>流量加密</h2>
-<p>使用 DNS-over-HTTPS，参考<a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a>或<a href="simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html">macOS 配置 DNS-over-HTTPS SmartDNS 简化版</a>。</p>
+<p>使用 DNS-over-HTTPS，参考 <a href="configure-DNS-over-HTTPS-for-macOS.html">macOS 配置 DNS-over-HTTPS</a> 或 <a href="simplified-version-of-DNS-over-HTTPS-for-macOS-by-SmartDNS.html">macOS 配置 DNS-over-HTTPS SmartDNS 简化版</a>。</p>
 <h2><a id="%E9%98%B2%E7%81%AB%E5%A2%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>防火墙</h2>
 <p>启用内置防火墙。转到<code>System Settings</code>，打开<code>Network</code>，单击<code>Firewall</code>选项卡，单击开启防火墙。</p>
 <p>Apple 的防火墙只保护传入流量，不会阻止向外发送数据。为了提高安全性，可以考虑使用提供更高级保护的第三方防火墙，例如 Little Snitch。</p>
@@ -2574,55 +2707,6 @@ URL with %s in place of query：https://search.brave.com/search?q=%s
 <li>privacyguides <a href="https://www.privacyguides.org/en/desktop-browsers/#brave">https://www.privacyguides.org/en/desktop-browsers/#brave</a></li>
 <li>使用Docker自建支持DoH、DoT的DNS服务器 <a href="https://morooi.com/2020/%E6%90%AD%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/">https://morooi.com/2020/%E6%90%AD%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/<br />
 </a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[安全、隐私和匿名]]></title>
-    <link href="https://smartdigg.github.io/security-privacy-anonymity.html"/>
-    <updated>2023-11-04T09:58:41+08:00</updated>
-    <id>https://smartdigg.github.io/security-privacy-anonymity.html</id>
-    <content type="html"><![CDATA[
-<div class="mweb_toc"><ul>
-<li><a href="#%E5%AE%89%E5%85%A8%E3%80%81%E9%9A%90%E7%A7%81%E5%92%8C%E5%8C%BF%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB">安全、隐私和匿名的关系</a>
-<ul>
-<li><a href="#%E6%B2%A1%E6%9C%89%E9%9A%90%E7%A7%81%E6%88%96%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8">没有隐私或匿名的安全</a></li>
-<li><a href="#%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E9%9A%90%E7%A7%81">没有匿名的隐私</a></li>
-<li><a href="#%E6%B2%A1%E6%9C%89%E5%AE%89%E5%85%A8%E7%9A%84%E5%8C%BF%E5%90%8D">没有安全的匿名</a></li>
-<li><a href="#%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8%E5%92%8C%E9%9A%90%E7%A7%81">没有匿名的安全和隐私</a></li>
-<li><a href="#%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E6%88%96%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%90%E7%A7%81">没有匿名或安全的隐私</a></li>
-</ul>
-</li>
-<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
-</ul>
-</div>
-<p>我们可能认为我们知道隐私、安全和匿名之间的区别，但我们经常混淆它们，它们绝对不是同一件事。</p>
-<p>简单理解安全、隐私和匿名：</p>
-<ul>
-<li>安全（Security）：防止未经授权的人接触到信息、账户或其他类似东西；</li>
-<li>隐私（Privacy）：涉及你的身份和信息，不希望别人知道的。比如三围、聊天记录、银行卡密码等；</li>
-<li>匿名（Anonymity）：隐藏你的真实身份，完全不为任何人所知。</li>
-</ul>
-<h2><a id="%E5%AE%89%E5%85%A8%E3%80%81%E9%9A%90%E7%A7%81%E5%92%8C%E5%8C%BF%E5%90%8D%E7%9A%84%E5%85%B3%E7%B3%BB" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>安全、隐私和匿名的关系</h2>
-<p>隐私有助于你的安全，因为如果别人不知道你的信息，他们就无法冒充你来回答安全问题。安全可以通过控制谁能获取你的信息来保护你的隐私。<br />
-以家庭住房为例：安全是门锁；隐私是钥匙，你可以决定谁能得到备用钥匙；匿名是指没有人获得备用钥匙，甚至是家庭地址。</p>
-<p>这三个概念不一定相互依赖。安全产品不能保证隐私，私有产品不能保证安全，匿名也不能保证。</p>
-<h3><a id="%E6%B2%A1%E6%9C%89%E9%9A%90%E7%A7%81%E6%88%96%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有隐私或匿名的安全</h3>
-<p>谷歌提供了世界一流的安全性，却没有隐私或匿名。</p>
-<h3><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名的隐私</h3>
-<p>类似<a href="privacy.com">Privacy.com</a>、<a href="https://ironvest.com/">IronVest</a>（曾经的 Blur）提供的掩码卡(Masked card)服务，他们清楚地知道你是谁。不过，他们会向你提供虚拟电话号码、电子邮件地址和银行卡，让你提供给其他公司和个人，从而保护你的真实信息，帮助你保护自己的隐私。</p>
-<h3><a id="%E6%B2%A1%E6%9C%89%E5%AE%89%E5%85%A8%E7%9A%84%E5%8C%BF%E5%90%8D" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有安全的匿名</h3>
-<p>以现金为例，以现金支付商品可以保持您的匿名。但是，如果卖家不发货（除非您有收据），您就没有任何安全保障。</p>
-<h3><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E7%9A%84%E5%AE%89%E5%85%A8%E5%92%8C%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名的安全和隐私</h3>
-<p>以 Signal 为例，Signal 注册需要您的电话号码，因此可以通过法院命令甚至网络搜索来找到您的身份，具体取决于您使用的电话号码。即使您的身份不受保护和控制，您的 Signal 消息内容和您传输的信息也将受到保护和控制。</p>
-<h3><a id="%E6%B2%A1%E6%9C%89%E5%8C%BF%E5%90%8D%E6%88%96%E5%AE%89%E5%85%A8%E7%9A%84%E9%9A%90%E7%A7%81" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>没有匿名或安全的隐私</h3>
-<p>想想你在野外上厕所的情景。你可以找一些小树丛躲在后面，这样可以保护你的隐私，但却没有安全性或匿名性。没有任何东西可以阻止任何人找到你，如果警察要求你出示证件，你也得不到任何保护。</p>
-<h2><a id="%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" class="anchor" aria-hidden="true"><span class="octicon octicon-link"></span></a>参考资料</h2>
-<ul>
-<li>privacyguides <a href="https://blog.privacyguides.org/2021/02/23/security-privacy-anonymity/">https://blog.privacyguides.org/2021/02/23/security-privacy-anonymity/</a></li>
-<li>web.archive <a href="https://web.archive.org/web/20210729190914/https://thenewoil.xyz/privsecanon.html">https://web.archive.org/web/20210729190914/https://thenewoil.xyz/privsecanon.html</a></li>
 </ul>
 
 ]]></content>
